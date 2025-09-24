@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+@import './components.css';
+
+/* Utilidades personalizadas que extienden Tailwind */
+@layer utilities {
+  .text-contrast-high {
+    color: #111827;
+  }
+  .text-contrast-medium {
+    color: #374151;
+  }
+  .text-contrast-low {
+    color: #6b7280;
+  }
+  .icon-contrast-low {
+    color: #6b7280;
+  }
+  .icon-contrast-medium {
+    color: #374151;
+  }
+}

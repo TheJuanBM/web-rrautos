@@ -1,0 +1,39 @@
+---
+import type { Marca } from '../types'
+
+interface Props {
+  marcas: Marca[]
+}
+
+const { marcas } = Astro.props
+---
+
+<div class="flex gap-1 mb-4 flex-col" role="search">
+  <label for="marca-select" class="text-sm font-semibold"> Filtrar por marca </label>
+  <div
+    class="inline-flex items-center gap-2 bg-white border border-gray-300 rounded-md px-2 py-1 shadow-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500"
+  >
+    <svg
+      class="w-4 h-4 icon-contrast-medium pointer-events-none"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        fill="currentColor"
+        d="M10 18a1 1 0 0 1-.707-.293l-6-6a1 1 0 1 1 1.414-1.414L10 15.586l9.293-9.293a1 1 0 0 1 1.414 1.414l-10 10A1 1 0 0 1 10 18Z"
+      ></path>
+    </svg>
+    <select
+      id="marca-select"
+      name="marca"
+      aria-label="Selecciona una marca de vehículo para filtrar"
+      aria-describedby="marca-help"
+      class="appearance-none bg-transparent text-contrast-high text-sm px-2 py-1.5 rounded-md outline-none focus:outline-none min-w-[120px]"
+    >
+      <option value="">Todas las marcas</option>
+      {marcas.map(marca => <option value={marca.id}>{marca.title}</option>)}
+    </select>
+  </div>
+  <span id="marca-help" class="sr-only"> Usa este filtro para mostrar solo vehículos de una marca específica </span>
+</div>

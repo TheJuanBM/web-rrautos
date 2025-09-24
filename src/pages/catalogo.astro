@@ -1,0 +1,105 @@
+---
+import AsesoresList from '../components/AsesoresList.astro'
+import BrandSelector from '../components/BrandSelector.astro'
+import VehicleSkeleton from '../components/VehicleSkeleton.astro'
+import { ASESORES } from '../config/constants'
+import Layout from '../layouts/Layout.astro'
+import { apiService } from '../services/api'
+
+const marcas = await apiService.fetchMarcas()
+
+// Metadatos SEO específicos para la página de catálogo
+const seoData = {
+  title: 'Catálogo de Vehículos Usados',
+  description:
+    'Explora nuestra amplia selección de vehículos usados de calidad. Filtra por marca, encuentra el auto perfecto y obtén asesoría personalizada. Garantía y financiamiento disponible.',
+  keywords: [
+    'catálogo autos usados',
+    'vehículos usados',
+    'carros segunda mano',
+    'compra vehículos',
+    'autos garantizados',
+    'financiamiento vehicular',
+    'asesoría automotriz',
+    ...marcas.map(m => `${m.title} usados`).slice(0, 10),
+  ],
+  type: 'website' as const,
+}
+---
+
+<Layout {...seoData}>
+  <div class="min-h-screen bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 py-6">
+      <!-- Header principal -->
+      <header class="mb-6">
+        <h1 class="text-3xl font-extrabold mb-2">Catálogo de Vehículos Usados</h1>
+        <p class="max-w-2xl">
+          Encuentra el vehículo perfecto para ti. Explora nuestra selección de autos usados con garantía, filtra por
+          marca y recibe asesoría personalizada de nuestros expertos.
+        </p>
+      </header>
+
+      <!-- Filtros -->
+      <section aria-label="Filtros de búsqueda">
+        <BrandSelector marcas={marcas} />
+      </section>
+
+      <!-- Resultados -->
+      <section aria-label="Resultados de búsqueda" class="mb-8">
+        <div id="vehiculos-lista" class="min-h-[400px]" aria-live="polite" aria-label="Lista de vehículos">
+          <VehicleSkeleton />
+        </div>
+
+        <div
+          id="paginacion"
+          class="flex flex-wrap justify-center items-center gap-2 mt-6"
+          aria-label="Navegación de páginas"
+        >
+        </div>
+      </section>
+
+      <!-- Información de asesores -->
+      <aside aria-label="Información de contacto">
+        <AsesoresList asesores={ASESORES} />
+      </aside>
+
+      <!-- Información adicional para SEO -->
+      <section class="mt-8 max-w-none">
+        <div class="bg-white rounded-lg p-6 shadow-sm">
+          <h2 class="text-xl font-bold text-contrast-high mb-4">¿Por qué elegir RR Autos?</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm text-contrast-medium">
+            <div>
+              <h3 class="font-semibold mb-2 text-contrast-high">Garantía de Calidad</h3>
+              <p>
+                Todos nuestros vehículos pasan por una rigurosa inspección técnica para garantizar su calidad y
+                funcionamiento óptimo.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-2 text-contrast-high">Financiamiento Flexible</h3>
+              <p>Ofrecemos opciones de financiamiento adaptadas a tu presupuesto con las mejores tasas del mercado.</p>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-2 text-contrast-high">Asesoría Experta</h3>
+              <p>
+                Nuestro equipo de asesores especializados te ayudará a encontrar el vehículo que mejor se adapte a tus
+                necesidades.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-2 text-contrast-high">Trámites Simplificados</h3>
+              <p>
+                Nos encargamos de todos los trámites legales y de transferencia para que solo te preocupes por disfrutar
+                tu nuevo vehículo.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    import '../scripts/catalogoClient.ts'
+  </script>
+</Layout>

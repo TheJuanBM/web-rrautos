@@ -1,0 +1,38 @@
+---
+import type { Vehiculo } from '../types'
+import VehicleCard from './VehicleCard.astro'
+
+interface Props {
+  vehiculos: Vehiculo[]
+}
+
+const { vehiculos } = Astro.props
+---
+
+{
+  vehiculos.length === 0 ? (
+    <div
+      class="flex flex-col items-center justify-center text-contrast-medium gap-2 py-10"
+      role="status"
+      aria-live="polite"
+    >
+      <svg class="w-8 h-8" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path
+          fill="currentColor"
+          d="M20.92 8.78a2 2 0 0 0-1.64-.89h-2.72L14.54 5.2A3 3 0 0 0 12.07 4H8a3 3 0 0 0-2.82 2H3.72a2 2 0 0 0-1.9 2.62l1.72 6A3 3 0 0 0 6.44 17H17a3 3 0 0 0 2.83-2l1.62-4.33a2 2 0 0 0-.53-1.89ZM7 7a1 1 0 0 1 1-1h4.07a1 1 0 0 1 .76.35L14.41 8H6.28ZM17 15H6.44a1 1 0 0 1-1-.73L3.91 10h15.37Z"
+        />
+      </svg>
+      <p class="text-sm">No hay vehículos para mostrar con este filtro.</p>
+    </div>
+  ) : (
+    <section
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+      role="region"
+      aria-label="Lista de vehículos disponibles"
+    >
+      {vehiculos.map((vehiculo, index) => (
+        <VehicleCard vehiculo={vehiculo} priority={index < 4} />
+      ))}
+    </section>
+  )
+}

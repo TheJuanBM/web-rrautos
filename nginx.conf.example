@@ -1,0 +1,90 @@
+# Configuración de nginx para RR Autos
+# Copia este archivo a tu configuración de nginx
+
+server {
+    listen 80;
+    server_name tu-dominio.com;
+    root /path/to/rr/dist;
+    index index.html;
+
+    # Compresión Gzip
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_proxied expired no-cache no-store private auth;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/javascript
+        application/xml+rss
+        application/json
+        image/svg+xml
+        application/x-font-ttf
+        font/opentype;
+
+    # Compresión Brotli (si está disponible)
+    brotli on;
+    brotli_comp_level 6;
+    brotli_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/javascript
+        application/xml+rss
+        application/json
+        image/svg+xml
+        application/x-font-ttf
+        font/opentype;
+
+    # Headers de seguridad
+    add_header X-Content-Type-Options nosniff;
+    add_header X-Frame-Options DENY;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header Referrer-Policy "strict-origin-when-cross-origin";
+
+    # Caché para archivos estáticos
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header Vary Accept-Encoding;
+    }
+
+    # Caché para HTML
+    location ~* \.html?$ {
+        expires 1h;
+        add_header Cache-Control "public, must-revalidate";
+        add_header Vary Accept-Encoding;
+    }
+
+    # Service Worker sin caché
+    location = /sw.js {
+        expires off;
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        add_header Service-Worker-Allowed "/";
+    }
+
+    # Manifest
+    location = /manifest.json {
+        expires 1w;
+        add_header Content-Type "application/manifest+json";
+    }
+
+    # Intentar archivos y luego directorios, fallback a index.html
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Robots y sitemap
+    location = /robots.txt {
+        expires 1d;
+        add_header Content-Type "text/plain";
+    }
+
+    location = /sitemap.xml {
+        expires 1d;
+        add_header Content-Type "application/xml";
+    }
+}

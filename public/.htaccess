@@ -1,0 +1,98 @@
+# Compresión GZIP/Brotli
+<IfModule mod_deflate.c>
+    # Habilitar compresión para tipos de archivo específicos
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+</IfModule>
+
+# Compresión Brotli (si está disponible)
+<IfModule mod_brotli.c>
+    BrotliCompressionQuality 6
+    BrotliCompressionWindow 22
+    BrotliFilterByType text/plain text/css text/html text/javascript application/javascript application/json image/svg+xml application/x-font-ttf font/opentype
+</IfModule>
+
+# Headers de caché optimizados
+<IfModule mod_expires.c>
+    ExpiresActive on
+
+    # Imágenes
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+
+    # CSS y JavaScript
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+
+    # Fuentes
+    ExpiresByType application/x-font-ttf "access plus 1 year"
+    ExpiresByType font/opentype "access plus 1 year"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+
+    # HTML (caché más corto para contenido dinámico)
+    ExpiresByType text/html "access plus 1 hour"
+
+    # Manifests y archivos de configuración
+    ExpiresByType application/manifest+json "access plus 1 week"
+    ExpiresByType text/cache-manifest "access plus 0 seconds"
+</IfModule>
+
+# Headers adicionales para performance y seguridad
+<IfModule mod_headers.c>
+    # Compresión
+    Header append Vary Accept-Encoding
+
+    # Seguridad
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Performance hints
+    Header set X-UA-Compatible "IE=edge"
+
+    # Service Worker
+    <FilesMatch "sw\.js$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Service-Worker-Allowed "/"
+    </FilesMatch>
+
+    # Manifest
+    <FilesMatch "manifest\.json$">
+        Header set Content-Type "application/manifest+json"
+    </FilesMatch>
+</IfModule>
+
+# Optimización adicional
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Precomprimir archivos estáticos si existen versiones .gz
+    RewriteCond %{HTTP:Accept-Encoding} gzip
+    RewriteCond %{REQUEST_FILENAME}\.gz -f
+    RewriteRule ^(.*)$ $1.gz [QSA,L]
+
+    # Headers para archivos precomprimidos
+    RewriteRule \.css\.gz$ - [T=text/css,E=no-gzip:1,E=no-brotli:1]
+    RewriteRule \.js\.gz$ - [T=text/javascript,E=no-gzip:1,E=no-brotli:1]
+    RewriteRule \.html\.gz$ - [T=text/html,E=no-gzip:1,E=no-brotli:1]
+</IfModule>

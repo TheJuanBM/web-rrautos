@@ -1,0 +1,25 @@
+---
+import type { Asesor } from '../types'
+
+interface Props {
+  asesores: Asesor[]
+}
+
+const { asesores } = Astro.props
+---
+
+<div class="bg-white border border-gray-200 rounded-xl p-4 mt-6">
+  <h3 class="text-base font-extrabold text-contrast-high mb-3 text-center">Asesores</h3>
+  <ul class="flex gap-3 flex-wrap justify-center">
+    {
+      asesores.map(asesor => (
+        <li class="flex items-center gap-2 text-sm font-bold text-contrast-high">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-sm font-bold text-white">
+            {asesor.inicial}
+          </span>
+          {asesor.nombre}
+        </li>
+      ))
+    }
+  </ul>
+</div>
