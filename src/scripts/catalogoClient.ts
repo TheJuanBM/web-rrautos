@@ -16,7 +16,7 @@ interface CatalogoState {
   currentPage: number
   currentMarca: string
   vehiculosLista: HTMLElement | null
-  paginacionDiv: HTMLElement | null
+  paginacionDivs: HTMLElement[]
   marcaSelect: HTMLSelectElement | null
 }
 
@@ -29,7 +29,7 @@ class CatalogoClient {
       currentPage: 1,
       currentMarca: '',
       vehiculosLista: document.getElementById('vehiculos-lista'),
-      paginacionDiv: document.getElementById('paginacion'),
+      paginacionDivs: Array.from(document.querySelectorAll<HTMLElement>('[data-pagination-anchor]')),
       marcaSelect: document.getElementById('marca-select') as HTMLSelectElement,
     }
   }
@@ -176,12 +176,12 @@ class CatalogoClient {
   }
 
   private renderPaginacion(total: number, page: number): void {
-    if (!this.state.paginacionDiv) return
+    if (!this.state.paginacionDivs || this.state.paginacionDivs.length === 0) return
 
     const totalPages = calculateTotalPages(total, API_CONFIG.PAGE_SIZE)
 
     if (totalPages <= 1) {
-      this.state.paginacionDiv.innerHTML = ''
+      this.state.paginacionDivs.forEach(div => (div.innerHTML = ''))
       return
     }
 
@@ -205,7 +205,7 @@ class CatalogoClient {
       })
       .join('')
 
-    this.state.paginacionDiv.innerHTML = `
+    const paginationHTML = `
       <nav class="pagination" role="navigation" aria-label="Paginación de resultados">
         <button class="pagination__control${prevDisabled ? ' is-disabled' : ''}" data-act="prev" ${prevDisabled ? 'disabled' : ''} data-pagination="true" aria-label="Página anterior">
           <span aria-hidden="true">‹</span>
@@ -216,46 +216,53 @@ class CatalogoClient {
         </button>
       </nav>
     `
+    this.state.paginacionDivs.forEach(div => {
+      div.innerHTML = paginationHTML
+    })
+
     this.attachPaginationEvents(totalPages)
   }
 
   private attachPaginationEvents(totalPages: number): void {
-    if (!this.state.paginacionDiv) return
+    if (!this.state.paginacionDivs || this.state.paginacionDivs.length === 0) return
 
-    // Eventos para botones de página específica
-    this.state.paginacionDiv.querySelectorAll('[data-page]').forEach(btn => {
-      const pageAttr = btn.getAttribute('data-page')
-      if (pageAttr) {
-        btn.addEventListener('click', () => {
-          const newPage = parseInt(pageAttr)
-          if (!isNaN(newPage)) {
-            this.state.currentPage = newPage
-            this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
-          }
-        })
-      }
-    })
+    const bindEvents = (container: HTMLElement) => {
+      container.querySelectorAll('[data-page]').forEach(btn => {
+        const pageAttr = btn.getAttribute('data-page')
+        if (pageAttr) {
+          btn.addEventListener('click', () => {
+            const newPage = parseInt(pageAttr)
+            if (!isNaN(newPage)) {
+              this.state.currentPage = newPage
+              this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
+            }
+          })
+        }
+      })
 
-    // Botón anterior
-    const prevBtn = this.state.paginacionDiv.querySelector('[data-act="prev"]')
-    prevBtn?.addEventListener('click', () => {
-      if (this.state.currentPage > 1) {
-        this.state.currentPage--
-        this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
-      }
-    })
+      const prevBtn = container.querySelector('[data-act="prev"]')
+      prevBtn?.addEventListener('click', () => {
+        if (this.state.currentPage > 1) {
+          this.state.currentPage--
+          this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
+        }
+      })
 
-    // Botón siguiente
-    const nextBtn = this.state.paginacionDiv.querySelector('[data-act="next"]')
-    nextBtn?.addEventListener('click', () => {
-      if (this.state.currentPage < totalPages) {
-        this.state.currentPage++
-        this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
-      }
-    })
+      const nextBtn = container.querySelector('[data-act="next"]')
+      nextBtn?.addEventListener('click', () => {
+        if (this.state.currentPage < totalPages) {
+          this.state.currentPage++
+          this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
+        }
+      })
+    }
+
+    this.state.paginacionDivs.forEach(bindEvents)
   }
 
   public init(): void {
+    this.state.paginacionDivs = Array.from(document.querySelectorAll<HTMLElement>('[data-pagination-anchor]'))
+
     // Event listener para selector de marcas
     this.state.marcaSelect?.addEventListener('change', e => {
       const target = e.target as HTMLSelectElement
@@ -319,9 +326,12 @@ class CatalogoClient {
   }
 
   private focusBoundaryButton(position: 'first' | 'last'): void {
-    if (!this.state.paginacionDiv) return
+    if (!this.state.paginacionDivs || this.state.paginacionDivs.length === 0) return
 
-    const buttons = Array.from(this.state.paginacionDiv.querySelectorAll('[data-page]')) as HTMLButtonElement[]
+    const primaryContainer = this.state.paginacionDivs[0]
+    if (!primaryContainer) return
+
+    const buttons = Array.from(primaryContainer.querySelectorAll<HTMLButtonElement>('[data-page]'))
     if (buttons.length === 0) return
 
     const target = position === 'first' ? buttons[0] : buttons[buttons.length - 1]

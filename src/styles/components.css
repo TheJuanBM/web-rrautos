@@ -170,6 +170,10 @@
     var(--color-gray-250);
 }
 
+.vehicle-card__title {
+  font-weight: 600;
+}
+
 @media (min-width: 768px) {
   .vehicle-card__media {
     aspect-ratio: 16 / 11;

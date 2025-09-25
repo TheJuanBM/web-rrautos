@@ -1,8 +1,7 @@
 ---
 const navLinks = [
-  { href: '/', label: 'Inicio' },
-  { href: '/catalogo', label: 'Catálogo' },
-  { href: 'https://wa.me/51987654321', label: 'WhatsApp', external: true },
+  { href: '/', label: 'Inicio', external: false },
+  { href: '/catalogo', label: 'Catálogo', external: false },
 ]
 
 const currentPath = Astro.url.pathname
@@ -12,8 +11,7 @@ const currentPath = Astro.url.pathname
   <div class="site-header__background" aria-hidden="true"></div>
   <div class="site-header__inner">
     <a class="site-header__brand" href="/" aria-label="RR Autos - Inicio">
-      <span class="site-header__brand-mark">RR</span>
-      <span class="site-header__brand-text">Autos</span>
+      <img src="/logo/logo.svg" alt="Logo de RR Autos" width="50" height="50" loading="lazy" decoding="async" />
     </a>
 
     <button
@@ -56,7 +54,7 @@ const currentPath = Astro.url.pathname
     </nav>
 
     <div class="site-header__actions">
-      <a class="site-header__cta" href="https://calendly.com/rr-autos/asesoria" rel="noopener">Agendar asesoría</a>
+      <a class="site-header__cta" href="https://wa.me/51987654321" rel="noopener">Agendar asesoría</a>
     </div>
   </div>
   <div class="site-header__overlay" data-nav-overlay hidden></div>
@@ -122,7 +120,8 @@ const currentPath = Astro.url.pathname
     z-index: 50;
     display: flex;
     justify-content: center;
-    padding: 0.85rem 0;
+    height: 85px;
+    background-color: rgba(var(--color-gray-900-rgb), 0.88);
     backdrop-filter: blur(28px) saturate(140%);
     -webkit-backdrop-filter: blur(28px) saturate(140%);
   }
@@ -134,13 +133,13 @@ const currentPath = Astro.url.pathname
     border-bottom: 1px solid rgba(var(--color-gray-400-rgb), 0.28);
     background:
       linear-gradient(
-        120deg,
-        rgba(var(--color-gray-900-rgb), 0.78),
-        rgba(var(--color-primary-contrast-rgb), 0.45) 38%,
-        rgba(var(--color-sky-rgb), 0.38) 72%
+        125deg,
+        rgba(var(--color-gray-900-rgb), 0.95),
+        rgba(var(--color-primary-contrast-rgb), 0.6) 34%,
+        rgba(var(--color-sky-rgb), 0.42) 68%
       ),
-      rgba(var(--color-gray-900-rgb), 0.45);
-    opacity: 0.95;
+      rgba(var(--color-gray-900-rgb), 0.92);
+    opacity: 1;
     pointer-events: none;
   }
 
@@ -148,11 +147,11 @@ const currentPath = Astro.url.pathname
     position: absolute;
     inset: auto 0 -35% 0;
     background:
-      radial-gradient(circle at top left, rgba(var(--color-primary-rgb), 0.55), transparent 60%),
-      radial-gradient(circle at top right, rgba(var(--color-sky-rgb), 0.45), transparent 60%);
+      radial-gradient(circle at top left, rgba(var(--color-primary-rgb), 0.32), transparent 60%),
+      radial-gradient(circle at top right, rgba(var(--color-sky-rgb), 0.28), transparent 60%);
     pointer-events: none;
-    opacity: 0.85;
-    filter: blur(18px);
+    opacity: 0.6;
+    filter: blur(24px);
   }
 
   .site-header__inner {
@@ -170,7 +169,7 @@ const currentPath = Astro.url.pathname
     align-items: center;
     gap: 0.6rem;
     text-decoration: none;
-    color: var(--color-gray-80);
+    color: rgba(var(--color-white-rgb), 0.95);
     font-weight: 700;
     letter-spacing: 0.015em;
     font-size: 1rem;
@@ -200,7 +199,7 @@ const currentPath = Astro.url.pathname
     font-size: 1.05rem;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: var(--color-gray-250);
+    color: rgba(var(--color-white-rgb), 0.82);
   }
 
   .site-header__nav ul {
@@ -215,7 +214,7 @@ const currentPath = Astro.url.pathname
   .site-header__nav a {
     font-size: 0.95rem;
     font-weight: 500;
-    color: rgba(var(--color-gray-250-rgb), 0.92);
+    color: rgba(var(--color-white-rgb), 0.78);
     text-decoration: none;
     position: relative;
     padding-bottom: 0.2rem;
@@ -233,8 +232,8 @@ const currentPath = Astro.url.pathname
     width: 100%;
     height: 2px;
     background:
-      linear-gradient(90deg, rgba(var(--color-gray-450-rgb), 0.4), rgba(var(--color-primary-glow-rgb), 0.85)),
-      linear-gradient(90deg, rgba(var(--color-gray-250-rgb), 0.25), transparent);
+      linear-gradient(90deg, rgba(var(--color-primary-glow-rgb), 0.75), rgba(var(--color-sky-bright-rgb), 0.85)),
+      linear-gradient(90deg, rgba(var(--color-white-rgb), 0.2), transparent);
     border-radius: 999px;
     transform: scaleX(0);
     transform-origin: left;
@@ -242,8 +241,8 @@ const currentPath = Astro.url.pathname
   }
 
   .site-header__nav a:is(:hover, :focus-visible) {
-    color: var(--color-gray-80);
-    text-shadow: 0 0 12px rgba(var(--color-gray-480-rgb), 0.65);
+    color: rgba(var(--color-white-rgb), 0.95);
+    text-shadow: 0 0 18px rgba(var(--color-primary-glow-rgb), 0.55);
   }
 
   .site-header__nav a:is(:hover, :focus-visible)::after {
@@ -255,7 +254,7 @@ const currentPath = Astro.url.pathname
   }
 
   .site-header__nav a.is-active {
-    color: var(--color-gray-80);
+    color: rgba(var(--color-white-rgb), 0.95);
   }
 
   .site-header__nav a.is-external::after {
@@ -307,7 +306,7 @@ const currentPath = Astro.url.pathname
   .site-header__cta:hover,
   .site-header__cta:focus-visible {
     transform: translateY(-1px);
-    box-shadow: 0 18px 45px -18px rgba(var(--color-gray-900-rgb), 0.6);
+    box-shadow: 0 18px 45px -18px rgba(var(--color-primary-rgb), 0.7);
   }
 
   @media (max-width: 900px) {
