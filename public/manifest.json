@@ -33,13 +33,13 @@
   ],
   "screenshots": [
     {
-      "src": "/screenshot-mobile.png",
+      // "src": "/screenshot-mobile.png",
       "sizes": "640x1136",
       "type": "image/png",
       "form_factor": "narrow"
     },
     {
-      "src": "/screenshot-desktop.png",
+      // "src": "/screenshot-desktop.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"

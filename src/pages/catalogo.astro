@@ -28,71 +28,92 @@ const seoData = {
 ---
 
 <Layout {...seoData}>
-  <div class="min-h-screen bg-gray-50">
-    <div class="max-w-6xl mx-auto px-4 py-6">
-      <!-- Header principal -->
-      <header class="mb-6">
-        <h1 class="text-3xl font-extrabold mb-2">Catálogo de Vehículos Usados</h1>
-        <p class="max-w-2xl">
-          Encuentra el vehículo perfecto para ti. Explora nuestra selección de autos usados con garantía, filtra por
-          marca y recibe asesoría personalizada de nuestros expertos.
-        </p>
-      </header>
-
-      <!-- Filtros -->
-      <section aria-label="Filtros de búsqueda">
-        <BrandSelector marcas={marcas} />
+  <div class="catalog">
+    <div class="catalog__inner">
+      <section class="catalog__filters" aria-label="Filtros de búsqueda">
+        <div class="filters-card">
+          <header>
+            <p class="filters-eyebrow">Filtrar resultados</p>
+            <h1 id="catalog-title">Encuentra la marca ideal</h1>
+            <p>
+              El inventario se actualiza a diario con unidades exclusivas. Empieza eligiendo la marca que prefieres y
+              descubre las opciones disponibles.
+            </p>
+          </header>
+          <div class="filters-control">
+            <BrandSelector marcas={marcas} />
+          </div>
+          <footer>
+            <p>¿No encuentras la marca que buscas? Escríbenos y la rastreamos por ti.</p>
+            <a class="filters-link" href="https://wa.me/51987654321" rel="noopener">Solicitar búsqueda personalizada</a>
+          </footer>
+        </div>
       </section>
 
-      <!-- Resultados -->
-      <section aria-label="Resultados de búsqueda" class="mb-8">
-        <div id="vehiculos-lista" class="min-h-[400px]" aria-live="polite" aria-label="Lista de vehículos">
+      <section class="catalog__results" aria-label="Resultados de búsqueda">
+        <header class="results-header">
+          <div>
+            <p class="results-eyebrow">Inventario disponible</p>
+            <h2>Vehículos listos para entregar</h2>
+          </div>
+          <p>
+            Los resultados se muestran automáticamente según el filtro seleccionado. Nuestros asesores validan la
+            disponibilidad de cada unidad en tiempo real.
+          </p>
+        </header>
+
+        <div id="vehiculos-lista" class="results-grid" aria-live="polite" aria-label="Lista de vehículos">
           <VehicleSkeleton />
         </div>
 
-        <div
-          id="paginacion"
-          class="flex flex-wrap justify-center items-center gap-2 mt-6"
-          aria-label="Navegación de páginas"
-        >
+        <div id="paginacion" class="results-pagination" aria-label="Navegación de páginas"></div>
+      </section>
+
+      <AsesoresList asesores={ASESORES} />
+
+      <section class="catalog__highlights" aria-labelledby="highlights-title">
+        <header>
+          <p class="section-eyebrow">Lo que nos diferencia</p>
+          <p>
+            Desde la inspección hasta la entrega, cuidamos cada detalle para que disfrutes tu auto desde el primer día.
+            Sin trámites extensos ni sorpresas ocultas.
+          </p>
+        </header>
+
+        <div class="highlights-grid">
+          <article class="highlight">
+            <h3>Stock curado</h3>
+            <p>Seleccionamos solo unidades con historial claro, kilometraje real y mantenimiento documentado.</p>
+          </article>
+          <article class="highlight">
+            <h3>Entrega express</h3>
+            <p>
+              Gestionamos matrícula, SOAT y transferencia para que recibas tu auto listo para circular en menos de 72
+              horas.
+            </p>
+          </article>
+          <article class="highlight">
+            <h3>Postventa dedicada</h3>
+            <p>Accede a talleres aliados, recordatorios de mantenimiento y soporte continuo después de la compra.</p>
+          </article>
         </div>
       </section>
 
-      <!-- Información de asesores -->
-      <aside aria-label="Información de contacto">
-        <AsesoresList asesores={ASESORES} />
-      </aside>
-
-      <!-- Información adicional para SEO -->
-      <section class="mt-8 max-w-none">
-        <div class="bg-white rounded-lg p-6 shadow-sm">
-          <h2 class="text-xl font-bold text-contrast-high mb-4">¿Por qué elegir RR Autos?</h2>
-          <div class="grid md:grid-cols-2 gap-6 text-sm text-contrast-medium">
-            <div>
-              <h3 class="font-semibold mb-2 text-contrast-high">Garantía de Calidad</h3>
-              <p>
-                Todos nuestros vehículos pasan por una rigurosa inspección técnica para garantizar su calidad y
-                funcionamiento óptimo.
-              </p>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-2 text-contrast-high">Financiamiento Flexible</h3>
-              <p>Ofrecemos opciones de financiamiento adaptadas a tu presupuesto con las mejores tasas del mercado.</p>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-2 text-contrast-high">Asesoría Experta</h3>
-              <p>
-                Nuestro equipo de asesores especializados te ayudará a encontrar el vehículo que mejor se adapte a tus
-                necesidades.
-              </p>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-2 text-contrast-high">Trámites Simplificados</h3>
-              <p>
-                Nos encargamos de todos los trámites legales y de transferencia para que solo te preocupes por disfrutar
-                tu nuevo vehículo.
-              </p>
-            </div>
+      <section class="catalog__cta" aria-labelledby="cta-title">
+        <div class="cta-card">
+          <div class="cta-card__content">
+            <p class="section-eyebrow">Reserva sin compromiso</p>
+            <h2 id="cta-title">Agenda un test drive y asegura tu auto ideal</h2>
+            <p>
+              Coordina tu visita presencial o virtual. Te mostramos el estado real de la unidad, simulamos
+              financiamiento y bloqueamos el vehículo mientras firmas.
+            </p>
+          </div>
+          <div class="cta-card__actions">
+            <a class="cta-btn cta-btn--primary" href="https://calendly.com/rr-autos/asesoria" rel="noopener">
+              Reservar asesoría
+            </a>
+            <a class="cta-btn cta-btn--ghost" href="tel:+5112345678">Llamar ahora</a>
           </div>
         </div>
       </section>
@@ -102,4 +123,541 @@ const seoData = {
   <script>
     import '../scripts/catalogoClient.ts'
   </script>
+
+  <style>
+    :global(body) {
+      background: var(--color-gray-80);
+    }
+
+    .catalog {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(var(--color-primary-rgb), 0.12), transparent 55%),
+        linear-gradient(180deg, var(--color-white) 0%, var(--color-indigo-soft) 55%, var(--color-gray-80) 100%);
+      padding: clamp(3rem, 7vw, 4.5rem) 0 clamp(4rem, 8vw, 5.5rem);
+    }
+
+    .catalog__inner {
+      width: min(1160px, calc(100% - 2.5rem));
+      margin: 0 auto;
+      display: grid;
+      gap: clamp(2.5rem, 5vw, 3.5rem);
+    }
+
+    .section-eyebrow,
+    .filters-eyebrow,
+    .results-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      color: var(--color-gray-900);
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      line-height: 1.05;
+    }
+
+    .catalog__results p,
+    .catalog__filters p,
+    .catalog__highlights p,
+    .catalog__cta p {
+      margin: 0;
+      color: var(--color-gray-600);
+      line-height: 1.7;
+    }
+
+    .catalog__filters .filters-card {
+      background: rgba(var(--color-white-rgb), 0.95);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(var(--color-gray-400-rgb), 0.25);
+      padding: clamp(1.25rem, 3.5vw, 2rem);
+      display: grid;
+      gap: 1.25rem;
+      box-shadow: 0 24px 48px -32px rgba(var(--color-primary-rgb), 0.4);
+    }
+
+    .filters-card header {
+      display: grid;
+      gap: 0.55rem;
+      max-width: 34rem;
+    }
+
+    .filters-card h2 {
+      font-size: clamp(1.6rem, 3vw, 2rem);
+    }
+
+    .filters-control {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .filters-card footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.92rem;
+      color: var(--color-gray-600);
+    }
+
+    .filters-link {
+      color: var(--color-primary-hover);
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .filters-link::after {
+      content: '↗';
+      font-size: 0.85rem;
+    }
+
+    .catalog__results {
+      display: grid;
+      gap: 1.75rem;
+      padding: clamp(1.8rem, 4vw, 2.4rem);
+      border-radius: 1.75rem;
+      background: rgba(var(--color-white-rgb), 0.94);
+      border: 1px solid rgba(var(--color-gray-400-rgb), 0.3);
+      box-shadow: 0 24px 55px -38px rgba(var(--color-gray-900-rgb), 0.6);
+    }
+
+    .results-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .results-header h2 {
+      font-size: clamp(1.6rem, 3vw, 2rem);
+    }
+
+    .results-grid {
+      min-height: 325px;
+    }
+
+    :global(.results-pagination) {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 18px 40px -32px rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(8px);
+    }
+
+    :global(.pagination) {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 9999px;
+      background: transparent;
+    }
+
+    :global(.pagination__control),
+    :global(.pagination__item) {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.45rem;
+      height: 2.45rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(var(--color-gray-400-rgb), 0.35);
+      background: rgba(var(--color-white-rgb), 0.92);
+      color: var(--color-gray-700);
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow: 0 8px 18px -16px rgba(var(--color-gray-900-rgb), 0.45);
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease;
+      cursor: pointer;
+    }
+
+    :global(.pagination__control[data-act='prev']),
+    :global(.pagination__control[data-act='next']) {
+      width: 2.65rem;
+      height: 2.65rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    :global(.pagination__item.is-active) {
+      background: linear-gradient(135deg, var(--color-indigo), var(--color-indigo-dark));
+      border-color: transparent;
+      color: var(--color-white);
+      box-shadow: 0 12px 26px -18px rgba(var(--color-indigo-dark-rgb), 0.75);
+      transform: translateY(-2px);
+      cursor: not-allowed;
+    }
+
+    :global(.pagination__item:not(.is-active):hover),
+    :global(.pagination__control:not(.is-disabled):hover) {
+      background: rgba(var(--color-gray-250-rgb), 0.75);
+      border-color: rgba(var(--color-indigo-rgb), 0.35);
+      color: var(--color-primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px -16px rgba(var(--color-gray-900-rgb), 0.45);
+    }
+
+    :global(.pagination__control.is-disabled) {
+      opacity: 0.4;
+      cursor: not-allowed;
+      color: var(--color-gray-400);
+      background: rgba(var(--color-gray-80-rgb), 0.85);
+      border-color: rgba(var(--color-gray-350-rgb), 0.5);
+      box-shadow: none;
+    }
+
+    :global(.pagination__ellipsis) {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      color: rgba(var(--color-gray-500-rgb), 0.65);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    :global(.pagination__item:focus-visible),
+    :global(.pagination__control:focus-visible) {
+      outline: 2px solid rgba(var(--color-indigo-rgb), 0.5);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 640px) {
+      :global(.pagination) {
+        gap: 0.25rem;
+      }
+
+      :global(.pagination__control),
+      :global(.pagination__item) {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
+      }
+
+      :global(.pagination__control[data-act='prev']),
+      :global(.pagination__control[data-act='next']) {
+        width: 2.1rem;
+        height: 2.1rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :global(.pagination) {
+        gap: 0.2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 100%;
+      }
+
+      :global(.pagination__control),
+      :global(.pagination__item) {
+        width: 1.85rem;
+        height: 1.85rem;
+        font-size: 0.75rem;
+      }
+
+      :global(.pagination__control[data-act='prev']),
+      :global(.pagination__control[data-act='next']) {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.9rem;
+      }
+
+      :global(.pagination__item.is-active),
+      :global(.pagination__item:not(.is-active):hover),
+      :global(.pagination__control:not(.is-disabled):hover) {
+        transform: none;
+        box-shadow: 0 6px 14px -14px rgba(15, 23, 42, 0.4);
+      }
+
+      :global(.pagination__ellipsis) {
+        width: 1.3rem;
+      }
+    }
+
+    .catalog__highlights {
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .catalog__highlights header {
+      display: grid;
+      gap: 0.75rem;
+      max-width: 40rem;
+    }
+
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .highlight {
+      background: rgba(255, 255, 255, 0.93);
+      border-radius: 1.25rem;
+      border: 1px solid rgba(var(--color-gray-400-rgb), 0.28);
+      padding: 1.6rem;
+      box-shadow: 0 22px 45px -36px rgba(var(--color-primary-shadow-rgb), 0.45);
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .highlight h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--color-gray-900);
+    }
+
+    .catalog__cta .cta-card {
+      background: linear-gradient(140deg, var(--color-primary-hover), var(--color-primary-contrast));
+      color: var(--color-white);
+      border-radius: 1.75rem;
+      padding: clamp(2rem, 4.5vw, 3rem);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1.5rem;
+      box-shadow: 0 35px 65px -42px rgba(var(--color-primary-shadow-rgb), 0.8);
+    }
+
+    .cta-card__content {
+      display: grid;
+      gap: 0.75rem;
+      max-width: 32rem;
+    }
+
+    .cta-card__content h2 {
+      color: var(--color-white);
+    }
+
+    .cta-card__content p {
+      color: rgba(var(--color-gray-250-rgb), 0.85);
+    }
+
+    .cta-card__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 9999px;
+      padding: 0.9rem 1.6rem;
+      font-weight: 600;
+      font-size: 0.98rem;
+      text-decoration: none;
+      transition:
+        transform 150ms ease,
+        box-shadow 150ms ease,
+        background-color 150ms ease,
+        color 150ms ease;
+    }
+
+    .cta-btn--primary {
+      background: var(--color-white);
+      color: var(--color-primary-hover);
+      box-shadow: 0 15px 40px -18px rgba(var(--color-white-rgb), 0.9);
+    }
+
+    .cta-btn--primary:hover,
+    .cta-btn--primary:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 45px -16px rgba(var(--color-white-rgb), 0.85);
+    }
+
+    .cta-btn--ghost {
+      border: 1px solid rgba(var(--color-gray-250-rgb), 0.4);
+      color: var(--color-gray-250);
+    }
+
+    .cta-btn--ghost:hover,
+    .cta-btn--ghost:focus-visible {
+      background: rgba(var(--color-gray-250-rgb), 0.18);
+    }
+
+    @media (max-width: 768px) {
+      .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .catalog {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+
+      .filters-card footer {
+        flex-direction: column;
+      }
+
+      .cta-card__actions {
+        width: 100%;
+      }
+
+      .cta-btn {
+        width: 100%;
+      }
+
+      .catalog__stats div {
+        padding: 0.85rem 1rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .catalog {
+        padding-top: clamp(2rem, 6vw, 2.6rem);
+      }
+
+      .catalog__filters .filters-card,
+      .catalog__results,
+      .catalog__cta .cta-card {
+        padding: clamp(1.2rem, 4vw, 1.7rem);
+      }
+
+      .filters-card header {
+        gap: 0.45rem;
+      }
+
+      .filters-card footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .filters-link {
+        width: auto;
+        justify-content: flex-start;
+      }
+
+      .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .catalog {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .catalog__inner {
+        width: min(1160px, calc(100% - 0.25rem));
+      }
+
+      .catalog__filters .filters-card {
+        border-radius: 1.15rem;
+        gap: 0.9rem;
+      }
+
+      .filters-card h1,
+      .filters-card h2 {
+        font-size: clamp(1.6rem, 6vw, 2rem);
+      }
+
+      .filters-card footer {
+        gap: 0.6rem;
+      }
+
+      .catalog__results {
+        padding: clamp(1.2rem, 6vw, 1.6rem);
+        border-radius: 1.35rem;
+      }
+
+      .results-grid {
+        min-height: 320px;
+      }
+
+      .catalog__highlights header,
+      .cta-card__content {
+        gap: 0.55rem;
+      }
+
+      .cta-card__actions {
+        width: 100%;
+        gap: 0.6rem;
+      }
+
+      .cta-card__actions .cta-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .catalog {
+        padding-top: clamp(1.75rem, 7vw, 2.1rem);
+      }
+
+      .catalog__filters .filters-card {
+        padding: clamp(1.05rem, 6vw, 1.4rem);
+        gap: 0.75rem;
+      }
+
+      .filters-card h1,
+      .filters-card h2 {
+        font-size: clamp(1.4rem, 7vw, 1.85rem);
+      }
+
+      .filters-card footer p {
+        font-size: 0.9rem;
+      }
+
+      .filters-link {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .catalog__results {
+        padding: clamp(1rem, 6vw, 1.4rem);
+      }
+
+      .catalog__cta .cta-card {
+        padding: clamp(1.1rem, 6vw, 1.5rem);
+        border-radius: 1.25rem;
+      }
+
+      .cta-card__actions {
+        gap: 0.5rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-btn,
+      .catalog-card,
+      .highlight,
+      .catalog__results,
+      .filters-card {
+        transition: none;
+        box-shadow: none;
+      }
+    }
+  </style>
 </Layout>

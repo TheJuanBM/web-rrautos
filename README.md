@@ -1,24 +1,26 @@
 # 🚗 RR Autos - Catálogo de Vehículos
 
-Una aplicación web moderna construida con **Astro** para mostrar el catálogo de vehículos usados de RR Autos.
+Aplicación web construida con **Astro** para mostrar el catálogo de vehículos usados de RR Autos con foco en
+accesibilidad, rendimiento y SEO.
 
 ## ✨ Características
 
 - 🏎️ **Catálogo dinámico** de vehículos con filtrado por marca
 - 📱 **Diseño responsive** y mobile-first
-- ♿ **Accesibilidad completa** (WCAG AA/AAA)
-- 🚀 **Optimizada para rendimiento** (PWA, Service Worker)
-- 🔍 **SEO optimizado** (Schema.org, Open Graph)
-- 🎨 **UI moderna** con Tailwind CSS
-- 📊 **Paginación inteligente** con navegación por teclado
+- ♿ **Accesibilidad completa** (WCAG AA/AAA) y navegación por teclado
+- 🔍 **SEO centralizado** con metadatos por defecto y Schema.org/Open Graph
+- 🎨 **UI moderna** con Tailwind CSS y componentes reutilizables
+- ⚙️ **Utilidades de cliente** para sanitizar datos, optimizar imágenes y generar paginaciones
+
+> Nota: el proyecto incluye un `sw.js` opcional, pero el registro del Service Worker está desactivado por defecto para
+> priorizar una experiencia sin sorpresas. Puedes activarlo manualmente si necesitas funcionalidad offline.
 
 ## 🛠️ Tecnologías
 
 - **[Astro](https://astro.build/)** - Framework web moderno
 - **[Tailwind CSS](https://tailwindcss.com/)** - Framework de CSS utility-first
 - **[TypeScript](https://www.typescriptlang.org/)** - Tipado estático
-- **PWA** - Progressive Web App
-- **Service Worker** - Caching y funcionalidad offline
+- **Astro View Transitions** deshabilitadas (apuesta por SSR limpio)
 
 ## 🚀 Inicio Rápido
 
@@ -37,7 +39,7 @@ cd rr
 # Instalar dependencias
 pnpm install
 
-# Iniciar servidor de desarrollo
+# Iniciar el servidor de desarrollo
 pnpm dev
 ```
 
@@ -59,13 +61,10 @@ El sitio estará disponible en `http://localhost:4321`
 ```
 src/
 ├── components/          # Componentes UI reutilizables
-│   ├── VehicleCard.astro      # Tarjeta de vehículo
-│   ├── VehicleList.astro      # Lista/grid de vehículos
 │   ├── BrandSelector.astro    # Selector de marcas
-│   ├── Pagination.astro       # Componente de paginación
-│   ├── AsesoresList.astro     # Lista de asesores
-│   ├── OptimizedImage.astro   # Imágenes optimizadas
-│   ├── VehicleSkeleton.astro  # Loading skeleton
+│   ├── AsesoresList.astro     # Listado de asesores
+│   ├── OptimizedImage.astro   # Utilidad opcional para imágenes
+│   ├── VehicleSkeleton.astro  # Loading skeleton reutilizable
 │   └── SEOHead.astro          # Meta tags y SEO
 ├── layouts/             # Layouts de página
 │   └── Layout.astro           # Layout principal
@@ -73,7 +72,7 @@ src/
 │   ├── index.astro            # Página de inicio
 │   └── catalogo.astro         # Página del catálogo
 ├── scripts/             # Scripts del cliente
-│   └── catalogoClient.ts      # Lógica del catálogo
+│   └── catalogoClient.ts       # Lógica de filtrado y paginación
 ├── services/            # Servicios API
 │   └── api.ts                 # Cliente API
 ├── styles/              # Estilos globales
@@ -105,17 +104,17 @@ src/
 
 ### Performance 🚀
 
-- Service Worker con estrategias de cache
-- Imágenes responsive y optimizadas
-- Critical CSS inline
-- Bundle splitting automático
+- Imágenes responsive generadas dinámicamente
+- Critical CSS inline desde el layout base
+- Llamadas fetch encapsuladas con manejo de errores
+- Paginación y skeletons con rendering diferido
 
 ### SEO 🔍
 
-- Meta tags dinámicos por página
-- Schema.org structured data
-- Open Graph para redes sociales
-- Sitemap y robots.txt incluidos
+- Metadatos por defecto gestionados desde `Layout.astro`
+- Schema.org structured data para `AutoDealer`
+- Open Graph y Twitter Cards listos para compartir
+- Sitemap, robots y manifest listos para producción
 
 ## 🔧 Configuración
 
@@ -130,18 +129,15 @@ API_BASE_URL=https://api.rrautos.com
 
 ### Personalización
 
-- **Colores**: Modifica `src/styles/global.css`
-- **Configuración API**: Edita `src/config/constants.ts`
-- **Metadatos SEO**: Personaliza `src/components/SEOHead.astro`
+- **Colores**: actualiza `src/styles/global.css`
+- **Configuración API**: edita `src/config/constants.ts`
+- **Metadatos SEO**: ajusta `src/components/SEOHead.astro` o pasa props al layout
 
-## 📱 PWA (Progressive Web App)
+## 📱 Assets instalables
 
-El sitio incluye:
-
-- ✅ Web App Manifest
-- ✅ Service Worker para cache offline
-- ✅ Installable en dispositivos móviles
-- ✅ Iconos optimizados para todas las plataformas
+- Manifest y favicon listos para agregar la aplicación a pantalla de inicio
+- Service Worker opcional (`public/sw.js`) pendiente de registro manual si se desea funcionalidad offline
+- Íconos optimizados para diferentes dispositivos
 
 ## 🚢 Despliegue
 
@@ -168,26 +164,9 @@ Características incluidas:
 
 ## 📊 Optimizaciones Implementadas
 
-### Performance
-
-- **Lighthouse Score**: 95-100/100
-- **LCP**: < 2.5s
-- **FID**: < 100ms
-- **CLS**: < 0.1
-
-### Accesibilidad
-
-- **WCAG AA/AAA** compliant
-- **Lighthouse A11y**: 95-100/100
-- **Navegación por teclado** completa
-- **Screen readers** compatible
-
-### SEO
-
-- **Meta tags** completos
-- **Schema.org** structured data
-- **Open Graph** optimization
-- **Core Web Vitals** optimizados
+- **Accesibilidad**: componentes con `aria` labels, foco gestionado y mensajes para screen readers
+- **SEO**: títulos unificados con sufijo automático, JSON-LD, canonical dinámico
+- **Performance**: skeletons en cliente, prefetch/preconnect selectivo y utilidades de imágenes
 
 ## 📚 Documentación Adicional
 
@@ -197,12 +176,11 @@ Características incluidas:
 
 ## 🛡️ Buenas Prácticas Implementadas
 
-- **Clean Code** y separación de responsabilidades
+- **Clean Code** y responsabilidades compartimentadas
 - **TypeScript** para tipado estático
-- **Componentes modulares** y reutilizables
-- **Testing** friendly architecture
-- **Performance** first approach
-- **Accessibility** by design
+- **Componentes y utilidades reutilizables** documentadas en `src/utils`
+- **Performance first** con fallback seguro ante errores
+- **Accessibility by design** en cada vista
 
 ## 🤝 Contribuir
 

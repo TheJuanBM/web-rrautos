@@ -8,13 +8,13 @@ interface Props {
 const { marcas } = Astro.props
 ---
 
-<div class="flex gap-1 mb-4 flex-col" role="search">
+<div class="flex gap-1.5 mb-4 flex-col w-full" role="search">
   <label for="marca-select" class="text-sm font-semibold"> Filtrar por marca </label>
   <div
-    class="inline-flex items-center gap-2 bg-white border border-gray-300 rounded-md px-2 py-1 shadow-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500"
+    class="inline-flex items-center gap-2 bg-white border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 w-full flex-nowrap"
   >
     <svg
-      class="w-4 h-4 icon-contrast-medium pointer-events-none"
+      class="w-4 h-4 icon-contrast-medium pointer-events-none flex-shrink-0"
       viewBox="0 0 24 24"
       aria-hidden="true"
       focusable="false"
@@ -29,7 +29,7 @@ const { marcas } = Astro.props
       name="marca"
       aria-label="Selecciona una marca de vehículo para filtrar"
       aria-describedby="marca-help"
-      class="appearance-none bg-transparent text-contrast-high text-sm px-2 py-1.5 rounded-md outline-none focus:outline-none min-w-[120px]"
+      class="appearance-none bg-transparent text-contrast-high text-sm px-1.5 py-1.5 rounded-md outline-none focus:outline-none w-full min-w-0"
     >
       <option value="">Todas las marcas</option>
       {marcas.map(marca => <option value={marca.id}>{marca.title}</option>)}

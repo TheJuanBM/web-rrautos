@@ -8,18 +8,37 @@ interface Props {
 const { asesores } = Astro.props
 ---
 
-<div class="bg-white border border-gray-200 rounded-xl p-4 mt-6">
-  <h3 class="text-base font-extrabold text-contrast-high mb-3 text-center">Asesores</h3>
-  <ul class="flex gap-3 flex-wrap justify-center">
+<section class="advisors-card" aria-label="Equipo de asesores">
+  <header class="advisors-card__header">
+    <p class="advisors-card__eyebrow">Equipo experto</p>
+    <h3 class="advisors-card__title">Conecta con tu asesor ideal</h3>
+    <p class="advisors-card__subtitle">
+      Elige a la persona que te acompañará en todo el proceso: desde resolver dudas hasta coordinar la entrega.
+    </p>
+  </header>
+
+  <ul class="advisors-card__list">
     {
       asesores.map(asesor => (
-        <li class="flex items-center gap-2 text-sm font-bold text-contrast-high">
-          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-sm font-bold text-white">
+        <li class="advisors-card__item">
+          <span class="advisors-card__initial" aria-hidden="true">
             {asesor.inicial}
           </span>
-          {asesor.nombre}
+          <div class="advisors-card__info">
+            <span class="advisors-card__name">{asesor.nombre}</span>
+            <span class="advisors-card__label">Respuesta en minutos</span>
+          </div>
+          <a
+            href={`https://wa.me/51${asesor.id}`}
+            class="advisors-card__cta"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Abrir WhatsApp con ${asesor.nombre}`}
+          >
+            Chatear
+          </a>
         </li>
       ))
     }
   </ul>
-</div>
+</section>

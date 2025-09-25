@@ -1,6 +1,16 @@
-import type { Vehiculo } from '../types'
 import { API_CONFIG } from '../config/constants'
-import { extractFirstLink, calculateTotalPages, generatePageNumbers } from '../utils'
+import type { Vehiculo } from '../types'
+import {
+  announceToScreenReader,
+  buildOptimizedImageUrl,
+  buildSrcSet,
+  calculateTotalPages,
+  escapeHtml,
+  extractFirstLink,
+  generatePageNumbers,
+  sanitizeUrl,
+  toDomId,
+} from '../utils'
 
 interface CatalogoState {
   currentPage: number
@@ -12,6 +22,7 @@ interface CatalogoState {
 
 class CatalogoClient {
   private state: CatalogoState
+  private readonly defaultCtaUrl = 'https://wa.me/51987654321'
 
   constructor() {
     this.state = {
@@ -23,23 +34,14 @@ class CatalogoClient {
     }
   }
 
-  private generateOptimizedImageUrl(baseSrc: string, width: number, quality = 80): string {
-    return `${baseSrc}?w=${width}&q=${quality}`
-  }
-
-  private generateSrcSet(baseSrc: string, quality = 80): string {
-    const widths = [320, 640, 768, 1024, 1280]
-    return widths.map(w => `${baseSrc}?w=${w}&q=${quality} ${w}w`).join(', ')
-  }
-
   private renderSkeletons(count = API_CONFIG.PAGE_SIZE): void {
     if (!this.state.vehiculosLista) return
 
     const skeletonHTML = Array.from({ length: count })
       .map(
         () => `
-        <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm animate-pulse">
-          <div class="w-full h-28 md:h-32 bg-gray-200 rounded-md"></div>
+        <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm animate-pulse h-[345px] vehicle-card">
+          <div class="w-full h-30 md:h-32 bg-gray-200 rounded-md"></div>
           <div class="h-3 bg-gray-200 rounded w-2/3 mt-3"></div>
           <div class="h-3 bg-gray-200 rounded w-1/3 mt-2"></div>
           <div class="h-7 bg-gray-200 rounded-md w-24 mt-3"></div>
@@ -49,7 +51,7 @@ class CatalogoClient {
       .join('')
 
     this.state.vehiculosLista.innerHTML = `
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-4 vehicle-card-grid">
         ${skeletonHTML}
       </div>
     `
@@ -92,44 +94,71 @@ class CatalogoClient {
     }
 
     const vehiculosHTML = productos
-      .map(
-        vehiculo => `
-        <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition">
-          <div class="w-full h-28 md:h-32 relative overflow-hidden rounded-md bg-gray-100">
-            ${vehiculo.ribbon_text ? `<span class="absolute top-2 right-2 bg-green-600 text-[11px] font-bold px-2 py-0.5 rounded-full shadow">${vehiculo.ribbon_text}</span>` : ''}
-            <img
-              src="${this.generateOptimizedImageUrl(vehiculo.thumbnail, 320)}"
-              srcset="${this.generateSrcSet(vehiculo.thumbnail)}"
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              alt="${vehiculo.title} - Vehículo usado disponible en RR Autos"
-              class="w-full h-full object-cover"
-              loading="lazy"
-              decoding="async"
-              referrerpolicy="no-referrer"
-              onerror="this.style.display='none'"
-              onload="this.style.opacity='1'"
-              style="opacity: 0; transition: opacity 0.3s ease-in-out;"
-            />
-          </div>
-          <h3 class="mt-2 text-sm font-semibold">${vehiculo.title}</h3>
-          <a href="${extractFirstLink(vehiculo.description)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-blue-600 hover:underline text-sm font-medium mt-1">
-            Ver más
-            <svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
-              <path fill="currentColor" d="M13.172 12L8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/>
-            </svg>
-          </a>
-        </div>
-      `
-      )
+      .map((vehiculo, index) => {
+        const safeTitle = escapeHtml(vehiculo.title ?? 'Vehículo disponible')
+        const ribbonLabel = vehiculo.ribbon_text ? escapeHtml(vehiculo.ribbon_text.trim()) : ''
+        const baseImageUrl = vehiculo.thumbnail ? sanitizeUrl(vehiculo.thumbnail) : ''
+        const hasImage = Boolean(baseImageUrl && baseImageUrl !== '#')
+        const imageSrc = hasImage ? buildOptimizedImageUrl(baseImageUrl, 480) : ''
+        const imageSrcSet = hasImage ? buildSrcSet(baseImageUrl) : ''
+        const loading = index < 2 ? 'eager' : 'lazy'
+        const fetchPriority = index < 2 ? 'high' : 'auto'
+        const cardId = toDomId(vehiculo.id ?? safeTitle, `vehicle-${index}`)
+        const extractedLink = extractFirstLink(vehiculo.description)
+        const ctaHref = sanitizeUrl(extractedLink !== '#' ? extractedLink : this.defaultCtaUrl)
+
+        return `
+          <article class="vehicle-card" role="listitem" aria-labelledby="${cardId}-title">
+            <div class="vehicle-card__media" ${hasImage ? `role="img" aria-label="Imagen de ${safeTitle}"` : 'aria-hidden="true"'}>
+              ${ribbonLabel ? `<span class="vehicle-card__badge">${ribbonLabel}</span>` : ''}
+              ${
+                hasImage
+                  ? `<img
+                src="${imageSrc}"
+                ${imageSrcSet ? `srcset="${imageSrcSet}"` : ''}
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                alt="${safeTitle} - Vehículo usado disponible en RR Autos"
+                class="vehicle-card__image"
+                loading="${loading}"
+                decoding="async"
+                referrerpolicy="no-referrer"
+                fetchpriority="${fetchPriority}"
+                onerror="this.style.display='none'"
+                onload="this.style.opacity='1'"
+                style="opacity: 0; transition: opacity 0.3s ease-in-out;"
+              />`
+                  : `<div class="vehicle-card__image vehicle-card__image--empty" aria-hidden="true"></div>`
+              }
+              <span class="vehicle-card__glow" aria-hidden="true"></span>
+            </div>
+
+            <div class="vehicle-card__body">
+              <div class="vehicle-card__info">
+                <h3 id="${cardId}-title" class="vehicle-card__title">${safeTitle}</h3>
+              </div>
+
+              <a
+                href="${ctaHref}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="vehicle-card__cta"
+                aria-label="Ver más detalles de ${safeTitle} (se abre en nueva ventana)"
+              >
+                <span>Ver ficha completa</span>
+                <svg class="vehicle-card__cta-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M13.172 12L8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"></path>
+                </svg>
+              </a>
+            </div>
+          </article>
+        `
+      })
       .join('')
 
     this.state.vehiculosLista.innerHTML = `
-      <div class="mb-4">
-        <h2 class="text-xl font-bold text-contrast-high mb-4 sr-only">Vehículos Disponibles</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-          ${vehiculosHTML}
-        </div>
-      </div>
+      <section class="vehicle-card-grid" role="list" aria-label="Vehículos disponibles">
+        ${vehiculosHTML}
+      </section>
     `
   }
 
@@ -156,36 +185,37 @@ class CatalogoClient {
       return
     }
 
-    const pageNumbers = generatePageNumbers(totalPages)
+    const pageNumbers = generatePageNumbers(totalPages, page)
     const prevDisabled = page === 1
     const nextDisabled = page === totalPages
 
-    let html = `
-      <button class="px-3 py-1.5 rounded-md border bg-white  text-contrast-high border-gray-300  hover:bg-gray-50  text-sm font-medium${prevDisabled ? ' opacity-50 cursor-not-allowed' : ''}" 
-              data-act="prev" ${prevDisabled ? 'disabled' : ''}>
-        Anterior
-      </button>
-    `
+    const buttonsHTML = pageNumbers
+      .map(pageNumber => {
+        if (pageNumber === -1) {
+          return `<span class="pagination__ellipsis" aria-hidden="true">…</span>`
+        }
 
-    html += pageNumbers
-      .map(
-        pageNumber => `
-        <button class="px-3 py-1.5 rounded-md border text-sm font-medium${page === pageNumber ? ' bg-blue-600 border-blue-600 hover:bg-blue-700 text-white' : ' bg-white  text-contrast-high border-gray-300  hover:bg-gray-50 '}"
-                data-page="${pageNumber}">
-          ${pageNumber}
-        </button>
-      `
-      )
+        const isActive = page === pageNumber
+
+        return `
+          <button class="pagination__item${isActive ? ' is-active' : ''}" ${isActive ? "disabled='true'" : ''} data-page="${pageNumber}" data-pagination="true" aria-current="${isActive ? 'page' : 'false'}">
+            ${pageNumber}
+          </button>
+        `
+      })
       .join('')
 
-    html += `
-      <button class="px-3 py-1.5 rounded-md border bg-white  text-contrast-high border-gray-300  hover:bg-gray-50  text-sm font-medium${nextDisabled ? ' opacity-50 cursor-not-allowed' : ''}"
-              data-act="next" ${nextDisabled ? 'disabled' : ''}>
-        Siguiente
-      </button>
+    this.state.paginacionDiv.innerHTML = `
+      <nav class="pagination" role="navigation" aria-label="Paginación de resultados">
+        <button class="pagination__control${prevDisabled ? ' is-disabled' : ''}" data-act="prev" ${prevDisabled ? 'disabled' : ''} data-pagination="true" aria-label="Página anterior">
+          <span aria-hidden="true">‹</span>
+        </button>
+        ${buttonsHTML}
+        <button class="pagination__control${nextDisabled ? ' is-disabled' : ''}" data-act="next" ${nextDisabled ? 'disabled' : ''} data-pagination="true" aria-label="Página siguiente">
+          <span aria-hidden="true">›</span>
+        </button>
+      </nav>
     `
-
-    this.state.paginacionDiv.innerHTML = html
     this.attachPaginationEvents(totalPages)
   }
 
@@ -201,7 +231,6 @@ class CatalogoClient {
           if (!isNaN(newPage)) {
             this.state.currentPage = newPage
             this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
-            this.scrollToPagination()
           }
         })
       }
@@ -213,7 +242,6 @@ class CatalogoClient {
       if (this.state.currentPage > 1) {
         this.state.currentPage--
         this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
-        this.scrollToPagination()
       }
     })
 
@@ -223,15 +251,7 @@ class CatalogoClient {
       if (this.state.currentPage < totalPages) {
         this.state.currentPage++
         this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
-        this.scrollToPagination()
       }
-    })
-  }
-
-  private scrollToPagination(): void {
-    this.state.paginacionDiv?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
     })
   }
 
@@ -243,17 +263,11 @@ class CatalogoClient {
       this.state.currentPage = 1
       this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
 
-      // Anunciar cambio para screen readers
-      this.announceToScreenReader(
-        `Filtro aplicado: ${target.options[target.selectedIndex].text}. Cargando vehículos...`
-      )
+      announceToScreenReader(`Filtro aplicado: ${target.options[target.selectedIndex].text}. Cargando vehículos...`)
     })
 
     // Navegación por teclado
     this.setupKeyboardNavigation()
-
-    // Registrar Service Worker
-    this.registerServiceWorker()
 
     // Carga inicial
     this.renderSkeletons()
@@ -275,91 +289,43 @@ class CatalogoClient {
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault()
-        const prevBtn = target.previousElementSibling as HTMLButtonElement
-        if (prevBtn && !prevBtn.disabled) {
-          prevBtn.focus()
-        }
+        this.focusSiblingButton(target, 'previous')
         break
 
       case 'ArrowRight':
         e.preventDefault()
-        const nextBtn = target.nextElementSibling as HTMLButtonElement
-        if (nextBtn && !nextBtn.disabled) {
-          nextBtn.focus()
-        }
+        this.focusSiblingButton(target, 'next')
         break
 
       case 'Home':
         e.preventDefault()
-        const firstBtn = this.state.paginacionDiv?.querySelector('[data-page="1"]') as HTMLButtonElement
-        if (firstBtn) firstBtn.focus()
+        this.focusBoundaryButton('first')
         break
 
       case 'End':
         e.preventDefault()
-        const lastPageBtn = Array.from(
-          this.state.paginacionDiv?.querySelectorAll('[data-page]') || []
-        ).pop() as HTMLButtonElement
-        if (lastPageBtn) lastPageBtn.focus()
+        this.focusBoundaryButton('last')
         break
     }
   }
 
-  private announceToScreenReader(message: string): void {
-    const announcement = document.createElement('div')
-    announcement.setAttribute('aria-live', 'polite')
-    announcement.setAttribute('aria-atomic', 'true')
-    announcement.className = 'sr-only'
-    announcement.textContent = message
+  private focusSiblingButton(target: HTMLElement, direction: 'previous' | 'next'): void {
+    const siblingProp = direction === 'previous' ? 'previousElementSibling' : 'nextElementSibling'
+    const sibling = target[siblingProp] as HTMLButtonElement | null
 
-    document.body.appendChild(announcement)
-
-    // Remover después de anunciar
-    setTimeout(() => {
-      document.body.removeChild(announcement)
-    }, 1000)
-  }
-
-  private async registerServiceWorker(): Promise<void> {
-    if ('serviceWorker' in navigator) {
-      try {
-        const registration = await navigator.serviceWorker.register('/sw.js')
-
-        // Detectar actualizaciones
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // Mostrar notificación de actualización disponible
-                this.showUpdateNotification()
-              }
-            })
-          }
-        })
-      } catch (error) {
-        console.error('Error registrando Service Worker:', error)
-      }
+    if (sibling && !sibling.disabled) {
+      sibling.focus()
     }
   }
 
-  private showUpdateNotification(): void {
-    const notification = document.createElement('div')
-    notification.className = 'fixed bottom-4 right-4 bg-blue-600 p-4 rounded-lg shadow-lg z-50'
-    notification.innerHTML = `
-      <p class="mb-2">Nueva versión disponible</p>
-      <button class="bg-white text-blue-700 px-3 py-1 rounded text-sm font-medium border border-blue-200" onclick="window.location.reload()">
-        Actualizar
-      </button>
-    `
-    document.body.appendChild(notification)
+  private focusBoundaryButton(position: 'first' | 'last'): void {
+    if (!this.state.paginacionDiv) return
 
-    // Auto-remover después de 10 segundos
-    setTimeout(() => {
-      if (notification.parentNode) {
-        notification.parentNode.removeChild(notification)
-      }
-    }, 10000)
+    const buttons = Array.from(this.state.paginacionDiv.querySelectorAll('[data-page]')) as HTMLButtonElement[]
+    if (buttons.length === 0) return
+
+    const target = position === 'first' ? buttons[0] : buttons[buttons.length - 1]
+    target.focus()
   }
 }
 

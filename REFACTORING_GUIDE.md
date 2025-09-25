@@ -52,21 +52,10 @@ src/
 
 #### **5. Componentes UI**
 
-**VehicleCard.astro**
-
-- Tarjeta individual de vehículo
-- Manejo de imágenes y ribbons
-- Enlaces externos seguros
-
 **VehicleSkeleton.astro**
 
 - Skeleton loader durante carga
 - Diseño responsive
-
-**VehicleList.astro**
-
-- Lista/grid de vehículos
-- Estado vacío integrado
 
 **BrandSelector.astro**
 

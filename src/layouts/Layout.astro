@@ -1,10 +1,29 @@
 ---
-import '../styles/global.css'
+import Header from '../components/Header.astro'
 import SEOHead, { type SEOProps } from '../components/SEOHead.astro'
+import '../styles/global.css'
 
-interface Props extends SEOProps {}
+const DEFAULT_SEO: Required<Pick<SEOProps, 'description' | 'title'>> = {
+  title: 'RR Autos - Vehículos Usados de Calidad',
+  description:
+    'Encuentra el vehículo usado perfecto para ti con RR Autos. Inventario curado, financiamiento flexible y asesoría personalizada para tu próxima compra.',
+}
 
-const seoProps = Astro.props
+const PAGE_TITLE_SUFFIX = 'RR Autos'
+
+const props = Astro.props as SEOProps
+
+const seoProps: SEOProps = {
+  ...DEFAULT_SEO,
+  ...props,
+  title: normalizeTitle(props.title ?? DEFAULT_SEO.title),
+}
+
+function normalizeTitle(rawTitle: string): string {
+  const trimmed = rawTitle.trim()
+  if (!trimmed) return DEFAULT_SEO.title
+  return trimmed.includes(PAGE_TITLE_SUFFIX) ? trimmed : `${trimmed} | ${PAGE_TITLE_SUFFIX}`
+}
 ---
 
 <!doctype html>
@@ -33,8 +52,8 @@ const seoProps = Astro.props
           -apple-system,
           sans-serif;
         line-height: 1.6;
-        color: #111827;
-        background-color: #ffffff;
+        color: var(--color-gray-800);
+        background-color: var(--color-white);
       }
 
       .sr-only {
@@ -58,7 +77,7 @@ const seoProps = Astro.props
 
       /* Focus visible para mejor accesibilidad */
       .focus-visible {
-        outline: 2px solid #2563eb;
+        outline: 2px solid var(--color-primary);
         outline-offset: 2px;
       }
     </style>
@@ -72,36 +91,11 @@ const seoProps = Astro.props
       Saltar al contenido principal
     </a>
 
+    <Header />
+
     <main id="main-content" role="main">
       <slot />
     </main>
-
-    <!-- Performance monitoring básico -->
-    <script>
-      // Monitoreo básico de rendimiento
-      window.addEventListener('load', () => {
-        // Métricas básicas de tiempo de carga
-        try {
-          // if (performance && performance.timing) {
-          //   const timing = performance.timing
-          //   const loadTime = timing.loadEventEnd - timing.navigationStart
-          //   console.log('Tiempo de carga total:', loadTime + 'ms') // TODO: Remove this
-          // }
-          // Observar LCP si está disponible
-          // if ('PerformanceObserver' in window) {
-          //   const observer = new PerformanceObserver((list) => {
-          //     const entries = list.getEntries()
-          //     for (const entry of entries) {
-          //       console.log('LCP:', entry.startTime + 'ms') // TODO: Remove this
-          //     }
-          //   })
-          //   observer.observe({ entryTypes: ['largest-contentful-paint'] })
-          // }
-        } catch (e) {
-          console.error('Performance monitoring no disponible', e)
-        }
-      })
-    </script>
   </body>
 </html>
 

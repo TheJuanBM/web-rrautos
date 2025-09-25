@@ -134,7 +134,7 @@ fix(api): corregir manejo de errores en fetchVehiculos
 docs(readme): actualizar instrucciones de instalación
 style(css): mejorar contraste de botones
 refactor(utils): simplificar función de paginación
-test(components): añadir tests para VehicleCard
+test(components): añadir tests para BrandSelector
 ```
 
 ### Tipos de Commit

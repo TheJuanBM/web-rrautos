@@ -44,7 +44,6 @@ pautas WCAG AA.
 | ------------------ | --------------- | ---------------------- | -------- |
 | **BrandSelector**  | `text-gray-400` | `icon-contrast-medium` | 7.9:1 ✅ |
 | **Pagination**     | `text-gray-500` | `text-contrast-medium` | 7.9:1 ✅ |
-| **VehicleList**    | `text-gray-500` | `text-contrast-medium` | 7.9:1 ✅ |
 | **Catálogo**       | `text-gray-600` | `text-contrast-low`    | 7.9:1 ✅ |
 | **Script Cliente** | `text-gray-500` | `text-contrast-medium` | 7.9:1 ✅ |
 
