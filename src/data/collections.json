@@ -1,0 +1,1205 @@
+{
+  "collections": [
+    {
+      "id": "pcol_01JWY6RB4BYJ5AS8724R4T797R",
+      "title": "CHEVROLET SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-04T19:30:11.723Z",
+      "updated_at": "2025-06-04T19:30:11.723Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JWY82J88Y62CMDAXAQ6CJG88",
+      "title": "FORD SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-04T19:53:15.271Z",
+      "updated_at": "2025-06-04T19:53:15.271Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JWXTN3QP2ZD0X4YY16WQ0Y9S",
+      "title": "MERCEDES-BENZ HÍBRIDO COUPE",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-04T15:58:42.933Z",
+      "updated_at": "2025-06-04T15:58:42.933Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JX0935BTGNNPK4NYENMN6YCK",
+      "title": "IMPORTADOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-05T14:49:32.281Z",
+      "updated_at": "2025-06-05T14:49:32.281Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JX09TFKP6KWJP7MKJ3KGA7V2",
+      "title": "TOYOTA SEDAN HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-05T15:02:16.437Z",
+      "updated_at": "2025-06-05T15:02:16.437Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JW97RQW2PCB22MW79320GNAA",
+      "title": "YAMAHA MOTOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-27T16:03:50.274Z",
+      "updated_at": "2025-05-27T16:03:50.274Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JW9ARK632AZDGA0225HGXT4V",
+      "title": "MERCEDES-BENZ HÍBRIDO BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-27T16:56:11.201Z",
+      "updated_at": "2025-05-27T16:56:11.201Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JW9GYK982FEXH81BRK8P3BZ4",
+      "title": "TOYOTA CAMIONETA HÍBRIDO BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-27T18:44:19.367Z",
+      "updated_at": "2025-05-27T18:44:19.367Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JW9J3NAZH6MYX9FMR4G0Z093",
+      "title": "TOYOTA SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-27T19:04:33.886Z",
+      "updated_at": "2025-05-27T19:04:33.886Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JD5Z5CS620H3GRHXPPSJKGHS",
+      "title": "LEXUS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-20T23:40:17.045Z",
+      "updated_at": "2024-11-20T23:40:17.045Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JPD8YDRQJ6YNSGG1CMXH7C8D",
+      "title": "TOYOTA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-15T16:07:11.870Z",
+      "updated_at": "2025-03-15T16:07:11.870Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JWY08G6BYGGG41ZVQR29DBA1",
+      "title": "KIA SUV HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-04T17:36:41.162Z",
+      "updated_at": "2025-06-04T17:36:41.162Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JDWWWPYNF9ZSHA44YGMGJRHK",
+      "title": "HONDA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-29T21:23:07.341Z",
+      "updated_at": "2024-11-29T21:23:07.341Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JDWXGR5VCRM1XWE8A362NV2D",
+      "title": "LAND ROVER",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-29T21:34:03.951Z",
+      "updated_at": "2024-11-29T21:34:03.951Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JWYDKK2NHTWGQ4W4N00T6YNQ",
+      "title": "TOYOTA SUV HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-04T21:29:56.052Z",
+      "updated_at": "2025-06-04T21:29:56.052Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JX11FKHD0K23F4SG869DHHGS",
+      "title": "MERCEDES-BENZ HÍBRIDO SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-05T21:55:45.837Z",
+      "updated_at": "2025-06-05T21:55:45.837Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JXQW27GFRBNVCKHGKS1Y285M",
+      "title": "VOLVO SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-14T18:43:36.589Z",
+      "updated_at": "2025-06-14T18:43:36.589Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JX12WC8WHMADH0D5YW5TY02N",
+      "title": "TOYOTA CAMIONETA BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-05T22:20:12.955Z",
+      "updated_at": "2025-06-05T22:20:12.955Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JX2WCMN0S1V3GKEDVZQABNM9",
+      "title": "DUCATI MOTOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-06T15:05:14.655Z",
+      "updated_at": "2025-06-06T15:05:14.655Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JDMY7GW67TFKV7Q4TP7ECZ0Y",
+      "title": "SEAT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-26T19:12:34.682Z",
+      "updated_at": "2024-11-26T19:12:34.682Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JDMYBNPPD6WEC422F6J39KGS",
+      "title": "CUPRA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-26T19:14:50.690Z",
+      "updated_at": "2024-11-26T19:14:50.690Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JAE5ED09RQ4QPMYMZJNB9RXN",
+      "title": "HYBRID",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-17T21:16:53.535Z",
+      "updated_at": "2024-10-21T14:25:39.951Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JAE6V79MMESMY68Y54GNCDWD",
+      "title": "CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-17T21:41:22.343Z",
+      "updated_at": "2024-10-21T14:28:10.669Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JAG7P65C8GQB0ATH9E7B9ZS9",
+      "title": "HATCHBACK",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-18T16:34:34.774Z",
+      "updated_at": "2024-10-21T14:28:40.513Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JAG6XMG0T0T6P6CPYMBWK9RK",
+      "title": "SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-18T16:21:10.254Z",
+      "updated_at": "2024-10-21T14:28:52.307Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JAQQPGB4TFVM6E6X5N3EM4SV",
+      "title": "SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-21T14:29:03.456Z",
+      "updated_at": "2024-10-21T14:29:03.456Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JAQS244X51TFJ48B3G5VVP83",
+      "title": "SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-21T14:52:52.762Z",
+      "updated_at": "2024-10-21T14:52:52.762Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JARE7GJ0B808MXSBQKW6JWQA",
+      "title": "CABRIOLET",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-21T21:02:49.388Z",
+      "updated_at": "2024-10-23T18:18:14.362Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JARW6Q7QHY0DXQ3H8JVG18HX",
+      "title": "ELÉCTRICO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-22T01:07:03.540Z",
+      "updated_at": "2024-10-22T01:07:54.380Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JATZJ6NAJHK61VD9CQBG1VGE",
+      "title": "BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-22T20:44:14.363Z",
+      "updated_at": "2024-10-22T20:44:14.363Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JAX3F9T5YB6FP8RDGEEH8TYH",
+      "title": "COUPE",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-23T16:31:02.456Z",
+      "updated_at": "2024-10-23T16:31:02.456Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBCTPT9RAF5R5YJG234DEM7M",
+      "title": "TOYOTA ",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-29T19:05:42.453Z",
+      "updated_at": "2024-10-29T19:05:42.453Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBCTWY4PPJM3S3PNBJA6KVFC",
+      "title": "VOLKSWAGEN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-29T19:09:02.986Z",
+      "updated_at": "2024-10-29T19:09:02.986Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBCV0BYEHDY9VPKMT8XXMPP8",
+      "title": "MAZDA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-29T19:10:55.433Z",
+      "updated_at": "2024-10-29T19:12:40.980Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBCVAY4BR3GVZ7168K8QBBSC",
+      "title": "CHEVROLET",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-29T19:16:41.667Z",
+      "updated_at": "2024-10-29T19:16:41.667Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBCVCS7D1WPYTT8KTFE93890",
+      "title": "KIA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-29T19:17:42.224Z",
+      "updated_at": "2024-10-29T19:17:42.224Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBCVR67PSGX3TT8SSFPTSTWP",
+      "title": "BMW",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-29T19:23:55.983Z",
+      "updated_at": "2024-10-29T19:23:55.983Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBCVXREP1MMXFB7W84901BBJ",
+      "title": "MERCEDES-BENZ",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-29T19:26:58.394Z",
+      "updated_at": "2024-10-29T19:26:58.394Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JXXFAJXB5ZN9DFW93AZEFF1M",
+      "title": "MERCEDES-BENZ HÍBRIDO COUPE BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-16T22:56:25.513Z",
+      "updated_at": "2025-06-16T22:56:25.513Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBHJ05M3VPQV7CG7C4CSTT2N",
+      "title": "FORD",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-31T15:09:43.910Z",
+      "updated_at": "2024-10-31T15:09:43.910Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBJBNESF78CVR0WYYA79GKBN",
+      "title": "AUDI",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-31T22:38:15.852Z",
+      "updated_at": "2024-10-31T22:38:15.852Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBJBS13CGWWNJZBW3EGKZCSA",
+      "title": "MITSUBISHI",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-10-31T22:40:12.895Z",
+      "updated_at": "2024-10-31T22:40:12.895Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JBM99T11EE6RMTVWVJ5EPNFA",
+      "title": "JEEP",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-01T16:35:25.843Z",
+      "updated_at": "2024-11-01T16:35:25.843Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JC1NCTZA6RZG9NXB3JQ685AC",
+      "title": "NISSAN ",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-06T21:16:55.643Z",
+      "updated_at": "2024-11-06T21:16:55.643Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JC9VCV0ERM89XCADA4E0WR0A",
+      "title": "TESLA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-10T01:35:42.603Z",
+      "updated_at": "2024-11-10T01:35:42.603Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JC9VDCFPC9MWG9PXJKQX1FBE",
+      "title": "MINI",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-11-10T01:36:00.499Z",
+      "updated_at": "2024-11-10T01:36:00.499Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JF8GZP1T43VK4N1RA6CGZJWW",
+      "title": "MOTOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2024-12-16T20:01:36.821Z",
+      "updated_at": "2024-12-16T20:01:36.821Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JX5NZKYHDAR3NNSXQMSC64M1",
+      "title": "SUBARU SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-07T17:10:59.788Z",
+      "updated_at": "2025-06-07T17:10:59.788Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JJZHN32N633Y5P06C6Y82NEP",
+      "title": "VOLVO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-02-01T01:22:55.698Z",
+      "updated_at": "2025-02-01T01:22:55.698Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JMSXN5F69CAGSFG835TJR72A",
+      "title": "POLARIS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-02-23T17:28:38.109Z",
+      "updated_at": "2025-02-23T17:28:38.109Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JMSXQ2GKDGMCGMHQXH129PJ1",
+      "title": "PEUGEOT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-02-23T17:29:40.612Z",
+      "updated_at": "2025-02-23T17:29:40.612Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JN5BY7G95138JY55G5WH554P",
+      "title": "PORSCHE",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-02-28T04:09:53.875Z",
+      "updated_at": "2025-02-28T04:09:53.875Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JNM174CA2D55WVNSD4QTEH94",
+      "title": "CITROËN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-05T20:51:07.776Z",
+      "updated_at": "2025-03-05T20:51:07.776Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JNYQ71J1C6DBVMGCRTKDDHFH",
+      "title": "DODGE",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-10T00:27:57.853Z",
+      "updated_at": "2025-03-10T00:27:57.853Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JY9N6KNGCFE3TEPJ18AZ8MSF",
+      "title": "KAWASAKI MOTOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-21T16:29:59.855Z",
+      "updated_at": "2025-06-21T16:29:59.855Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JY9QQNZMKHCECVTD20EHRCQW",
+      "title": "LEXUS SUV SPORT BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-21T17:14:16.435Z",
+      "updated_at": "2025-06-21T17:14:16.435Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JPXES2905JKC0E24SPGSY9Y1",
+      "title": "TOYOTA BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-21T22:56:58.638Z",
+      "updated_at": "2025-03-21T22:56:58.638Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQ6Z7JCR56Q77SKFYHFVZF2S",
+      "title": "MERCEDES-BENZ BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-25T15:37:40.997Z",
+      "updated_at": "2025-03-25T15:37:40.997Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQ71YP469MXZSH3NV1QTK4Q7",
+      "title": "RENAULT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-25T16:25:15.631Z",
+      "updated_at": "2025-03-25T16:25:15.631Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQ7MQW768JS4KBARCR87JC2K",
+      "title": "MAZDA SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-25T21:53:35.430Z",
+      "updated_at": "2025-03-25T21:53:35.430Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQ7N5P6PYAMD9XCG1PY3EQ7M",
+      "title": "CHEVROLET HATCHBACK",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-25T22:01:08.044Z",
+      "updated_at": "2025-03-25T22:01:08.044Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQ7P81NYXPBZNVQVCH34QWYV",
+      "title": "BMW SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-25T22:19:53.895Z",
+      "updated_at": "2025-03-25T22:19:53.895Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQ9ZQX658J7YHA0P5PX63T4A",
+      "title": "TOYOTA SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-26T19:44:19.632Z",
+      "updated_at": "2025-03-26T19:44:19.632Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQA00JDGG0W309B33VGKGC3F",
+      "title": "BMW COUPE",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-26T19:49:03.525Z",
+      "updated_at": "2025-03-26T19:49:03.525Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQA0P8W1ATMB71ZCQREGXZ4J",
+      "title": "BMW CABRIOLET",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-26T20:00:54.641Z",
+      "updated_at": "2025-03-26T20:00:54.641Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQA2AFX7XRSBYC74H33E8TVS",
+      "title": "MAZDA HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-26T20:29:25.782Z",
+      "updated_at": "2025-03-26T20:29:25.782Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQC435HXFDFNF9BP5DNZTTW8",
+      "title": "MERCEDES-BENZ SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-27T15:38:51.823Z",
+      "updated_at": "2025-03-27T15:38:51.823Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQC5PCMFEZEB7KJQB0NZ25KS",
+      "title": "MAZDA HATCHBACK",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-27T16:06:50.242Z",
+      "updated_at": "2025-03-27T16:06:50.242Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQCK4BN2HN0VA91EY5ES4H0N",
+      "title": "MAZDA SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-27T20:01:39.474Z",
+      "updated_at": "2025-03-27T20:01:39.474Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQF7C3SH8YZWGFZTVAKK8AV9",
+      "title": "BMW SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-28T20:33:53.946Z",
+      "updated_at": "2025-03-28T20:33:53.946Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQF8QY1YSF6QEV0WEG5Y1HGH",
+      "title": "NISSAN SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-28T20:57:49.867Z",
+      "updated_at": "2025-03-28T20:57:49.867Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQF9J0XZFCK3QZ0C4NDSW64G",
+      "title": "BMW SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-28T21:12:04.775Z",
+      "updated_at": "2025-03-28T21:12:04.775Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQH8QPTR2W09WAMZCS3D7F5E",
+      "title": "FORD CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-03-29T15:36:11.331Z",
+      "updated_at": "2025-03-29T15:36:11.331Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQS4TFRXSYWKQ1CCMZ0VR67R",
+      "title": "NISSAN CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-01T17:01:43.554Z",
+      "updated_at": "2025-04-01T17:01:43.554Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQS9ZJZBZVJTYQBSNK5G98YN",
+      "title": "MERCEDES-BENZ SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-01T18:31:53.562Z",
+      "updated_at": "2025-04-01T18:31:53.562Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQSJD9P88D6381EHFJ73ZYJ3",
+      "title": "AUDI SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-01T20:59:11.416Z",
+      "updated_at": "2025-04-01T20:59:11.416Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JQYB1B2N53PV649N0V2Z185E",
+      "title": "MERCEDES-BENZ HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-03T17:26:31.744Z",
+      "updated_at": "2025-04-03T17:26:31.744Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JR8AXH8P8NN4DVV1EX5M0VBF",
+      "title": "CHEVROLET CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-07T14:36:51.324Z",
+      "updated_at": "2025-04-07T14:36:51.324Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JR8FFGDYBTXC3BA0K1K1B8M3",
+      "title": "TOYOTA CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-07T15:56:34.571Z",
+      "updated_at": "2025-04-07T15:56:34.571Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JR926WVRSRSP4SGQES51K37B",
+      "title": "BMW HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-07T21:23:55.309Z",
+      "updated_at": "2025-04-07T21:23:55.309Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JR96EEJXKEV3B46ZJYZHS3KF",
+      "title": "AUDI ELÉCTRICO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-07T22:37:57.195Z",
+      "updated_at": "2025-04-07T22:37:57.195Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRAYBH60AEANDWTM41CC1ZXV",
+      "title": "MERCEDES-BENZ SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-08T14:55:01.800Z",
+      "updated_at": "2025-04-08T14:55:01.800Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRGJTS0YSFC93SHEHNDTQBD1",
+      "title": "OTROS VEHÍCULOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-10T19:29:05.051Z",
+      "updated_at": "2025-04-10T19:29:05.051Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRGX9APD2EXHY8A9BV1N74QW",
+      "title": "BMW MOTOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-10T22:31:47.660Z",
+      "updated_at": "2025-04-10T22:31:47.660Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRNE35TTHSR63PQ0DFC2G43B",
+      "title": "KIA SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-12T16:42:29.593Z",
+      "updated_at": "2025-04-12T16:42:29.593Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRNP1NHJ8ZQCE8DG2H352R52",
+      "title": "HONDA MOTOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-12T19:01:28.754Z",
+      "updated_at": "2025-04-12T19:01:28.754Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRNW7YCAB4M7600AFZ9M8M47",
+      "title": "PORSCHE HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-12T20:49:45.866Z",
+      "updated_at": "2025-04-12T20:49:45.866Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRTEMR46XXZQSZHQDAM8FZY7",
+      "title": "PORSCHE SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-14T15:28:17.537Z",
+      "updated_at": "2025-04-14T15:28:17.537Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRX0E82DAF19RHG8049P4432",
+      "title": "VOLKSWAGEN CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-15T15:17:47.724Z",
+      "updated_at": "2025-04-15T15:17:47.724Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRX108QP9AXCVK35V6JQ71QY",
+      "title": "OTROS VEHÍCULOS ELÉCTRICOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-15T15:27:38.229Z",
+      "updated_at": "2025-04-15T15:27:38.229Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRX3C2JXZWFPFHD8H8WK11KR",
+      "title": "AUDI SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-15T16:09:02.300Z",
+      "updated_at": "2025-04-15T16:09:02.300Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JRX7NYH8R016C3693EZ3P028",
+      "title": "MERCEDES-BENZ COUPE",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-15T17:24:20.136Z",
+      "updated_at": "2025-04-15T17:24:20.136Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JSFP5XEYDFBHCN9M5DG4ZC4J",
+      "title": "MAZDA SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-22T21:24:03.165Z",
+      "updated_at": "2025-04-22T21:24:03.165Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JSFR6WZ07B32TR91JQ9PC93A",
+      "title": "DODGE CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-22T21:59:32.572Z",
+      "updated_at": "2025-04-22T21:59:32.572Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JSFSSRNX1TPG6MPZP3D45MB5",
+      "title": "PORSCHE ELÉCTRICO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-22T22:27:19.355Z",
+      "updated_at": "2025-04-22T22:27:19.355Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JSHW1SGTY2XN4VNMRG631FDK",
+      "title": "JEEP CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-23T17:45:08.377Z",
+      "updated_at": "2025-04-23T17:45:08.377Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JSJ7NPER6TMNBRYY6CQ00H7K",
+      "title": "OTROS VEHÍCULOS CAMIONETA",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-23T21:08:14.935Z",
+      "updated_at": "2025-04-23T21:08:14.935Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JSYXD18JB38NCG0X51X5SVK1",
+      "title": "AUDI SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-28T19:18:52.945Z",
+      "updated_at": "2025-04-28T19:18:52.945Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JT15GK7XWGV4GE34B2R7KRST",
+      "title": "KTM MOTOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-29T16:19:07.133Z",
+      "updated_at": "2025-04-29T16:19:07.133Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JT3TVP9M22066GEHSX7F6F9B",
+      "title": "MINI CABRIOLET",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-30T17:10:39.667Z",
+      "updated_at": "2025-04-30T17:10:39.667Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JT4FM9YSHCXP9DFM9K824Y9A",
+      "title": "MERCEDES-BENZ ELÉCTRICO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-04-30T23:13:37.753Z",
+      "updated_at": "2025-04-30T23:13:37.753Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JTKE5P3BPK2MYG4K1PJKKN66",
+      "title": "FERRARI SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-06T18:36:46.570Z",
+      "updated_at": "2025-05-06T18:36:46.570Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JTKJNPHM9B0XDC7M15AC3SN5",
+      "title": "TOYOTA CAMIONETA HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-06T19:55:25.619Z",
+      "updated_at": "2025-05-06T19:55:25.619Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JTKT1GQEJR8RE4Q46VD17MNC",
+      "title": "OTROS VEHÍCULOS SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-06T22:04:12.909Z",
+      "updated_at": "2025-05-06T22:04:12.909Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JTPGH2X59SE4YV0T4WZFC375",
+      "title": "CHEVROLET SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-07T23:15:40.580Z",
+      "updated_at": "2025-05-07T23:15:40.580Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JTRDNTQTZ6JG7F7R2ECW29H0",
+      "title": "LEXUS SUV HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-08T17:04:19.194Z",
+      "updated_at": "2025-05-08T17:04:19.194Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JTRYTR493XPPCET0WTZFMQCS",
+      "title": "LAND ROVER BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-08T22:04:06.152Z",
+      "updated_at": "2025-05-08T22:04:06.152Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JV2X4E93VS4CHZ42V38C49SF",
+      "title": "LEXUS SPORT BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-12T18:46:50.914Z",
+      "updated_at": "2025-05-12T18:46:50.914Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JV37GZKFM2KPNK0KVKVBP93C",
+      "title": "OTROS VEHÍCULOS BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-12T21:48:27.630Z",
+      "updated_at": "2025-05-12T21:48:27.630Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JYS3WRGRYPZP6W1BP0CYKJFX",
+      "title": "FORD SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-06-27T16:35:22.262Z",
+      "updated_at": "2025-06-27T16:35:22.262Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JV7NRT2Y3BP6M9RMKCGTC73W",
+      "title": "OTRAS MOTOS",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-14T15:14:21.917Z",
+      "updated_at": "2025-05-14T15:14:21.917Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JVD8Z0R5PZ9H56M0C8EQ9TSA",
+      "title": "FORD CAMIONETA HÍBRIDO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-16T19:26:00.452Z",
+      "updated_at": "2025-05-16T19:26:00.452Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JVMFV7WVACTSGZPQDSCTNFYX",
+      "title": "VOLKSWAGEN SEDAN",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-19T14:40:57.755Z",
+      "updated_at": "2025-05-19T14:40:57.755Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JVMXZFJAQZQWSZ66JJ2G75SC",
+      "title": "LEXUS SUV SPORT",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-19T18:47:56.745Z",
+      "updated_at": "2025-05-19T18:47:56.745Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JVQ9YVKTC7JMFZWBWAH1EVNX",
+      "title": "PORSCHE SUV",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-20T16:55:48.086Z",
+      "updated_at": "2025-05-20T16:55:48.086Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JVSTA7BA5269F31VP5YPJFBK",
+      "title": "BMW HÍBRIDO BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-21T16:20:06.633Z",
+      "updated_at": "2025-05-21T16:20:06.633Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JVTG8V1069XNSRGPX0AB71CS",
+      "title": "MAZDA COUPE",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-21T22:43:49.919Z",
+      "updated_at": "2025-05-21T22:43:49.919Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JVWY57F6MFC3G1EHWN9PM4KS",
+      "title": "MINI BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-22T21:25:00.517Z",
+      "updated_at": "2025-05-22T21:25:00.517Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JVYYFG2NYBNTK5B9GHQHV8P3",
+      "title": "LEXUS SUV BLINDADO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-23T16:09:05.876Z",
+      "updated_at": "2025-05-23T16:09:05.876Z",
+      "deleted_at": null,
+      "metadata": null
+    },
+    {
+      "id": "pcol_01JW78QEFNVDB9ASV27EYV4PG9",
+      "title": "CADILLAC SUV ELECTRICO",
+      "image_url": null,
+      "store_id": "store_01J9S3VMVD29XN5DP0E917FH67",
+      "created_at": "2025-05-26T21:42:07.604Z",
+      "updated_at": "2025-05-26T21:42:07.604Z",
+      "deleted_at": null,
+      "metadata": null
+    }
+  ],
+  "count": 120
+}
