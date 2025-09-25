@@ -34,6 +34,47 @@ class CatalogoClient {
     }
   }
 
+  private syncStateWithParams(): void {
+    const searchParams = new URLSearchParams(window.location.search)
+    const marcaFromUrl = searchParams.get('marca') ?? ''
+    const pageFromUrl = parseInt(searchParams.get('page') ?? '1', 10)
+
+    if (marcaFromUrl) {
+      this.state.currentMarca = marcaFromUrl
+      if (this.state.marcaSelect) {
+        this.state.marcaSelect.value = marcaFromUrl
+      }
+    }
+
+    if (!isNaN(pageFromUrl) && pageFromUrl > 0) {
+      this.state.currentPage = pageFromUrl
+    }
+  }
+
+  private handlePopState = (): void => {
+    this.syncStateWithParams()
+    this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
+  }
+
+  private updateUrlParams(): void {
+    if (typeof window === 'undefined') return
+
+    const url = new URL(window.location.href)
+    if (this.state.currentMarca) {
+      url.searchParams.set('marca', this.state.currentMarca)
+    } else {
+      url.searchParams.delete('marca')
+    }
+
+    if (this.state.currentPage > 1) {
+      url.searchParams.set('page', String(this.state.currentPage))
+    } else {
+      url.searchParams.delete('page')
+    }
+
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`)
+  }
+
   private renderSkeletons(count = API_CONFIG.PAGE_SIZE): void {
     if (!this.state.vehiculosLista) return
 
@@ -58,6 +99,8 @@ class CatalogoClient {
   }
 
   private async fetchVehiculos(page = 1, marca = ''): Promise<void> {
+    this.updateUrlParams()
+
     const offset = (page - 1) * API_CONFIG.PAGE_SIZE
     let url = `${API_CONFIG.BASE_URL}/products?offset=${offset}&limit=${API_CONFIG.PAGE_SIZE}&to_date=2025-06-11T19%3A11%3A06.729Z`
 
@@ -261,8 +304,6 @@ class CatalogoClient {
   }
 
   public init(): void {
-    this.state.paginacionDivs = Array.from(document.querySelectorAll<HTMLElement>('[data-pagination-anchor]'))
-
     // Event listener para selector de marcas
     this.state.marcaSelect?.addEventListener('change', e => {
       const target = e.target as HTMLSelectElement
@@ -278,7 +319,9 @@ class CatalogoClient {
 
     // Carga inicial
     this.renderSkeletons()
+    this.syncStateWithParams()
     this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
+    window.addEventListener('popstate', this.handlePopState)
   }
 
   private setupKeyboardNavigation(): void {
