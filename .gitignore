@@ -24,4 +24,4 @@ coverage/
 .idea/
 
 #pnpm
-## pnpm-lock.yaml
+pnpm-lock.yaml
