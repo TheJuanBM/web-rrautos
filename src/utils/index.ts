@@ -22,72 +22,50 @@ export function extractFirstLink(text: string): string {
  * Calcula el número total de páginas
  */
 export function calculateTotalPages(total: number, pageSize: number): number {
+  if (pageSize <= 0) return 0
+  if (total <= 0) return 0
   return Math.ceil(total / pageSize)
 }
 
 /**
  * Genera un array de números para la paginación
  */
-export function generatePageNumbers(totalPages: number, currentPage: number): number[] {
+export function buildPaginationSequence(totalPages: number, currentPage: number): number[] {
   if (totalPages <= 0) return []
 
-  if (totalPages <= 9) {
-    return Array.from({ length: totalPages }, (_, i) => i + 1)
-  }
-
-  const pages: number[] = []
   const safeCurrent = Math.min(Math.max(currentPage, 1), totalPages)
-  const edgeCount = 6
-
-  const firstPages = Array.from({ length: edgeCount }, (_, i) => i + 1)
-  const lastPagesStart = Math.max(totalPages - (edgeCount - 1), 1)
-  const lastPages = Array.from({ length: totalPages - lastPagesStart + 1 }, (_, i) => lastPagesStart + i)
-
-  if (safeCurrent <= edgeCount - 2) {
-    pages.push(...firstPages, -1, totalPages)
-    return dedupeWithinBounds(pages, totalPages)
+  const sequence = new Set<number>()
+  const pushWithinBounds = (...values: number[]) => {
+    for (const value of values) {
+      if (value >= 1 && value <= totalPages) {
+        sequence.add(value)
+      }
+    }
   }
 
-  if (safeCurrent >= totalPages - (edgeCount - 3)) {
-    pages.push(1, -1, ...lastPages)
-    return dedupeWithinBounds(pages, totalPages)
+  pushWithinBounds(1, totalPages)
+
+  if (totalPages <= 9) {
+    for (let i = 2; i < totalPages; i += 1) {
+      pushWithinBounds(i)
+    }
+    return Array.from(sequence).sort((a, b) => a - b)
   }
 
-  const middleStart = Math.max(safeCurrent - 2, 2)
-  const middleEnd = Math.min(safeCurrent + 2, totalPages - 1)
+  pushWithinBounds(safeCurrent - 2, safeCurrent - 1, safeCurrent, safeCurrent + 1, safeCurrent + 2)
+  pushWithinBounds(2, 3, totalPages - 2, totalPages - 1)
 
-  const middlePages = Array.from({ length: middleEnd - middleStart + 1 }, (_, i) => middleStart + i)
-
-  pages.push(1, -1, ...middlePages, -1, totalPages)
-
-  return dedupeWithinBounds(pages, totalPages)
-}
-
-function dedupeWithinBounds(pages: number[], totalPages: number): number[] {
-  const seen = new Set<number>()
+  const sorted = Array.from(sequence).sort((a, b) => a - b)
   const result: number[] = []
 
-  for (const page of pages) {
-    if (page === -1) {
-      if (result[result.length - 1] !== -1) {
-        result.push(-1)
-      }
-      continue
+  for (let i = 0; i < sorted.length; i += 1) {
+    const value = sorted[i]
+    result.push(value)
+
+    const nextValue = sorted[i + 1]
+    if (nextValue != null && nextValue - value > 1) {
+      result.push(-1)
     }
-
-    if (page < 1 || page > totalPages) continue
-    if (seen.has(page)) continue
-
-    seen.add(page)
-    result.push(page)
-  }
-
-  if (result[0] !== 1) {
-    result.unshift(1)
-  }
-
-  if (result[result.length - 1] !== totalPages) {
-    result.push(totalPages)
   }
 
   return result
@@ -111,6 +89,7 @@ export function toDomId(value: string, fallback: string): string {
   try {
     const normalized = value
       .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-zA-Z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '')
       .toLowerCase()

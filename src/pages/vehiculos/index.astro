@@ -10,7 +10,14 @@ import { ASESORES } from '../../config/constants'
 import Layout from '../../layouts/Layout.astro'
 import { apiService } from '../../services/api'
 
-const marcas = await apiService.fetchMarcas()
+let marcas: Awaited<ReturnType<typeof apiService.fetchMarcas>> = []
+
+try {
+  marcas = await apiService.fetchMarcas()
+} catch (error) {
+  console.error('No se pudieron cargar las marcas', error)
+  marcas = []
+}
 
 // Metadatos SEO específicos para la página de catálogo
 const seoData = {
@@ -28,6 +35,8 @@ const seoData = {
     ...marcas.map(m => `${m.title} usados`).slice(0, 10),
   ],
   type: 'website' as const,
+  author: 'RR Autos',
+  siteName: 'RR Autos',
 }
 ---
 

@@ -12,17 +12,27 @@ class ApiService {
     this.headers = API_CONFIG.HEADERS
   }
 
-  private async makeRequest<T>(url: string): Promise<T> {
-    try {
-      const response = await fetch(url, { headers: this.headers })
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+  private async makeRequest<T>(url: string, { retries = 2 } = {}): Promise<T> {
+    let lastError: unknown
+
+    for (let attempt = 0; attempt <= retries; attempt += 1) {
+      try {
+        const response = await fetch(url, { headers: this.headers })
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return await response.json()
+      } catch (error) {
+        lastError = error
+        if (attempt < retries) {
+          const waitTime = 2 ** attempt * 150
+          await new Promise(resolve => setTimeout(resolve, waitTime))
+        }
       }
-      return await response.json()
-    } catch (error) {
-      console.error('Error en la petición API:', error)
-      throw error
     }
+
+    console.error('Error en la petición API:', lastError)
+    throw lastError
   }
 
   async fetchMarcas(): Promise<Marca[]> {
@@ -39,10 +49,17 @@ class ApiService {
       url += `&order=ASC&sort_by=collection_order&collection_ids[]=${marca}`
     }
 
-    const data = await this.makeRequest<ApiResponse<Vehiculo[]>>(url)
-    return {
-      vehiculos: data.products ?? [],
-      total: data.count ?? 0,
+    try {
+      const data = await this.makeRequest<ApiResponse<Vehiculo[]>>(url)
+      return {
+        vehiculos: data.products ?? [],
+        total: data.count ?? 0,
+      }
+    } catch (error) {
+      return {
+        vehiculos: [],
+        total: 0,
+      }
     }
   }
 

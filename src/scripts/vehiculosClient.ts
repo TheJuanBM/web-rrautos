@@ -7,7 +7,7 @@ import {
   calculateTotalPages,
   escapeHtml,
   extractFirstLink,
-  generatePageNumbers,
+  buildPaginationSequence,
   resolveVehicleSlug,
   sanitizeUrl,
   toDomId,
@@ -19,6 +19,7 @@ interface VehiculosState {
   vehiculosLista: HTMLElement | null
   paginacionDivs: HTMLElement[]
   marcaSelect: HTMLSelectElement | null
+  errorBanner: HTMLElement | null
 }
 
 class VehiculosClient {
@@ -32,6 +33,7 @@ class VehiculosClient {
       vehiculosLista: document.getElementById('vehiculos-lista'),
       paginacionDivs: Array.from(document.querySelectorAll<HTMLElement>('[data-pagination-anchor]')),
       marcaSelect: document.getElementById('marca-select') as HTMLSelectElement,
+      errorBanner: document.querySelector('[data-results-error]'),
     }
   }
 
@@ -269,17 +271,30 @@ class VehiculosClient {
     if (!this.state.vehiculosLista) return
 
     this.state.vehiculosLista.innerHTML = `
-      <div class="flex flex-col items-center justify-center text-red-500 gap-2 py-10">
+      <div class="flex flex-col items-center justify-center text-contrast-medium gap-2 py-10">
         <svg class="w-8 h-8" viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          <path fill="currentColor" d="M11 15h2v2h-2zm0-8h2v6h-2zm1-5a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
         </svg>
-        <p class="text-sm">No pudimos cargar los vehículos. Actualiza la página o contáctanos si el problema persiste.</p>
+        <p class="text-sm">No pudimos cargar los vehículos. Intenta nuevamente o contáctanos si el problema persiste.</p>
       </div>
     `
+
+    if (this.state.errorBanner) {
+      this.state.errorBanner.textContent =
+        'Estamos experimentando problemas para cargar el catálogo. Reintenta en unos segundos.'
+      this.state.errorBanner.removeAttribute('hidden')
+      this.state.errorBanner.classList.add('is-visible')
+    }
   }
 
   private renderPaginacion(total: number, page: number): void {
     if (!this.state.paginacionDivs || this.state.paginacionDivs.length === 0) return
+
+    if (this.state.errorBanner) {
+      this.state.errorBanner.textContent = ''
+      this.state.errorBanner.setAttribute('hidden', '')
+      this.state.errorBanner.classList.remove('is-visible')
+    }
 
     const totalPages = calculateTotalPages(total, API_CONFIG.PAGE_SIZE)
 
@@ -288,7 +303,7 @@ class VehiculosClient {
       return
     }
 
-    const pageNumbers = generatePageNumbers(totalPages, page)
+    const pageNumbers = buildPaginationSequence(totalPages, page)
     const prevDisabled = page === 1
     const nextDisabled = page === totalPages
 
@@ -361,6 +376,12 @@ class VehiculosClient {
     }
 
     this.state.paginacionDivs.forEach(bindEvents)
+
+    if (this.state.errorBanner) {
+      this.state.errorBanner.textContent = ''
+      this.state.errorBanner.setAttribute('hidden', '')
+      this.state.errorBanner.classList.remove('is-visible')
+    }
   }
 
   public init(): void {

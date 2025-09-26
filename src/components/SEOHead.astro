@@ -9,6 +9,9 @@ export interface SEOProps {
   keywords?: string[]
   author?: string
   siteName?: string
+  analyticsId?: string
+  facebookAppId?: string
+  googleSiteVerification?: string
 }
 
 interface Props extends SEOProps {}
@@ -31,10 +34,21 @@ const {
   ],
   author = 'RR Autos',
   siteName = 'RR Autos',
-} = Astro.props
+  analyticsId = import.meta.env.PUBLIC_ANALYTICS_ID,
+  facebookAppId = import.meta.env.PUBLIC_FACEBOOK_APP_ID,
+  googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION,
+} = Astro.props as Props
 
 const fullTitle = title.includes('RR Autos') ? title : `${title} | RR Autos`
 const imageUrl = new URL(image, Astro.site || Astro.url.origin).href
+const analyticsSnippet = analyticsId
+  ? [
+      'window.dataLayer = window.dataLayer || [];',
+      'function gtag(){dataLayer.push(arguments);}',
+      "gtag('js', new Date());",
+      `gtag('config', '${analyticsId}', { anonymize_ip: true });`,
+    ].join(' ')
+  : undefined
 ---
 
 <!-- Meta básicos -->
@@ -46,6 +60,7 @@ const imageUrl = new URL(image, Astro.site || Astro.url.origin).href
 
 <!-- Robots -->
 {noindex && <meta name="robots" content="noindex, nofollow" />}
+{googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
@@ -55,6 +70,7 @@ const imageUrl = new URL(image, Astro.site || Astro.url.origin).href
 <meta property="og:url" content={canonical} />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content="es_CO" />
+{facebookAppId && <meta property="fb:app_id" content={facebookAppId} />}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -93,6 +109,16 @@ const imageUrl = new URL(image, Astro.site || Astro.url.origin).href
     },
   })}
 />
+
+<!-- Analytics -->
+{
+  analyticsSnippet && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${analyticsId}`} />
+      <script set:html={analyticsSnippet} />
+    </>
+  )
+}
 
 <!-- Preconnect para mejorar performance -->
 <link rel="preconnect" href="https://api-ecommerce.hostinger.com" />

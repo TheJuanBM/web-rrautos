@@ -60,6 +60,13 @@ Sitemap: https://rrautosweb.com/sitemap.xml
 - Frecuencia de actualización
 - Prioridades de páginas
 
+### ✅ **5. Señales de Verificación y Analítica**
+
+- `PUBLIC_GOOGLE_SITE_VERIFICATION` para Search Console
+- `PUBLIC_ANALYTICS_ID` configurado para Google Analytics 4
+- `PUBLIC_FACEBOOK_APP_ID` para mejorar insight sociales
+- Manejo de errores con reintentos en `apiService` y banners accesibles en el catálogo
+
 ---
 
 ## ♿ **MEJORAS DE ACCESIBILIDAD**

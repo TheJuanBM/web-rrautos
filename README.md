@@ -52,6 +52,7 @@ El sitio estará disponible en `http://localhost:4321`
 | `pnpm dev`        | Inicia el servidor de desarrollo   |
 | `pnpm build`      | Genera el build estándar           |
 | `pnpm build:prod` | Build optimizado (sin pasos extra) |
+| `pnpm test:ci`    | Ejecuta Vitest con cobertura       |
 
 ## 🏗️ Estructura del Proyecto
 

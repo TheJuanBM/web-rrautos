@@ -28,66 +28,36 @@ pautas WCAG AA.
 --color-gray-600: #374151; /* Ratio: ~7.9:1 ✅ */
 ```
 
-### 🛠️ **2. Nuevas Clases de Utilidad**
+### 🛠️ **2. Utilidades Consolidada en `components.css`**
+
+La paleta final vive en `src/styles/components.css`, usando variables reutilizables:
 
 ```css
-.text-contrast-high    /* Para títulos principales (#111827) */
-.text-contrast-medium  /* Para texto secundario (#374151) */
-.text-contrast-low     /* Para texto descriptivo (#374151) */
-.icon-contrast-low     /* Para iconos decorativos (#4b5563) */
-.icon-contrast-medium  /* Para iconos funcionales (#374151) */
+.vehicle-card__title {
+  color: var(--color-gray-900);
+}
+
+.text-contrast-high {
+  color: var(--color-gray-800);
+}
+
+.text-contrast-medium {
+  color: var(--color-gray-600);
+}
+
+.icon-contrast-medium {
+  color: var(--color-gray-600);
+}
 ```
 
 ### 🔧 **3. Elementos Corregidos**
 
-| Componente         | Antes           | Después                | Ratio    |
-| ------------------ | --------------- | ---------------------- | -------- |
-| **BrandSelector**  | `text-gray-400` | `icon-contrast-medium` | 7.9:1 ✅ |
-| **Pagination**     | `text-gray-500` | `text-contrast-medium` | 7.9:1 ✅ |
-| **Catálogo**       | `text-gray-600` | `text-contrast-low`    | 7.9:1 ✅ |
-| **Script Cliente** | `text-gray-500` | `text-contrast-medium` | 7.9:1 ✅ |
-
----
-
-## ☀️ **Enfoque Light Mode Únicamente**
-
-El proyecto ha sido optimizado para usar únicamente light mode, eliminando la complejidad y conflictos del dual-mode:
-
-```css
-/* Sistema simplificado - solo light mode */
-@layer utilities {
-  .text-contrast-high {
-    color: #111827;
-  }
-  .text-contrast-medium {
-    color: #374151;
-  }
-  .text-contrast-low {
-    color: #6b7280;
-  }
-  .icon-contrast-low {
-    color: #6b7280;
-  }
-  .icon-contrast-medium {
-    color: #374151;
-  }
-}
-```
-
----
-
-## 📊 **Ratios de Contraste Logrados (Light Mode)**
-
-| Clase                   | Color   | Hex   | Ratio sobre Blanco | Uso                 |
-| ----------------------- | ------- | ----- | ------------------ | ------------------- |
-| `.text-contrast-high`   | #111827 | Negro | **15.8:1** ✅      | Títulos principales |
-| `.text-contrast-medium` | #374151 | Gris  | **7.9:1** ✅       | Texto secundario    |
-| `.text-contrast-low`    | #6b7280 | Gris  | **4.6:1** ✅       | Texto descriptivo   |
-| `.icon-contrast-low`    | #6b7280 | Gris  | **4.6:1** ✅       | Iconos decorativos  |
-| `.icon-contrast-medium` | #374151 | Gris  | **7.9:1** ✅       | Iconos funcionales  |
-
-> **✅ Todos los ratios superan el mínimo WCAG AA (4.5:1)** **✅ La mayoría alcanza WCAG AAA (7:1) para máxima
-> accesibilidad**
+| Componente        | Ajuste aplicado                                                               |
+| ----------------- | ----------------------------------------------------------------------------- |
+| **BrandSelector** | Iconografía usa `var(--color-gray-600)` para 7.9:1 de ratio                   |
+| **Pagination**    | Botones con `var(--color-gray-700)` y focus visible accesible                 |
+| **Catálogo**      | Copy principal con `var(--color-gray-900)`                                    |
+| **Vehículos**     | Card titles con `var(--color-gray-900)` y CTA en `var(--color-primary-hover)` |
 
 ---
 
@@ -95,7 +65,7 @@ El proyecto ha sido optimizado para usar únicamente light mode, eliminando la c
 
 ### **Accesibilidad** ♿
 
-- ✅ Cumplimiento WCAG AA nivel **AAA** (7:1)
+- ✅ Cumplimiento WCAG AA (mayores a 4.5:1)
 - ✅ Mejor legibilidad para usuarios con baja visión
 - ✅ Soporte para daltonismo y deficiencias visuales
 
@@ -159,18 +129,12 @@ npx lighthouse http://localhost:4322/vehiculos --only-categories=accessibility
 **Antes**: ❌ Múltiples warnings de contraste + conflictos de dark/light mode **Después**: ✅ **0 warnings de
 contraste** + CSS simplificado y limpio
 
-### **Estado Actual (2024)**:
+### **Estado Actual (2025)**
 
-- ✅ **Solo Light Mode**: Eliminada complejidad de dual-mode
-- ✅ **Sistema de Utilidades**: `@layer utilities` para mejor especificidad
-- ✅ **Contraste Perfecto**: Todos los elementos cumplen WCAG AA/AAA
-- ✅ **CSS Limpio**: Sin conflictos, sin `!important` innecesarios
-- ✅ **Mantenible**: Clases semánticas y bien organizadas
+- ✅ Sistema de utilidades consolidado en `components.css`
+- ✅ Contrastes auditados conforme a WCAG AA
+- ✅ CSS simplificado y mantenible
+- ✅ Documentación actualizada para el equipo
 
-El sitio ahora cumple con los más altos estándares de accesibilidad visual, proporcionando una experiencia inclusiva
-para todos los usuarios.
-
----
-
-_Estas mejoras aseguran que RR Autos sea accesible para la mayor cantidad de usuarios posible, incluyendo personas con
-discapacidades visuales._
+Estas mejoras mantienen a RR Autos accesible para la mayor cantidad de usuarios posible, incluyendo personas con
+discapacidades visuales.
