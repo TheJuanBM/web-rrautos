@@ -22,3 +22,6 @@ coverage/
 
 # jetbrains setting folder
 .idea/
+
+#pnpm
+## pnpm-lock.yaml
