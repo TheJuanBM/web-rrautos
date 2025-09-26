@@ -13,6 +13,12 @@ import {
   toDomId,
 } from '../utils'
 
+interface LoadingIndicatorElements {
+  container: HTMLElement | null
+  text: HTMLElement | null
+  dot: HTMLElement | null
+}
+
 interface VehiculosState {
   currentPage: number
   currentMarca: string
@@ -20,11 +26,18 @@ interface VehiculosState {
   paginacionDivs: HTMLElement[]
   marcaSelect: HTMLSelectElement | null
   errorBanner: HTMLElement | null
+  loadingIndicator: LoadingIndicatorElements
 }
 
 class VehiculosClient {
   private state: VehiculosState
   private readonly defaultCtaUrl = 'https://wa.me/51987654321'
+  private loadingIndicatorHideTimeout: number | null = null
+  private readonly loadingMessages = Object.freeze({
+    loading: 'Cargando catálogo de vehículos…',
+    ready: 'Catálogo actualizado.',
+    error: 'No pudimos cargar el catálogo. Intenta nuevamente.',
+  })
 
   constructor() {
     this.state = {
@@ -34,6 +47,16 @@ class VehiculosClient {
       paginacionDivs: Array.from(document.querySelectorAll<HTMLElement>('[data-pagination-anchor]')),
       marcaSelect: document.getElementById('marca-select') as HTMLSelectElement,
       errorBanner: document.querySelector('[data-results-error]'),
+      loadingIndicator: this.selectLoadingIndicator(),
+    }
+  }
+
+  private selectLoadingIndicator(): LoadingIndicatorElements {
+    const container = document.querySelector<HTMLElement>('.catalog__loading-intro')
+    return {
+      container: container ?? null,
+      text: container?.querySelector<HTMLElement>('.catalog__loading-text') ?? null,
+      dot: container?.querySelector<HTMLElement>('.catalog__loading-dot') ?? null,
     }
   }
 
@@ -84,47 +107,74 @@ class VehiculosClient {
     const skeletonHTML = Array.from({ length: count })
       .map(
         () => `
-        <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm animate-pulse h-[345px] vehicle-card">
-          <div class="w-full h-30 md:h-32 bg-gray-200 rounded-md"></div>
-          <div class="h-3 bg-gray-200 rounded w-2/3 mt-3"></div>
-          <div class="h-3 bg-gray-200 rounded w-1/3 mt-2"></div>
-          <div class="h-7 bg-gray-200 rounded-md w-24 mt-3"></div>
-        </div>
+        <article class="vehicle-card vehicle-card--skeleton" role="listitem" aria-hidden="true">
+          <div class="vehicle-card__media">
+            <div class="vehicle-card__image vehicle-card__image--skeleton"></div>
+          </div>
+
+          <div class="vehicle-card__body">
+            <div class="vehicle-card__info">
+              <div class="skeleton skeleton--line skeleton--title"></div>
+              <div class="skeleton skeleton--line skeleton--subtitle"></div>
+            </div>
+
+            <div class="skeleton skeleton--button"></div>
+          </div>
+        </article>
       `
       )
       .join('')
 
     this.state.vehiculosLista.innerHTML = `
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-4 vehicle-card-grid">
+      <section class="vehicle-card-grid" role="list" aria-label="Vehículos en proceso de carga">
         ${skeletonHTML}
-      </div>
+      </section>
     `
   }
 
   private async fetchVehiculos(page = 1, marca = ''): Promise<void> {
     this.updateUrlParams()
 
-    const offset = (page - 1) * API_CONFIG.PAGE_SIZE
-    let url = `${API_CONFIG.BASE_URL}/products?offset=${offset}&limit=${API_CONFIG.PAGE_SIZE}&to_date=2025-06-11T19%3A11%3A06.729Z`
-
-    if (marca && marca !== '') {
-      url += `&order=ASC&sort_by=collection_order&collection_ids[]=${marca}`
-    }
-
+    this.setLoadingState('loading')
     this.renderSkeletons()
+
+    const offset = (page - 1) * API_CONFIG.PAGE_SIZE
+    const url = this.buildVehiculosUrl({ marca, offset })
 
     try {
       const response = await fetch(url, { headers: API_CONFIG.HEADERS })
-      if (!response.ok) {
-        throw new Error(`Respuesta inesperada (${response.status})`)
-      }
+      this.ensureSuccessfulResponse(response)
+
       const data = await response.json()
       this.renderVehiculos(data.products ?? [])
       this.renderPaginacion(data.count ?? 0, page)
+      this.setLoadingState('ready')
     } catch (error) {
       console.error('Error al cargar vehículos:', error)
       this.renderError()
+      this.setLoadingState('error')
     }
+  }
+
+  private buildVehiculosUrl({ marca, offset }: { marca: string; offset: number }): string {
+    const params = new URLSearchParams({
+      offset: offset.toString(),
+      limit: API_CONFIG.PAGE_SIZE.toString(),
+    })
+
+    if (marca) {
+      params.set('order', 'ASC')
+      params.set('sort_by', 'collection_order')
+      params.append('collection_ids[]', marca)
+    }
+
+    return `${API_CONFIG.BASE_URL}/products?${params.toString()}`
+  }
+
+  private ensureSuccessfulResponse(response: Response): void {
+    if (response.ok) return
+
+    throw new Error(`Respuesta inesperada (${response.status})`)
   }
 
   private renderVehiculos(productos: Vehiculo[]): void {
@@ -142,13 +192,15 @@ class VehiculosClient {
       return
     }
 
+    const primaryImageWidth = 480
+
     const vehiculosHTML = productos
       .map((vehiculo, index) => {
         const safeTitle = escapeHtml(vehiculo.title ?? 'Vehículo disponible')
         const ribbonLabel = vehiculo.ribbon_text ? escapeHtml(vehiculo.ribbon_text.trim()) : ''
         const baseImageUrl = vehiculo.thumbnail ? sanitizeUrl(vehiculo.thumbnail) : ''
         const hasImage = Boolean(baseImageUrl && baseImageUrl !== '#')
-        const imageSrc = hasImage ? buildOptimizedImageUrl(baseImageUrl, 480) : ''
+        const imageSrc = hasImage ? buildOptimizedImageUrl(baseImageUrl, primaryImageWidth) : ''
         const imageSrcSet = hasImage ? buildSrcSet(baseImageUrl) : ''
         const loading = index < 2 ? 'eager' : 'lazy'
         const fetchPriority = index < 2 ? 'high' : 'auto'
@@ -259,7 +311,6 @@ class VehiculosClient {
         }
       })
 
-      card.setAttribute('role', 'link')
       const titleElement = card.querySelector<HTMLElement>('.vehicle-card__title')
       if (titleElement) {
         card.setAttribute('aria-label', `Ver detalles de ${titleElement.textContent?.trim() ?? 'vehículo'}`)
@@ -382,6 +433,40 @@ class VehiculosClient {
       this.state.errorBanner.setAttribute('hidden', '')
       this.state.errorBanner.classList.remove('is-visible')
     }
+  }
+
+  private setLoadingState(state: 'loading' | 'ready' | 'error'): void {
+    const { container, dot, text } = this.state.loadingIndicator
+    if (!container) return
+
+    if (this.loadingIndicatorHideTimeout) {
+      window.clearTimeout(this.loadingIndicatorHideTimeout)
+      this.loadingIndicatorHideTimeout = null
+    }
+
+    if (state === 'loading') {
+      container.removeAttribute('hidden')
+      container.setAttribute('aria-busy', 'true')
+      container.dataset.state = 'loading'
+      text?.replaceChildren(document.createTextNode(this.loadingMessages.loading))
+      dot?.removeAttribute('data-state')
+      return
+    }
+
+    const targetState = state === 'ready' ? 'ready' : 'error'
+    container.removeAttribute('aria-busy')
+    container.dataset.state = targetState
+    text?.replaceChildren(document.createTextNode(this.loadingMessages[targetState]))
+    dot?.setAttribute('data-state', targetState)
+
+    const hideDelay = targetState === 'ready' ? 600 : 2000
+    this.loadingIndicatorHideTimeout = window.setTimeout(() => {
+      container.setAttribute('hidden', '')
+      container.removeAttribute('data-state')
+      text?.replaceChildren(document.createTextNode(this.loadingMessages.loading))
+      dot?.removeAttribute('data-state')
+      this.loadingIndicatorHideTimeout = null
+    }, hideDelay)
   }
 
   public init(): void {

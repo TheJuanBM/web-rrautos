@@ -19,7 +19,6 @@ export default defineConfig({
   compressHTML: true,
   server: {
     headers: {
-      'Cache-Control': 'public, max-age=3600',
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',
       'X-XSS-Protection': '1; mode=block',

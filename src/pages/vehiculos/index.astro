@@ -19,7 +19,7 @@ try {
   marcas = []
 }
 
-// Metadatos SEO específicos para la página de catálogo
+// Metadatos SEO específicos para la página de vehículos
 const seoData = {
   title: 'Catálogo de Vehículos Usados',
   description:
@@ -42,7 +42,10 @@ const seoData = {
 
 <Layout {...seoData}>
   <CatalogShell>
-    <p class="catalog__loading-intro" aria-live="polite">Cargando catálogo de vehículos…</p>
+    <p class="catalog__loading-intro" aria-live="polite" data-state="loading" role="status">
+      <span class="catalog__loading-dot" aria-hidden="true"></span>
+      <span class="catalog__loading-text">Cargando catálogo de vehículos…</span>
+    </p>
     <FiltersCard marcas={marcas} />
 
     <ResultsSection>
@@ -216,6 +219,156 @@ const seoData = {
 
       :global(.pagination__ellipsis) {
         width: 1.3rem;
+      }
+    }
+
+    .catalog__loading-intro {
+      display: inline-flex;
+      align-items: center;
+      position: absolute;
+      gap: 0.6rem;
+      margin: 1rem 1rem 1.5rem;
+      padding: 0.6rem 1.05rem 0.6rem 0.85rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(var(--color-gray-200-rgb), 0.65);
+      background: linear-gradient(
+        135deg,
+        rgba(var(--color-white-rgb), 0.98),
+        rgba(var(--color-primary-tint-rgb), 0.32)
+      );
+      color: rgba(var(--color-gray-600-rgb), 0.96);
+      font-size: 0.98rem;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      box-shadow:
+        0 22px 48px -30px rgba(var(--color-gray-900-rgb), 0.6),
+        0 0 0 1px rgba(var(--color-primary-rgb), 0.08);
+      justify-self: end;
+      z-index: 2;
+    }
+
+    .catalog__loading-dot {
+      position: relative;
+      display: inline-grid;
+      place-items: center;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 9999px;
+      background: radial-gradient(
+        circle,
+        var(--color-primary) 35%,
+        rgba(var(--color-primary-rgb), 0.6) 70%,
+        transparent 100%
+      );
+      box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.4);
+    }
+
+    .catalog__loading-intro[data-state='loading'] .catalog__loading-dot {
+      animation: catalogLoadingPulse 1.5s ease-in-out infinite;
+    }
+
+    .catalog__loading-intro[data-state='ready'] .catalog__loading-dot {
+      background: radial-gradient(
+        circle,
+        var(--color-success) 35%,
+        rgba(var(--color-success-rgb), 0.45) 70%,
+        transparent 100%
+      );
+      animation: catalogLoadingPulseSuccess 1.2s ease-in-out 1;
+    }
+
+    .catalog__loading-intro[data-state='error'] .catalog__loading-dot {
+      background: radial-gradient(
+        circle,
+        var(--color-error, #dc2626) 35%,
+        rgba(220, 38, 38, 0.5) 70%,
+        transparent 100%
+      );
+      animation: catalogLoadingPulseError 1.6s ease-in-out infinite;
+    }
+
+    .catalog__loading-text {
+      white-space: nowrap;
+    }
+
+    .catalog__loading-intro[data-state='ready'] .catalog__loading-text {
+      color: rgba(var(--color-success-rgb), 0.95);
+    }
+
+    .catalog__loading-intro[data-state='error'] .catalog__loading-text {
+      color: rgba(220, 38, 38, 0.92);
+    }
+
+    @media (max-width: 960px) {
+      .catalog__loading-intro {
+        justify-self: stretch;
+        justify-content: space-between;
+        padding: 0.65rem 1.1rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .catalog__loading-intro {
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 1.2rem;
+        text-align: center;
+        line-height: 1.3;
+      }
+
+      .catalog__loading-text {
+        white-space: normal;
+      }
+    }
+
+    .catalog__loading-intro[data-state='ready'] .catalog__loading-dot,
+    .catalog__loading-intro[data-state='error'] .catalog__loading-dot {
+      box-shadow: none;
+    }
+
+    .catalog__loading-intro[hidden] {
+      display: none;
+    }
+
+    @keyframes catalogLoadingPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 0 0.45rem rgba(var(--color-primary-rgb), 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0);
+      }
+    }
+
+    @keyframes catalogLoadingPulseSuccess {
+      0% {
+        box-shadow: 0 0 0 0 rgba(var(--color-success-rgb), 0.45);
+      }
+
+      45% {
+        box-shadow: 0 0 0 0.4rem rgba(var(--color-success-rgb), 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(var(--color-success-rgb), 0);
+      }
+    }
+
+    @keyframes catalogLoadingPulseError {
+      0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.5);
+      }
+
+      55% {
+        box-shadow: 0 0 0 0.45rem rgba(220, 38, 38, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
       }
     }
 

@@ -176,6 +176,9 @@ Características incluidas:
 - **Accesibilidad**: componentes con `aria` labels, foco gestionado y mensajes para screen readers
 - **SEO**: títulos unificados con sufijo automático, JSON-LD, canonical dinámico
 - **Performance**: skeletons en cliente, prefetch/preconnect selectivo y utilidades de imágenes
+- Improvements
+  - Added middleware (`src/middleware.ts`) to set caching headers for static assets, media, and HTML responses,
+    addressing Lighthouse’s “Efficient cache policy” recommendation.
 
 ## 📚 Documentación Adicional
 

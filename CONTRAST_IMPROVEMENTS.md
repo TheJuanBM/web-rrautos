@@ -56,7 +56,7 @@ La paleta final vive en `src/styles/components.css`, usando variables reutilizab
 | ----------------- | ----------------------------------------------------------------------------- |
 | **BrandSelector** | Iconografía usa `var(--color-gray-600)` para 7.9:1 de ratio                   |
 | **Pagination**    | Botones con `var(--color-gray-700)` y focus visible accesible                 |
-| **Catálogo**      | Copy principal con `var(--color-gray-900)`                                    |
+| **Vehículos**     | Copy principal con `var(--color-gray-900)`                                    |
 | **Vehículos**     | Card titles con `var(--color-gray-900)` y CTA en `var(--color-primary-hover)` |
 
 ---

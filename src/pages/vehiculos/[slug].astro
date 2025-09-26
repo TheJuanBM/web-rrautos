@@ -80,8 +80,6 @@ for (const line of descriptionLines) {
   }
 }
 
-const specs = Array.from(specsMap.entries()).map(([label, value]) => ({ label, value }))
-
 const priceLine = descriptionLines.find(line => /\$\s?\d/.test(line))
 const priceValue = priceLine?.match(/\$\s?[\d.,]+/)?.[0] ?? null
 const numericPrice = priceValue ? Number(priceValue.replace(/[^\d]/g, '')) : null
@@ -290,7 +288,7 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
     <nav class="vehicle-detail__breadcrumbs" aria-label="Ruta de navegación">
       <ol>
         <li><a href="/">Inicio</a></li>
-        <li><a href="/vehiculos">Catálogo</a></li>
+        <li><a href="/vehiculos">Vehículos</a></li>
         <li aria-current="page">{title}</li>
       </ol>
     </nav>

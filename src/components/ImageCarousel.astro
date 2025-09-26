@@ -59,6 +59,7 @@ const carouselId = `carousel-${requestId ?? Math.random().toString(36).slice(2, 
                   height={750}
                   class="carousel__image"
                   priority={index === 0}
+                  fetchpriority={index === 0 ? 'high' : 'low'}
                 />
               </div>
             </article>
@@ -110,6 +111,7 @@ const carouselId = `carousel-${requestId ?? Math.random().toString(36).slice(2, 
                   width={130}
                   height={160}
                   class="carousel__thumb-image"
+                  fetchpriority="low"
                 />
                 {showExtraBadge && (
                   <div class="carousel__thumb-extra" aria-hidden="true" title="Ver más imágenes">
@@ -127,9 +129,13 @@ const carouselId = `carousel-${requestId ?? Math.random().toString(36).slice(2, 
 
 <script>
   const hydrators = new Set()
+  const queuedCarousels = new WeakSet<HTMLElement>()
+  let intersectionObserver: IntersectionObserver | null = null
 
   function initCarousel(root: HTMLElement | null) {
     if (!root || root.dataset.carouselInitialized) return
+    queuedCarousels.delete(root)
+    delete root.dataset.carouselQueued
     const viewport = root.querySelector<HTMLElement>('[data-carousel-viewport]')
     const slides = Array.from(root.querySelectorAll<HTMLElement>('[data-carousel-slide]'))
     const prevButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-carousel-prev]'))
@@ -334,9 +340,50 @@ const carouselId = `carousel-${requestId ?? Math.random().toString(36).slice(2, 
     root.dataset.carouselInitialized = 'true'
   }
 
+  function queueCarouselInit(element: HTMLElement) {
+    if (element.dataset.carouselInitialized === 'true' || queuedCarousels.has(element)) return
+    queuedCarousels.add(element)
+    element.dataset.carouselQueued = 'true'
+
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      if (!intersectionObserver) {
+        intersectionObserver = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (!entry.isIntersecting) return
+              const target = entry.target as HTMLElement
+              intersectionObserver?.unobserve(target)
+              initCarousel(target)
+            })
+          },
+          { rootMargin: '200px 0px' }
+        )
+      }
+      intersectionObserver.observe(element)
+      return
+    }
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      ;(
+        window as Window &
+          typeof globalThis & {
+            requestIdleCallback: (callback: IdleRequestCallback) => number
+          }
+      ).requestIdleCallback(() => initCarousel(element))
+      return
+    }
+
+    if (typeof window !== 'undefined' && 'setTimeout' in window) {
+      ;(window as Window & typeof globalThis).setTimeout(() => initCarousel(element), 120)
+      return
+    }
+
+    setTimeout(() => initCarousel(element), 120)
+  }
+
   function hydrateAllCarousels() {
     const carousels = document.querySelectorAll<HTMLElement>('[data-carousel]')
-    carousels.forEach(element => initCarousel(element))
+    carousels.forEach(element => queueCarouselInit(element))
   }
 
   if (!hydrators.size) {
