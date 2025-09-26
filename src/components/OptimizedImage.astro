@@ -25,18 +25,46 @@ const {
   priority = false,
 } = Astro.props
 
-// Generar diferentes tamaños de imagen para responsive
-const generateSrcSet = (baseSrc: string) => {
-  const widths = [320, 640, 768, 1024, 1280, 1920]
-  return widths.map(w => `${baseSrc}?w=${w}&q=${quality} ${w}w`).join(', ')
+const defaultSizes = sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
+const widths = [320, 480, 640, 768, 1024, 1280, 1600, 1920]
+
+function buildImageUrl(baseSrc: string, targetWidth?: number): string {
+  if (!baseSrc) return ''
+
+  const baseOrigin = Astro.site || Astro.url?.origin || undefined
+  try {
+    const url = new URL(baseSrc, baseOrigin)
+
+    if (typeof targetWidth === 'number' && targetWidth > 0) {
+      url.searchParams.set('w', String(targetWidth))
+    }
+
+    url.searchParams.set('q', String(quality))
+    return url.toString()
+  } catch {
+    const separator = baseSrc.includes('?') ? '&' : '?'
+    const widthParam = targetWidth ? `w=${targetWidth}&` : ''
+    return `${baseSrc}${separator}${widthParam}q=${quality}`
+  }
 }
 
-const defaultSizes = sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
+const normalizedSrc = buildImageUrl(src, width)
+const srcSetEntries = widths
+  .concat(width && !widths.includes(width) ? [width] : [])
+  .sort((a, b) => a - b)
+  .map(currentWidth => {
+    const candidate = buildImageUrl(src, currentWidth)
+    return candidate ? `${candidate} ${currentWidth}w` : ''
+  })
+  .filter(Boolean)
+
+const srcSet = srcSetEntries.join(', ')
+const finalSrc = normalizedSrc || src
 ---
 
 <img
-  src={`${src}?w=${width || 640}&q=${quality}`}
-  srcset={generateSrcSet(src)}
+  src={finalSrc}
+  srcset={srcSet || undefined}
   sizes={defaultSizes}
   alt={alt}
   width={width}

@@ -8,11 +8,12 @@ import {
   escapeHtml,
   extractFirstLink,
   generatePageNumbers,
+  resolveVehicleSlug,
   sanitizeUrl,
   toDomId,
 } from '../utils'
 
-interface CatalogoState {
+interface VehiculosState {
   currentPage: number
   currentMarca: string
   vehiculosLista: HTMLElement | null
@@ -20,8 +21,8 @@ interface CatalogoState {
   marcaSelect: HTMLSelectElement | null
 }
 
-class CatalogoClient {
-  private state: CatalogoState
+class VehiculosClient {
+  private state: VehiculosState
   private readonly defaultCtaUrl = 'https://wa.me/51987654321'
 
   constructor() {
@@ -112,6 +113,9 @@ class CatalogoClient {
 
     try {
       const response = await fetch(url, { headers: API_CONFIG.HEADERS })
+      if (!response.ok) {
+        throw new Error(`Respuesta inesperada (${response.status})`)
+      }
       const data = await response.json()
       this.renderVehiculos(data.products ?? [])
       this.renderPaginacion(data.count ?? 0, page)
@@ -147,11 +151,24 @@ class CatalogoClient {
         const loading = index < 2 ? 'eager' : 'lazy'
         const fetchPriority = index < 2 ? 'high' : 'auto'
         const cardId = toDomId(vehiculo.id ?? safeTitle, `vehicle-${index}`)
-        const extractedLink = extractFirstLink(vehiculo.description)
+        const extractedLink = extractFirstLink(vehiculo.description ?? '')
         const ctaHref = sanitizeUrl(extractedLink !== '#' ? extractedLink : this.defaultCtaUrl)
+        const slug = resolveVehicleSlug({
+          id: vehiculo.id,
+          title: vehiculo.title,
+          slug: vehiculo.slug,
+          seo_settings: vehiculo.seo_settings,
+          page_settings: vehiculo.page_settings,
+        })
+        const detailPath = slug ? `/vehiculos/${slug}` : ''
+        const detailUrl = slug
+          ? `${typeof window !== 'undefined' ? window.location.origin.replace(/\/$/, '') : ''}${detailPath}`
+          : ''
+        const contactLink = ctaHref !== '#' ? ctaHref : detailUrl || this.defaultCtaUrl
+        const detailAttributes = detailPath ? ` data-detail-url="${detailPath}" tabindex="0"` : ''
 
         return `
-          <article class="vehicle-card" role="listitem" aria-labelledby="${cardId}-title">
+          <article class="vehicle-card" role="listitem" aria-labelledby="${cardId}-title"${detailAttributes}>
             <div class="vehicle-card__media" ${hasImage ? `role="img" aria-label="Imagen de ${safeTitle}"` : 'aria-hidden="true"'}>
               ${ribbonLabel ? `<span class="vehicle-card__badge">${ribbonLabel}</span>` : ''}
               ${
@@ -180,18 +197,27 @@ class CatalogoClient {
                 <h3 id="${cardId}-title" class="vehicle-card__title">${safeTitle}</h3>
               </div>
 
-              <a
-                href="${ctaHref}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="vehicle-card__cta"
-                aria-label="Ver más detalles de ${safeTitle} (se abre en nueva ventana)"
-              >
-                <span>Ver ficha completa</span>
-                <svg class="vehicle-card__cta-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="currentColor" d="M13.172 12L8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"></path>
-                </svg>
-              </a>
+              <div class="vehicle-card__cta-group">
+                <a
+                  href="${detailPath || '#'}"
+                  class="vehicle-card__cta"
+                  aria-label="Ver detalles de ${safeTitle}"
+                >
+                  <span>Ver ficha completa</span>
+                  <svg class="vehicle-card__cta-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M13.172 12L8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"></path>
+                  </svg>
+                </a>
+                <a
+                  href="${contactLink}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="vehicle-card__cta vehicle-card__cta--secondary"
+                  aria-label="Contactar asesor de ${safeTitle} (se abre en nueva ventana)"
+                >
+                  <span>Contactar asesor</span>
+                </a>
+              </div>
             </div>
           </article>
         `
@@ -203,6 +229,40 @@ class CatalogoClient {
         ${vehiculosHTML}
       </section>
     `
+
+    this.attachCardNavigation()
+  }
+
+  private attachCardNavigation(): void {
+    if (!this.state.vehiculosLista) return
+
+    this.state.vehiculosLista.querySelectorAll<HTMLElement>('[data-detail-url]').forEach(card => {
+      const detailUrl = card.getAttribute('data-detail-url')
+      if (!detailUrl) return
+
+      const navigateToDetail = () => {
+        window.location.href = detailUrl
+      }
+
+      card.addEventListener('click', event => {
+        const target = event.target as HTMLElement
+        if (target.closest('a')) return
+        navigateToDetail()
+      })
+
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          navigateToDetail()
+        }
+      })
+
+      card.setAttribute('role', 'link')
+      const titleElement = card.querySelector<HTMLElement>('.vehicle-card__title')
+      if (titleElement) {
+        card.setAttribute('aria-label', `Ver detalles de ${titleElement.textContent?.trim() ?? 'vehículo'}`)
+      }
+    })
   }
 
   private renderError(): void {
@@ -213,7 +273,7 @@ class CatalogoClient {
         <svg class="w-8 h-8" viewBox="0 0 24 24" aria-hidden="true">
           <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
         </svg>
-        <p class="text-sm">Error al cargar los vehículos. Por favor, intenta de nuevo.</p>
+        <p class="text-sm">No pudimos cargar los vehículos. Actualiza la página o contáctanos si el problema persiste.</p>
       </div>
     `
   }
@@ -384,7 +444,7 @@ class CatalogoClient {
 
 // Inicializar cuando el DOM esté listo
 if (typeof window !== 'undefined') {
-  const catalogo = new CatalogoClient()
+  const catalogo = new VehiculosClient()
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => catalogo.init())

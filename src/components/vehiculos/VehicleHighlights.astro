@@ -1,0 +1,58 @@
+---
+export interface VehicleHighlight {
+  label: string
+  value: string
+}
+
+export interface VehicleHighlightsProps {
+  items: VehicleHighlight[]
+}
+
+const { items = [] } = Astro.props as VehicleHighlightsProps
+---
+
+{
+  items.length > 0 && (
+    <dl class="vehicle-highlights">
+      {items.map(item => (
+        <div class="vehicle-highlights__item">
+          <dt>{item.label}</dt>
+          <dd>{item.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+<style>
+  .vehicle-highlights {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    margin: 0;
+  }
+
+  .vehicle-highlights__item {
+    background: rgba(248, 250, 255, 0.9);
+    border-radius: 1rem;
+    padding: 0.95rem 1.05rem;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .vehicle-highlights__item dt {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(79, 70, 229, 0.95);
+  }
+
+  .vehicle-highlights__item dd {
+    margin: 0;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    font-size: 1.05rem;
+  }
+</style>

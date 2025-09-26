@@ -1,10 +1,14 @@
 ---
-import AsesoresList from '../components/AsesoresList.astro'
-import BrandSelector from '../components/BrandSelector.astro'
-import VehicleSkeleton from '../components/VehicleSkeleton.astro'
-import { ASESORES } from '../config/constants'
-import Layout from '../layouts/Layout.astro'
-import { apiService } from '../services/api'
+import AsesoresList from '../../components/AsesoresList.astro'
+import VehicleSkeleton from '../../components/VehicleSkeleton.astro'
+import CatalogCTA from '../../components/vehiculos/CatalogCTA.astro'
+import CatalogShell from '../../components/vehiculos/CatalogShell.astro'
+import FiltersCard from '../../components/vehiculos/FiltersCard.astro'
+import HighlightsSection from '../../components/vehiculos/HighlightsSection.astro'
+import ResultsSection from '../../components/vehiculos/ResultsSection.astro'
+import { ASESORES } from '../../config/constants'
+import Layout from '../../layouts/Layout.astro'
+import { apiService } from '../../services/api'
 
 const marcas = await apiService.fetchMarcas()
 
@@ -28,239 +32,48 @@ const seoData = {
 ---
 
 <Layout {...seoData}>
-  <div class="catalog">
-    <div class="catalog__inner">
-      <section class="catalog__filters" aria-label="Filtros de búsqueda">
-        <div class="filters-card">
-          <header>
-            <p class="filters-eyebrow">Filtrar resultados</p>
-            <h1 id="catalog-title">Encuentra la marca ideal</h1>
-            <p>
-              El inventario se actualiza a diario con unidades exclusivas. Empieza eligiendo la marca que prefieres y
-              descubre las opciones disponibles.
-            </p>
-          </header>
-          <div class="filters-control">
-            <BrandSelector marcas={marcas} />
-          </div>
-          <footer>
-            <p>¿No encuentras la marca que buscas? Escríbenos y la rastreamos por ti.</p>
-            <a class="filters-link" href="https://wa.me/51987654321" rel="noopener">Solicitar búsqueda personalizada</a>
-          </footer>
-        </div>
-      </section>
+  <CatalogShell>
+    <p class="catalog__loading-intro" aria-live="polite">Cargando catálogo de vehículos…</p>
+    <FiltersCard marcas={marcas} />
 
-      <section class="catalog__results" aria-label="Resultados de búsqueda">
-        <header class="results-header">
-          <div>
-            <p class="results-eyebrow">Inventario disponible</p>
-            <h2>Vehículos listos para entregar</h2>
-          </div>
-          <p>
-            Los resultados se muestran automáticamente según el filtro seleccionado. Nuestros asesores validan la
-            disponibilidad de cada unidad en tiempo real.
-          </p>
-        </header>
+    <ResultsSection>
+      <VehicleSkeleton />
+    </ResultsSection>
 
-        <div class="results-pagination" data-pagination-anchor="top" aria-label="Navegación de páginas"></div>
+    <AsesoresList asesores={ASESORES} />
 
-        <div id="vehiculos-lista" class="results-grid" aria-live="polite" aria-label="Lista de vehículos">
-          <VehicleSkeleton />
-        </div>
+    <HighlightsSection
+      items={[
+        {
+          title: 'Stock curado',
+          description: 'Seleccionamos solo unidades con historial claro, kilometraje real y mantenimiento documentado.',
+        },
+        {
+          title: 'Entrega express',
+          description:
+            'Gestionamos matrícula, SOAT y transferencia para que recibas tu auto listo para circular en menos de 72 horas.',
+        },
+        {
+          title: 'Postventa dedicada',
+          description:
+            'Accede a talleres aliados, recordatorios de mantenimiento y soporte continuo después de la compra.',
+        },
+      ]}
+    />
 
-        <div class="results-pagination" data-pagination-anchor="bottom" aria-label="Navegación de páginas"></div>
-      </section>
-
-      <AsesoresList asesores={ASESORES} />
-
-      <section class="catalog__highlights" aria-labelledby="highlights-title">
-        <header>
-          <p class="section-eyebrow">Lo que nos diferencia</p>
-          <p>
-            Desde la inspección hasta la entrega, cuidamos cada detalle para que disfrutes tu auto desde el primer día.
-            Sin trámites extensos ni sorpresas ocultas.
-          </p>
-        </header>
-
-        <div class="highlights-grid">
-          <article class="highlight">
-            <h3>Stock curado</h3>
-            <p>Seleccionamos solo unidades con historial claro, kilometraje real y mantenimiento documentado.</p>
-          </article>
-          <article class="highlight">
-            <h3>Entrega express</h3>
-            <p>
-              Gestionamos matrícula, SOAT y transferencia para que recibas tu auto listo para circular en menos de 72
-              horas.
-            </p>
-          </article>
-          <article class="highlight">
-            <h3>Postventa dedicada</h3>
-            <p>Accede a talleres aliados, recordatorios de mantenimiento y soporte continuo después de la compra.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog__cta" aria-labelledby="cta-title">
-        <div class="cta-card">
-          <div class="cta-card__content">
-            <p class="section-eyebrow">Reserva sin compromiso</p>
-            <h2 id="cta-title">Agenda un test drive y asegura tu auto ideal</h2>
-            <p>
-              Coordina tu visita presencial o virtual. Te mostramos el estado real de la unidad, simulamos
-              financiamiento y bloqueamos el vehículo mientras firmas.
-            </p>
-          </div>
-          <div class="cta-card__actions">
-            <a class="cta-btn cta-btn--primary" href="https://calendly.com/rr-autos/asesoria" rel="noopener">
-              Reservar asesoría
-            </a>
-            <a class="cta-btn cta-btn--ghost" href="tel:+5112345678">Llamar ahora</a>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
+    <CatalogCTA
+      primaryHref="https://calendly.com/rr-autos/asesoria"
+      primaryLabel="Reservar asesoría"
+      secondaryHref="tel:+5112345678"
+      secondaryLabel="Llamar ahora"
+    />
+  </CatalogShell>
 
   <script>
-    import '../scripts/catalogoClient.ts'
+    import '../../scripts/vehiculosClient.ts'
   </script>
 
   <style>
-    :global(body) {
-      background: var(--color-gray-80);
-    }
-
-    .catalog {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top right, rgba(var(--color-primary-rgb), 0.12), transparent 55%),
-        linear-gradient(180deg, var(--color-white) 0%, var(--color-indigo-soft) 55%, var(--color-gray-80) 100%);
-      padding: clamp(3rem, 7vw, 4.5rem) 0 clamp(4rem, 8vw, 5.5rem);
-    }
-
-    .catalog__inner {
-      width: min(1160px, calc(100% - 2.5rem));
-      margin: 0 auto;
-      display: grid;
-      gap: clamp(2.5rem, 5vw, 3.5rem);
-    }
-
-    .section-eyebrow,
-    .filters-eyebrow,
-    .results-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-primary);
-    }
-
-    h1,
-    h2 {
-      margin: 0;
-      color: var(--color-gray-900);
-      letter-spacing: -0.01em;
-    }
-
-    h1 {
-      font-size: clamp(2.2rem, 5vw, 3.2rem);
-      line-height: 1.05;
-    }
-
-    .catalog__results p,
-    .catalog__filters p,
-    .catalog__highlights p,
-    .catalog__cta p {
-      margin: 0;
-      color: var(--color-gray-600);
-      line-height: 1.7;
-    }
-
-    .catalog__filters .filters-card {
-      background: rgba(var(--color-white-rgb), 0.95);
-      border-radius: 1.5rem;
-      border: 1px solid rgba(var(--color-gray-400-rgb), 0.25);
-      padding: clamp(1.25rem, 3.5vw, 2rem);
-      display: grid;
-      gap: 1.25rem;
-      box-shadow: 0 24px 48px -32px rgba(var(--color-primary-rgb), 0.4);
-    }
-
-    .filters-card header {
-      display: grid;
-      gap: 0.55rem;
-      max-width: 34rem;
-    }
-
-    .filters-card h2 {
-      font-size: clamp(1.6rem, 3vw, 2rem);
-    }
-
-    .filters-control {
-      display: grid;
-      gap: 0.75rem;
-    }
-
-    .filters-card footer {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      font-size: 0.92rem;
-      color: var(--color-gray-600);
-    }
-
-    .filters-link {
-      color: var(--color-primary-hover);
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .filters-link::after {
-      content: '↗';
-      font-size: 0.85rem;
-    }
-
-    .catalog__results {
-      display: grid;
-      gap: 1.75rem;
-      padding: clamp(1.8rem, 4vw, 2.4rem);
-      border-radius: 1.75rem;
-      background: rgba(var(--color-white-rgb), 0.94);
-      border: 1px solid rgba(var(--color-gray-400-rgb), 0.3);
-      box-shadow: 0 24px 55px -38px rgba(var(--color-gray-900-rgb), 0.6);
-    }
-
-    .results-header {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .results-header h2 {
-      font-size: clamp(1.6rem, 3vw, 2rem);
-    }
-
-    .results-grid {
-      min-height: 325px;
-    }
-
-    :global(.results-pagination) {
-      display: flex;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 18px 40px -32px rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(8px);
-    }
-
     :global(.pagination) {
       display: inline-flex;
       align-items: center;

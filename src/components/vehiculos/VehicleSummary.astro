@@ -1,0 +1,149 @@
+---
+export interface VehicleSummaryExtraInfo {
+  label: string
+  value: string
+}
+
+export interface VehicleSummaryProps {
+  title: string
+  priceText?: string | null
+  benefits: string[]
+  notes?: string[]
+  extraInfo?: VehicleSummaryExtraInfo[]
+}
+
+const { title, priceText = null, benefits = [], notes = [], extraInfo = [] } = Astro.props as VehicleSummaryProps
+---
+
+<section class="vehicle-summary">
+  <h2>Resumen del vehículo</h2>
+  <p>
+    Este {title} forma parte de nuestro inventario verificado. Confirmamos historial, kilometraje real y estado mecánico
+    antes de publicar cada unidad.
+  </p>
+
+  {
+    priceText && (
+      <p class="vehicle-detail__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+        <span class="vehicle-detail__price-label">Precio:</span>
+        <span itemprop="price">{priceText}</span>
+        <meta itemprop="priceCurrency" content="COP" />
+        <link itemprop="availability" href="https://schema.org/InStock" />
+      </p>
+    )
+  }
+
+  {
+    benefits.length > 0 && (
+      <ul class="vehicle-detail__benefits">
+        {benefits.map(benefit => (
+          <li>{benefit}</li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    extraInfo.length > 0 && (
+      <div class="vehicle-summary__extra">
+        <h3>Información adicional</h3>
+        <dl>
+          {extraInfo.map(item => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  .vehicle-summary {
+    position: relative;
+    background:
+      linear-gradient(140deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 255, 0.92)),
+      radial-gradient(130% 120% at 90% -10%, rgba(191, 219, 254, 0.3), transparent 60%);
+    border-radius: 1.9rem;
+    padding: clamp(2rem, 4vw, 2.6rem);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 24px 60px -45px rgba(30, 64, 175, 0.4);
+    display: grid;
+    gap: 1.3rem;
+  }
+
+  .vehicle-summary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.35), transparent 70%);
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+  }
+
+  .vehicle-summary h2 {
+    margin: 0;
+    color: var(--color-gray-900);
+    letter-spacing: -0.012em;
+  }
+
+  .vehicle-summary p {
+    margin: 0;
+    color: rgba(71, 85, 105, 0.92);
+  }
+
+  .vehicle-summary__extra {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    color: rgba(71, 85, 105, 0.9);
+  }
+
+  .vehicle-summary__extra dl {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .vehicle-summary__extra dl {
+    padding-left: 0;
+  }
+
+  .vehicle-summary__extra dt {
+    font-weight: 600;
+    color: var(--color-gray-800);
+    letter-spacing: 0.01em;
+    font-size: 0.94rem;
+  }
+
+  .vehicle-summary__extra dd {
+    margin: 0;
+    color: rgba(71, 85, 105, 0.9);
+  }
+
+  .vehicle-detail__price {
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    font-weight: 700;
+    color: var(--color-primary-hover);
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  .vehicle-detail__price-label {
+    font-weight: 600;
+    color: var(--color-gray-800);
+  }
+
+  .vehicle-detail__benefits {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.6rem;
+    color: rgba(71, 85, 105, 0.88);
+    list-style: disc;
+  }
+</style>

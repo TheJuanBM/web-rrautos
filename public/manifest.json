@@ -2,7 +2,7 @@
   "name": "RR Autos",
   "short_name": "RR Autos",
   "description": "Portafolio de vehículos usados certificados con garantía y financiamiento, además de importación personalizada de vehículos nuevos",
-  "start_url": "/catalogo",
+  "start_url": "/vehiculos",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
@@ -50,7 +50,7 @@
       "name": "Ver Catálogo",
       "short_name": "Catálogo",
       "description": "Explorar todos los vehículos disponibles",
-      "url": "/catalogo",
+      "url": "/vehiculos",
       "icons": [
         {
           "src": "/logo/logo.svg",
@@ -61,7 +61,7 @@
     }
   ],
   "share_target": {
-    "action": "/catalogo",
+    "action": "/vehiculos",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
     "params": {

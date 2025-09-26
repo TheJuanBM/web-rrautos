@@ -126,7 +126,7 @@ El proyecto ha sido optimizado para usar únicamente light mode, eliminando la c
 
 ```bash
 # Lighthouse audit de accesibilidad
-npx lighthouse http://localhost:4322/catalogo --only-categories=accessibility
+npx lighthouse http://localhost:4322/vehiculos --only-categories=accessibility
 ```
 
 ---

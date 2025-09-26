@@ -1,0 +1,77 @@
+---
+interface Highlight {
+  title: string
+  description: string
+}
+
+interface Props {
+  items: Highlight[]
+  eyebrow?: string
+  lead?: string
+}
+
+const {
+  items = [],
+  eyebrow = 'Lo que nos diferencia',
+  lead = 'Desde la inspección hasta la entrega, cuidamos cada detalle para que disfrutes tu auto desde el primer día. Sin trámites extensos ni sorpresas ocultas.',
+} = Astro.props
+---
+
+<section class="catalog__highlights" aria-labelledby="highlights-title">
+  <header>
+    <p class="section-eyebrow">{eyebrow}</p>
+    <p>{lead}</p>
+  </header>
+
+  <div class="highlights-grid">
+    {
+      items.map(item => (
+        <article class="highlight">
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .catalog__highlights {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .catalog__highlights header {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 40rem;
+  }
+
+  .catalog__highlights p {
+    margin: 0;
+    color: var(--color-gray-600);
+    line-height: 1.7;
+  }
+
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .highlight {
+    background: rgba(255, 255, 255, 0.93);
+    border-radius: 1.25rem;
+    border: 1px solid rgba(var(--color-gray-400-rgb), 0.28);
+    padding: 1.6rem;
+    box-shadow: 0 22px 45px -36px rgba(var(--color-primary-shadow-rgb), 0.45);
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .highlight h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: var(--color-gray-900);
+  }
+</style>

@@ -5,10 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "build:prod": "astro build && npm run compress",
+    "start": "node ./dist/server/entry.mjs",
+    "build:prod": "astro build",
     "preview": "astro preview",
-    "compress": "gzip -9 -r dist/ && brotli -q 11 -r dist/",
-    "analyze": "astro build && npx vite-bundle-analyzer dist/",
     "astro": "astro",
     "lint": "eslint . --ext .js,.ts,.astro",
     "lint:fix": "eslint . --ext .js,.ts,.astro --fix",
@@ -19,6 +18,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@astrojs/node": "^9.4.4",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.10",
     "tailwindcss": "^4.1.13"
@@ -28,9 +28,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
     "prettier": "^3.6.2",
-    "prettier-plugin-astro": "^0.14.1",
-    "terser": "^5.31.0",
-    "vite-bundle-analyzer": "^0.18.0"
+    "prettier-plugin-astro": "^0.14.1"
   },
   "lint-staged": {
     "*.js": [

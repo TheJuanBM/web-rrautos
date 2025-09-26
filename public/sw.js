@@ -3,7 +3,7 @@ const STATIC_CACHE = 'rr-autos-static-v1'
 const API_CACHE = 'rr-autos-api-v1'
 
 // Archivos estáticos para cachear
-const STATIC_ASSETS = ['/', '/catalogo', '/favicon.svg', '/manifest.json']
+const STATIC_ASSETS = ['/', '/vehiculos', '/favicon.svg', '/manifest.json']
 
 // URLs de API para cachear
 const API_URLS = ['https://api-ecommerce.hostinger.com/store/store_01J9S3VMVD29XN5DP0E917FH67/collections']
@@ -11,16 +11,30 @@ const API_URLS = ['https://api-ecommerce.hostinger.com/store/store_01J9S3VMVD29X
 // Instalación del Service Worker
 self.addEventListener('install', event => {
   event.waitUntil(
-    Promise.all([
+    (async () => {
       // Cache de archivos estáticos
-      caches.open(STATIC_CACHE).then(cache => {
-        return cache.addAll(STATIC_ASSETS)
-      }),
-      // Pre-cache de API crítica
-      caches.open(API_CACHE).then(cache => {
-        return cache.addAll(API_URLS)
-      }),
-    ])
+      const staticCache = await caches.open(STATIC_CACHE)
+      await staticCache.addAll(STATIC_ASSETS)
+
+      // Pre-cache de API crítica, pero sin fallar la instalación si alguna request falla
+      const apiCache = await caches.open(API_CACHE)
+
+      await Promise.all(
+        API_URLS.map(async url => {
+          try {
+            const response = await fetch(url, { mode: 'cors' })
+
+            if (!response.ok) {
+              throw new Error(`Respuesta no OK (${response.status}) para ${url}`)
+            }
+
+            await apiCache.put(url, response.clone())
+          } catch (error) {
+            console.warn('[ServiceWorker] No se pudo precachear', url, error)
+          }
+        })
+      )
+    })()
   )
 
   // Forzar activación inmediata
@@ -111,7 +125,7 @@ async function cacheFirst(request, cacheName) {
     // Fallback para páginas
     if (request.destination === 'document') {
       const cache = await caches.open(STATIC_CACHE)
-      return cache.match('/catalogo') || new Response('Offline')
+      return cache.match('/vehiculos') || new Response('Offline')
     }
 
     // Fallback para imágenes

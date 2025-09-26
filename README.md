@@ -47,32 +47,40 @@ El sitio estará disponible en `http://localhost:4321`
 
 ## 📋 Comandos Disponibles
 
-| Comando           | Descripción                          |
-| ----------------- | ------------------------------------ |
-| `pnpm dev`        | Inicia el servidor de desarrollo     |
-| `pnpm build`      | Construye el sitio para producción   |
-| `pnpm build:prod` | Build optimizado con compresión      |
-| `pnpm preview`    | Vista previa del build de producción |
-| `pnpm compress`   | Comprime archivos con gzip y brotli  |
-| `pnpm analyze`    | Analiza el tamaño del bundle         |
+| Comando           | Descripción                        |
+| ----------------- | ---------------------------------- |
+| `pnpm dev`        | Inicia el servidor de desarrollo   |
+| `pnpm build`      | Genera el build estándar           |
+| `pnpm build:prod` | Build optimizado (sin pasos extra) |
 
 ## 🏗️ Estructura del Proyecto
 
 ```
 src/
 ├── components/          # Componentes UI reutilizables
-│   ├── BrandSelector.astro    # Selector de marcas
-│   ├── AsesoresList.astro     # Listado de asesores
-│   ├── OptimizedImage.astro   # Utilidad opcional para imágenes
-│   ├── VehicleSkeleton.astro  # Loading skeleton reutilizable
-│   └── SEOHead.astro          # Meta tags y SEO
+│   ├── AsesoresList.astro            # Listado de asesores
+│   ├── BrandSelector.astro           # Selector de marcas
+│   ├── OptimizedImage.astro          # Utilidad opcional para imágenes
+│   ├── SEOHead.astro                 # Meta tags y SEO
+│   ├── VehicleSkeleton.astro         # Loading skeleton reutilizable
+│   └── vehiculos/                    # Componentes específicos del catálogo
+│       ├── CatalogCTA.astro          # CTA del catálogo
+│       ├── CatalogShell.astro        # Contenedor principal del catálogo
+│       ├── FiltersCard.astro         # Card de filtros
+│       ├── HighlightsSection.astro   # Beneficios destacados
+│       ├── ResultsSection.astro      # Contenedor de resultados y paginación
+│       ├── VehicleHero.astro         # Cabecera del detalle con galería
+│       ├── VehicleHighlights.astro   # Lista de especificaciones clave
+│       └── VehicleSummary.astro      # Resumen y beneficios del vehículo
 ├── layouts/             # Layouts de página
 │   └── Layout.astro           # Layout principal
 ├── pages/               # Páginas del sitio
 │   ├── index.astro            # Página de inicio
-│   └── catalogo.astro         # Página del catálogo
+│   └── vehiculos/
+│       ├── index.astro        # Página principal del catálogo
+│       └── [slug].astro       # Página de detalle por vehículo
 ├── scripts/             # Scripts del cliente
-│   └── catalogoClient.ts       # Lógica de filtrado y paginación
+│   └── vehiculosClient.ts       # Lógica de filtrado y paginación
 ├── services/            # Servicios API
 │   └── api.ts                 # Cliente API
 ├── styles/              # Estilos globales
@@ -147,7 +155,7 @@ API_BASE_URL=https://api.rrautos.com
 # Build básico
 pnpm build
 
-# Build optimizado con compresión
+# Build optimizado
 pnpm build:prod
 ```
 

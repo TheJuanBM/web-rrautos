@@ -67,9 +67,9 @@ src/
 - Lista de asesores con avatares
 - Diseño consistente
 
-#### **6. Script Cliente (`/scripts/catalogoClient.ts`)**
+#### **6. Script Cliente (`/scripts/vehiculosClient.ts`)**
 
-- `CatalogoClient`: Clase para manejar la lógica del frontend
+- `vehiculosClient`: Clase para manejar la lógica del frontend
 - Estado centralizado y tipado
 - Métodos organizados por responsabilidad
 - Manejo de errores mejorado
@@ -94,7 +94,7 @@ src/
 
 1. **Presentación**: Componentes Astro (.astro)
 2. **Lógica de Negocio**: Servicios (api.ts)
-3. **Estado y UI**: Script cliente (catalogoClient.ts)
+3. **Estado y UI**: Script cliente (vehiculosClient.ts)
 4. **Tipado**: Interfaces TypeScript (types/)
 5. **Configuración**: Constantes centralizadas (config/)
 6. **Estilos**: CSS organizado por componentes

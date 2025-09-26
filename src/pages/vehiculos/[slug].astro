@@ -1,0 +1,562 @@
+---
+import AsesoresList from '../../components/AsesoresList.astro'
+import VehicleHero from '../../components/vehiculos/VehicleHero.astro'
+import type { VehicleHighlight } from '../../components/vehiculos/VehicleHighlights.astro'
+import VehicleSummary, {
+  type VehicleSummaryExtraInfo,
+  type VehicleSummaryProps,
+} from '../../components/vehiculos/VehicleSummary.astro'
+import { ASESORES } from '../../config/constants'
+import Layout from '../../layouts/Layout.astro'
+import { apiService } from '../../services/api'
+import type { VehiculoDetalle } from '../../types'
+import { extractFirstLink, resolveVehicleSlug, sanitizeUrl } from '../../utils'
+
+export const prerender = false
+
+const slug = Astro.params.slug
+
+if (!slug) {
+  Astro.response.status = 404
+  throw new Error('Vehículo no encontrado')
+}
+
+let vehiculo: VehiculoDetalle | null = null
+
+try {
+  vehiculo = await apiService.fetchVehiculoBySlug(slug)
+} catch (error) {
+  console.error('No se pudo obtener el vehículo', error)
+}
+
+if (!vehiculo) {
+  Astro.response.status = 404
+  throw new Error('Vehículo no encontrado')
+}
+
+const { title, description = '', media = [], thumbnail, seo_settings, page_settings, additional_info = [] } = vehiculo
+
+const normalizedSlug = resolveVehicleSlug({
+  id: vehiculo.id,
+  title: vehiculo.title,
+  slug: vehiculo.slug,
+  seo_settings,
+  page_settings,
+})
+
+function getCanonical(): string {
+  const baseUrl = Astro.site || Astro.url.origin
+  return new URL(`/vehiculos/${normalizedSlug}`, baseUrl).href
+}
+
+function cleanHtml(html: string): string {
+  return html
+    .replace(/<br\s*\/>/gi, '\n')
+    .replace(/<br>/gi, '\n')
+    .replace(/<\/(p|th|td|tr|table|div)>/gi, '\n')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+\n/g, '\n')
+    .replace(/\n{2,}/g, '\n')
+    .trim()
+}
+
+const cleanedDescription = cleanHtml(description ?? '')
+const descriptionLines = cleanedDescription
+  .split('\n')
+  .map(line => line.trim())
+  .filter(Boolean)
+
+const specsMap = new Map<string, string>()
+
+for (const line of descriptionLines) {
+  const colonIndex = line.indexOf(':')
+  if (colonIndex > 1) {
+    const label = line.slice(0, colonIndex).trim()
+    const value = line.slice(colonIndex + 1).trim()
+    if (label && value) {
+      specsMap.set(label, value)
+    }
+  }
+}
+
+const specs = Array.from(specsMap.entries()).map(([label, value]) => ({ label, value }))
+
+const priceLine = descriptionLines.find(line => /\$\s?\d/.test(line))
+const priceValue = priceLine?.match(/\$\s?[\d.,]+/)?.[0] ?? null
+const numericPrice = priceValue ? Number(priceValue.replace(/[^\d]/g, '')) : null
+
+const mileageValue = specsMap.get('Kilometraje') ?? null
+const engineValue = specsMap.get('Motor') ?? null
+const fuelValue = specsMap.get('Combustible') ?? null
+const gearboxValue = specsMap.get('Caja') ?? null
+const locationValue = specsMap.get('Placa de') ?? null
+
+const financingText = descriptionLines.find(line => /Financiamos/i.test(line)) ?? null
+const detailNotes = descriptionLines.filter(
+  line => !specsMap.has(line) && line !== priceLine && !/Financiamos/i.test(line) && !/^CONTACTA/i.test(line)
+)
+
+const defaultContactUrl = 'https://wa.me/51987654321'
+const contactUrl = sanitizeUrl(
+  extractFirstLink(description ?? '') ||
+    `${defaultContactUrl}?text=${encodeURIComponent(`Hola, me interesa ${title}. ${getCanonical()}`)}`
+)
+
+function resolveImageUrl(rawUrl?: string | null): string {
+  if (!rawUrl) return ''
+
+  try {
+    return new URL(rawUrl).href
+  } catch {
+    try {
+      const base = Astro.site || Astro.url?.origin
+      if (base) {
+        return new URL(rawUrl, base).href
+      }
+    } catch {
+      /* ignore */
+    }
+
+    if (rawUrl.startsWith('//')) {
+      return `https:${rawUrl}`
+    }
+
+    return rawUrl
+  }
+}
+
+const normalizedMedia = media?.length
+  ? media.map(item => ({
+      ...item,
+      url: resolveImageUrl(item.url),
+    }))
+  : []
+
+const galleryImages = normalizedMedia
+  .filter(item => (item.type === 'image' || !item.type) && item.url)
+  .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+
+const heroImage = galleryImages[0]?.url || resolveImageUrl(thumbnail) || ''
+const carouselImages = galleryImages.length
+  ? galleryImages.map(image => ({
+      id: image.id,
+      url: image.url,
+      alt: image.display_slot ?? `${title} - imagen`,
+    }))
+  : heroImage
+    ? [
+        {
+          id: 'hero-fallback',
+          url: heroImage,
+          alt: `${title} - imagen principal`,
+        },
+      ]
+    : []
+
+function getBrandAndModel(rawTitle: string): { brand: string; model: string } {
+  if (!rawTitle) return { brand: 'RR Autos', model: 'Vehículo usado' }
+  const words = rawTitle.split(' ')
+  const brandWords: string[] = []
+  for (const word of words) {
+    if (/\d/.test(word)) break
+    brandWords.push(word)
+  }
+  const brand = brandWords.length ? brandWords.join(' ') : words[0]
+  const model = rawTitle.replace(brand, '').trim() || rawTitle
+  return { brand, model }
+}
+
+const { brand, model } = getBrandAndModel(title)
+
+const metaDescription = seo_settings?.description?.slice(0, 220) ?? cleanedDescription.slice(0, 220)
+
+const seoData = {
+  title: `${title} | Ficha técnica y precio` as const,
+  description:
+    metaDescription || `${title} disponible en RR Autos. Consulta precio, kilometraje y agenda un test drive.`,
+  canonical: getCanonical(),
+  image: heroImage || '/logo/logo.png',
+  type: 'product' as const,
+  keywords: [
+    title,
+    `${brand} ${model}`.trim(),
+    'vehículo usado',
+    'precio vehículo',
+    'ficha técnica',
+    ...(fuelValue ? [fuelValue] : []),
+    ...(locationValue ? [`vehículos en ${locationValue}`] : []),
+  ].filter(Boolean),
+}
+
+const schemaOrg = {
+  '@context': 'https://schema.org',
+  '@type': 'Vehicle',
+  name: title,
+  brand: {
+    '@type': 'Brand',
+    name: brand,
+  },
+  model,
+  description: seoData.description,
+  image: galleryImages.length ? galleryImages.slice(0, 5).map(item => item.url) : heroImage ? [heroImage] : [],
+  vehicleEngine: engineValue
+    ? {
+        '@type': 'EngineSpecification',
+        name: engineValue,
+      }
+    : undefined,
+  fuelType: fuelValue ?? undefined,
+  mileageFromOdometer: mileageValue
+    ? {
+        '@type': 'QuantitativeValue',
+        value: Number(mileageValue.replace(/[^\d]/g, '')) || undefined,
+        unitCode: 'KMT',
+      }
+    : undefined,
+  offers: {
+    '@type': 'Offer',
+    price: numericPrice ?? undefined,
+    priceCurrency: 'COP',
+    availability: 'https://schema.org/InStock',
+    url: seoData.canonical,
+  },
+  seller: {
+    '@type': 'AutoDealer',
+    name: 'RR Autos',
+  },
+  vehicleIdentificationNumber: specsMap.get('Placa terminada en') ?? undefined,
+  areaServed: locationValue ?? undefined,
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Inicio',
+      item: new URL('/', Astro.site || Astro.url.origin).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Catálogo de vehículos',
+      item: new URL('/vehiculos', Astro.site || Astro.url.origin).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: title,
+      item: seoData.canonical,
+    },
+  ],
+}
+
+const structuredData = [schemaOrg, breadcrumbSchema]
+
+const highlightSpecs: VehicleHighlight[] = [
+  priceValue ? { label: 'Precio', value: priceValue } : null,
+  mileageValue ? { label: 'Kilometraje', value: mileageValue } : null,
+  engineValue ? { label: 'Motor', value: engineValue } : null,
+  gearboxValue ? { label: 'Transmisión', value: gearboxValue } : null,
+  fuelValue ? { label: 'Combustible', value: fuelValue } : null,
+  locationValue ? { label: 'Matrícula', value: locationValue } : null,
+]
+  .filter((spec): spec is VehicleHighlight => spec !== null)
+  .slice(0, 6)
+
+const extraNotes = [financingText, ...detailNotes].filter(Boolean)
+const benefits: VehicleSummaryProps['benefits'] = [
+  'Inspección integral avalada por talleres aliados',
+  'Opciones de financiamiento flexibles y sin cuota inicial',
+  'Entrega coordinada en todo el país',
+  'Asesoría personalizada para trámites y traspaso',
+]
+const extraInfo: VehicleSummaryExtraInfo[] = additional_info.map((info, index) => ({
+  label: info.label ?? info.id ?? `Dato ${index + 1}`,
+  value: info.value ?? info.description ?? '',
+}))
+
+const hasGallery = carouselImages.length > 0
+const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Hablar con un asesor'
+---
+
+<Layout {...seoData}>
+  <article class="vehicle-detail" itemscope itemtype="https://schema.org/Vehicle">
+    <nav class="vehicle-detail__breadcrumbs" aria-label="Ruta de navegación">
+      <ol>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/vehiculos">Catálogo</a></li>
+        <li aria-current="page">{title}</li>
+      </ol>
+    </nav>
+
+    <VehicleHero title={title} highlights={highlightSpecs} carouselImages={carouselImages} hasGallery={hasGallery}>
+      <div class="hero__actions" slot="actions">
+        <a class="hero__cta hero__cta--primary" href={contactUrl} rel="noopener" target="_blank">
+          {contactLabel}
+        </a>
+        <a class="hero__cta hero__cta--secondary" href="tel:+573002006818">Llamar al asesor</a>
+        <a class="hero__cta hero__cta--ghost" href="/vehiculos">Volver al catálogo</a>
+      </div>
+    </VehicleHero>
+
+    <VehicleSummary title={title} priceText={priceValue} benefits={benefits} notes={extraNotes} extraInfo={extraInfo} />
+
+    <section class="vehicle-detail__cta" aria-labelledby="cta-detail-title">
+      <div class="cta-card">
+        <div class="cta-card__content">
+          <p class="section-eyebrow">Agenda tu cita</p>
+          <h2 id="cta-detail-title">Confirma disponibilidad y recibe una atención 100% personalizada</h2>
+          <p>
+            Habla con un asesor para revisar historial, validar precio, simular financiamiento y coordinar una visita o
+            inspección virtual.
+          </p>
+        </div>
+        <div class="cta-card__actions">
+          <a class="cta-btn cta-btn--primary" href={contactUrl} target="_blank" rel="noopener">
+            {contactLabel}
+          </a>
+          <a class="cta-btn cta-btn--ghost" href="mailto:contacto@rrautosweb.com">Enviar correo</a>
+        </div>
+      </div>
+    </section>
+
+    <AsesoresList asesores={ASESORES} />
+
+    <section class="vehicle-detail__faq" aria-labelledby="faq-title">
+      <div class="faq-card">
+        <h2 id="faq-title">Preguntas frecuentes</h2>
+        <dl>
+          <div>
+            <dt>¿Puedo reservar este vehículo?</dt>
+            <dd>
+              Sí, podemos apartarlo mientras completamos la inspección y documentación. Contáctanos para más detalles.
+            </dd>
+          </div>
+          <div>
+            <dt>¿Cómo funciona el financiamiento?</dt>
+            <dd>
+              Trabajamos con entidades aliadas para ofrecer planes con o sin cuota inicial. Te ayudamos a simular cuotas
+              y requisitos.
+            </dd>
+          </div>
+          <div>
+            <dt>¿Realizan envíos a otras ciudades?</dt>
+            <dd>
+              Coordinamos transporte a nivel nacional con empresas aseguradas. Validamos costos y tiempos antes de
+              confirmar.
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <style>
+    :global(body) {
+      background: var(--color-gray-80);
+    }
+
+    .vehicle-detail {
+      width: min(1180px, calc(100% - 2.5rem));
+      margin: clamp(1.5rem, 7vw, 1.5rem) auto;
+      display: grid;
+      gap: clamp(2rem, 4.5vw, 1.5rem);
+      color: var(--color-gray-800);
+      padding-bottom: clamp(3rem, 7vw, 4.5rem);
+    }
+
+    .vehicle-detail__breadcrumbs {
+      font-size: 0.88rem;
+      color: var(--color-gray-600);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.35rem;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: 0 18px 42px -32px rgba(15, 23, 42, 0.6);
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      width: fit-content;
+    }
+
+    .vehicle-detail__breadcrumbs ol {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      padding: 0;
+      margin: 0;
+      align-items: center;
+    }
+
+    .vehicle-detail__breadcrumbs li {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 500;
+      color: rgba(71, 85, 105, 0.9);
+    }
+
+    .vehicle-detail__breadcrumbs li::after {
+      content: '›';
+      font-size: 1rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .vehicle-detail__breadcrumbs li:last-child::after {
+      content: '';
+    }
+
+    .vehicle-detail__breadcrumbs li[aria-current='page'] {
+      color: var(--color-gray-900);
+      font-weight: 600;
+    }
+
+    .vehicle-detail__breadcrumbs a {
+      color: var(--color-primary);
+      text-decoration: none;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      transition:
+        background 0.18s ease,
+        color 0.18s ease;
+    }
+
+    .vehicle-detail__breadcrumbs a:hover,
+    .vehicle-detail__breadcrumbs a:focus-visible {
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--color-indigo);
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    .vehicle-detail__cta .cta-card {
+      background: linear-gradient(135deg, var(--color-primary-hover), var(--color-indigo));
+      border-radius: 1.75rem;
+      color: var(--color-white);
+      padding: clamp(2rem, 4vw, 2.8rem);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: space-between;
+      box-shadow: 0 38px 65px -44px rgba(var(--color-primary-shadow-rgb), 0.85);
+    }
+
+    .cta-card__content {
+      display: grid;
+      gap: 0.75rem;
+      max-width: 34rem;
+    }
+
+    .cta-card__content p {
+      margin: 0;
+      color: rgba(var(--color-gray-200-rgb), 0.9);
+    }
+
+    .cta-card__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.8rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      text-decoration: none;
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+    }
+
+    .cta-btn--primary {
+      background: var(--color-white);
+      color: var(--color-primary-hover);
+      box-shadow: 0 18px 48px -22px rgba(var(--color-white-rgb), 0.9);
+    }
+
+    .cta-btn--ghost {
+      border: 1px solid rgba(var(--color-gray-200-rgb), 0.5);
+      color: var(--color-white);
+    }
+
+    .cta-btn:hover,
+    .cta-btn:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 44px -22px rgba(var(--color-white-rgb), 0.85);
+    }
+
+    .vehicle-detail__faq .faq-card {
+      background: rgba(var(--color-white-rgb), 0.95);
+      border-radius: 1.75rem;
+      padding: clamp(1.8rem, 4vw, 2.4rem);
+      border: 1px solid rgba(var(--color-gray-300-rgb), 0.25);
+      box-shadow: 0 24px 55px -42px rgba(var(--color-gray-900-rgb), 0.55);
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .vehicle-detail__faq dl {
+      display: grid;
+      gap: 1rem;
+      margin: 0;
+    }
+
+    .vehicle-detail__faq dt {
+      font-weight: 600;
+      color: var(--color-gray-900);
+    }
+
+    .vehicle-detail__faq dd {
+      margin: 0;
+      color: var(--color-gray-600);
+    }
+
+    @media (max-width: 1000px) {
+      .vehicle-detail {
+        width: min(100%, calc(100% - 1.5rem));
+        margin: clamp(2.5rem, 6vw, 3.5rem) auto;
+        gap: clamp(2rem, 5vw, 3rem);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vehicle-detail {
+        width: min(100%, calc(100% - 1.5rem));
+      }
+
+      .cta-card__actions {
+        width: 100%;
+      }
+
+      .cta-btn {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-btn,
+      .vehicle-detail__cta .cta-card {
+        transition: none;
+        box-shadow: none;
+      }
+    }
+  </style>
+</Layout>

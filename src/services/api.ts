@@ -1,9 +1,11 @@
-import type { Marca, Vehiculo, ApiResponse, PaginationParams } from '../types'
 import { API_CONFIG } from '../config/constants'
+import type { ApiResponse, Marca, PaginationParams, Vehiculo, VehiculoDetalle } from '../types'
+import { resolveVehicleSlug } from '../utils'
 
 class ApiService {
   private baseUrl: string
   private headers: Record<string, string>
+  private slugCache = new Map<string, string>()
 
   constructor() {
     this.baseUrl = API_CONFIG.BASE_URL
@@ -42,6 +44,55 @@ class ApiService {
       vehiculos: data.products ?? [],
       total: data.count ?? 0,
     }
+  }
+
+  async fetchVehiculoById(id: string): Promise<VehiculoDetalle> {
+    const url = `${this.baseUrl}/products/${id}`
+    const data = await this.makeRequest<{ product: VehiculoDetalle }>(url)
+    return data.product
+  }
+
+  async fetchVehiculoBySlug(slug: string): Promise<VehiculoDetalle | null> {
+    const normalizedSlug = slug.toLowerCase()
+    const cachedId = this.slugCache.get(normalizedSlug)
+
+    if (cachedId) {
+      try {
+        return await this.fetchVehiculoById(cachedId)
+      } catch (error) {
+        console.warn('El ID en caché no es válido, se recargará el slug:', error)
+        this.slugCache.delete(normalizedSlug)
+      }
+    }
+
+    const pageSize = Math.max(API_CONFIG.PAGE_SIZE, 30)
+    let page = 1
+
+    while (true) {
+      const { vehiculos, total = 0 } = await this.fetchVehiculos({ page, pageSize })
+
+      if (!vehiculos || vehiculos.length === 0) {
+        break
+      }
+
+      for (const vehiculo of vehiculos) {
+        const vehiculoSlug = resolveVehicleSlug(vehiculo).toLowerCase()
+        this.slugCache.set(vehiculoSlug, vehiculo.id)
+
+        if (vehiculoSlug === normalizedSlug) {
+          return await this.fetchVehiculoById(vehiculo.id)
+        }
+      }
+
+      const totalPages = Math.ceil(total / pageSize)
+      if (!totalPages || page >= totalPages) {
+        break
+      }
+
+      page += 1
+    }
+
+    return null
   }
 }
 

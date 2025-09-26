@@ -147,3 +147,44 @@ export function announceToScreenReader(message: string): void {
     }
   }, 1000)
 }
+
+export function slugify(value: string | null | undefined): string {
+  if (!value) return ''
+
+  try {
+    return value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .toLowerCase()
+  } catch {
+    return String(value)
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .toLowerCase()
+  }
+}
+
+export function resolveVehicleSlug(vehiculo: {
+  id: string
+  title?: string | null
+  slug?: string | null
+  seo_settings?: { slug?: string | null } | null
+  page_settings?: { seoSlug?: string | null } | null
+}): string {
+  const candidates = [
+    vehiculo.page_settings?.seoSlug,
+    vehiculo.seo_settings?.slug,
+    vehiculo.slug,
+    vehiculo.title,
+    vehiculo.id,
+  ]
+
+  for (const candidate of candidates) {
+    const normalized = slugify(candidate)
+    if (normalized) return normalized
+  }
+
+  return slugify(`${vehiculo.title ?? 'vehiculo'}-${vehiculo.id}`) || vehiculo.id
+}

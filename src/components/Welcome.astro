@@ -1,9 +1,4 @@
----
-import background from '../assets/background.svg'
----
-
 <section class="landing" aria-labelledby="landing-title">
-  <img class="landing__background" src={background.src} alt="" decoding="async" fetchpriority="high" />
   <div class="landing__glow" aria-hidden="true"></div>
 
   <div class="landing__content">
@@ -17,7 +12,7 @@ import background from '../assets/background.svg'
         </p>
 
         <div class="hero__actions">
-          <a class="hero__cta hero__cta--primary" href="/catalogo">Ver catálogo completo</a>
+          <a class="hero__cta hero__cta--primary" href="/vehiculos">Ver catálogo completo</a>
           <a class="hero__cta hero__cta--ghost" href="https://wa.me/51987654321" rel="noopener">Hablar con un asesor</a>
         </div>
 
@@ -202,18 +197,6 @@ import background from '../assets/background.svg'
     background:
       radial-gradient(circle at top left, rgba(var(--color-primary-glow-rgb), 0.15), transparent 55%),
       linear-gradient(180deg, var(--color-white) 0%, var(--color-gray-150) 75%, var(--color-white) 100%);
-  }
-
-  .landing__background {
-    position: absolute;
-    inset: -10% -20% auto;
-    width: 120%;
-    max-height: 60vh;
-    object-fit: cover;
-    opacity: 0.45;
-    filter: blur(40px) saturate(120%);
-    transform: rotate(4deg);
-    pointer-events: none;
   }
 
   .landing__glow {

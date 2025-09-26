@@ -1,0 +1,79 @@
+---
+const { children } = Astro.props
+---
+
+<div class="catalog">
+  <div class="catalog__inner">
+    <slot>
+      <p class="catalog__fallback">Estamos preparando el catálogo…</p>
+    </slot>
+  </div>
+</div>
+
+<style>
+  :global(body) {
+    background: var(--color-gray-80);
+  }
+
+  .catalog {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top right, rgba(var(--color-primary-rgb), 0.12), transparent 55%),
+      linear-gradient(180deg, var(--color-white) 0%, var(--color-indigo-soft) 55%, var(--color-gray-80) 100%);
+    padding: clamp(3rem, 7vw, 4.5rem) 0 clamp(4rem, 8vw, 5.5rem);
+  }
+
+  .catalog__inner {
+    width: min(1160px, calc(100% - 2.5rem));
+    margin: 0 auto;
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .catalog :where(h1, h2) {
+    margin: 0;
+    color: var(--color-gray-900);
+    letter-spacing: -0.01em;
+  }
+
+  .catalog h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.05;
+  }
+
+  :global(.section-eyebrow),
+  :global(.filters-eyebrow),
+  :global(.results-eyebrow) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 640px) {
+    .catalog {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .catalog__inner {
+      width: min(1160px, calc(100% - 0.25rem));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .catalog {
+      padding-top: clamp(1.75rem, 7vw, 2.1rem);
+    }
+  }
+
+  .catalog__fallback {
+    margin: 0;
+    color: rgba(var(--color-gray-600-rgb, 71, 85, 105), 0.9);
+    font-size: 0.95rem;
+  }
+</style>

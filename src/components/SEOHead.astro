@@ -17,7 +17,7 @@ const {
   title = 'RR Autos - Vehículos Usados de Calidad',
   description = 'Encuentra el vehículo usado perfecto para ti. Amplio catálogo de autos con garantía y financiamiento disponible. Atención personalizada con nuestros asesores expertos.',
   canonical = Astro.url.href,
-  image = '/og-image.jpg',
+  image = '/logo/logo.png',
   type = 'website',
   noindex = false,
   keywords = [
@@ -108,4 +108,4 @@ const imageUrl = new URL(image, Astro.site || Astro.url.origin).href
 <meta name="apple-mobile-web-app-title" content="RR Autos" />
 
 <!-- Performance hints -->
-<link rel="prefetch" href="/catalogo" />
+<link rel="prefetch" href="/vehiculos" />
