@@ -21,8 +21,10 @@ const SSR_ONLY_HEADERS: Record<string, string> = {
 const HEADERS = import.meta.env.SSR ? { ...BASE_HEADERS, ...SSR_ONLY_HEADERS } : BASE_HEADERS
 
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.PUBLIC_API_BASE_URL || 'https://api-ecommerce.hostinger.com/store/store_01J9S3VMVD29XN5DP0E917FH67',
+  BASE_URL:
+    import.meta.env.PUBLIC_API_BASE_URL || 'https://api-ecommerce.hostinger.com/store/store_01J9S3VMVD29XN5DP0E917FH67',
   PAGE_SIZE: 9,
+  TO_DATE: import.meta.env.PUBLIC_API_TO_DATE || '2025-06-11T19:11:06.729Z',
   HEADERS,
 }
 

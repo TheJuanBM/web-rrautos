@@ -159,6 +159,7 @@ class VehiculosClient {
   private buildVehiculosUrl({ marca, offset }: { marca: string; offset: number }): string {
     const params = new URLSearchParams({
       offset: offset.toString(),
+      to_date: API_CONFIG.TO_DATE,
       limit: API_CONFIG.PAGE_SIZE.toString(),
     })
 
