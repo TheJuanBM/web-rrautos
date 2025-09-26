@@ -37,10 +37,10 @@ git clone <url-del-repo>
 cd rr
 
 # Instalar dependencias
-pnpm install
+npm | pnpm install
 
 # Iniciar el servidor de desarrollo
-pnpm dev
+npm | pnpm dev
 ```
 
 El sitio estará disponible en `http://localhost:4321`
@@ -154,10 +154,10 @@ API_BASE_URL=https://api.rrautos.com
 
 ```bash
 # Build básico
-pnpm build
+npm | pnpm build
 
 # Build optimizado
-pnpm build:prod
+npm | pnpm build:prod
 ```
 
 ### Servidor Web

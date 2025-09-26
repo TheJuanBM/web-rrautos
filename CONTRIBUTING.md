@@ -26,10 +26,10 @@ git remote add upstream https://github.com/original/rr.git
 
 ```bash
 # Instalar dependencias
-pnpm install
+npm | pnpm install
 
 # Iniciar servidor de desarrollo
-pnpm dev
+npm | pnpm dev
 ```
 
 ### 3. Crear una Rama
@@ -153,13 +153,13 @@ test(components): añadir tests para BrandSelector
 
 ```bash
 # Verificar linting
-pnpm lint
+npm | pnpm lint
 
 # Construir para producción
-pnpm build
+npm | pnpm build
 
 # Vista previa del build
-pnpm preview
+npm | pnpm preview
 ```
 
 ### Checklist de Calidad
