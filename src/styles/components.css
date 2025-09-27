@@ -123,7 +123,7 @@
 
 .vehicle-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
   gap: clamp(1rem, 3vw, 1.6rem);
   justify-content: center;
 }
