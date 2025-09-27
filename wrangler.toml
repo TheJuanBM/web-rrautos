@@ -2,7 +2,12 @@ name = "rrautos"
 main = "./dist/_worker.js/index.js"
 compatibility_date = "2025-09-27"
 compatibility_flags = ["nodejs_compat"]
+account_id = "110b635e271e80e1d68bc9e3ba5b0716"
 
 [build]
-command = "npm run build"
+command = "npm run build && echo _worker.js > dist/.assetsignore"
 
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+exclude = ["_worker.js/**"]
