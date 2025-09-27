@@ -2,6 +2,7 @@
 const navLinks = [
   { href: '/', label: 'Inicio', external: false },
   { href: '/vehiculos', label: 'Vehículos', external: false },
+  { href: '/servicios', label: 'Servicios', external: false },
 ]
 
 const currentPath = Astro.url.pathname
@@ -121,7 +122,6 @@ const currentPath = Astro.url.pathname
     display: flex;
     justify-content: center;
     height: 85px;
-    background-color: rgba(var(--surface-panel-rgb), 0.92);
     backdrop-filter: blur(28px) saturate(140%);
     -webkit-backdrop-filter: blur(28px) saturate(140%);
   }
@@ -131,14 +131,6 @@ const currentPath = Astro.url.pathname
     position: absolute;
     inset: 0;
     border-bottom: 1px solid rgba(var(--color-gray-400-rgb), 0.28);
-    background:
-      linear-gradient(
-        125deg,
-        rgba(var(--surface-panel-rgb), 0.96),
-        rgba(var(--color-primary-hover-rgb), 0.24) 45%,
-        rgba(var(--color-primary-glow-rgb), 0.16) 90%
-      ),
-      rgba(var(--surface-panel-rgb), 0.95);
     opacity: 1;
     pointer-events: none;
   }
