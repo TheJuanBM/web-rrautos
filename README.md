@@ -47,12 +47,13 @@ El sitio estará disponible en `http://localhost:4321`
 
 ## 📋 Comandos Disponibles
 
-| Comando           | Descripción                        |
-| ----------------- | ---------------------------------- |
-| `pnpm dev`        | Inicia el servidor de desarrollo   |
-| `pnpm build`      | Genera el build estándar           |
-| `pnpm build:prod` | Build optimizado (sin pasos extra) |
-| `pnpm test:ci`    | Ejecuta Vitest con cobertura       |
+| Comando                            | Descripción                        |
+| ---------------------------------- | ---------------------------------- |
+| `pnpm dev`                         | Inicia el servidor de desarrollo   |
+| `pnpm build`                       | Genera el build estándar           |
+| `pnpm build:prod`                  | Build optimizado (sin pasos extra) |
+| `pnpm test:ci`                     | Ejecuta Vitest con cobertura       |
+| `npx --yes wrangler@4.40.2 deploy` | Despliega a Cloudflare Workers     |
 
 ## 🏗️ Estructura del Proyecto
 
@@ -103,6 +104,7 @@ src/
 - Paginación con navegación por teclado
 - Cards responsive con información detallada
 - Imágenes optimizadas con lazy loading
+- Sección de “Los favoritos del momento” con placeholders listos para reemplazar
 
 ### Accesibilidad ♿
 
@@ -170,6 +172,31 @@ Características incluidas:
 - Headers de seguridad
 - Cache control optimizado
 - Soporte para PWA
+
+### Cloudflare Workers 🌥️
+
+La app se despliega como Worker usando `@astrojs/cloudflare`.
+
+1. **Token**: crea un API Token con permisos mínimos
+   - Cuenta → `Workers Scripts:Edit`
+   - Cuenta → `Workers KV Storage:Edit`
+   - Usuario → `User Details:Read`
+2. Exporta el token en tu sesión antes del deploy:
+
+   ```bash
+   export CLOUDFLARE_API_TOKEN="<tu-token>"
+   ```
+
+3. El archivo `wrangler.toml` ya incluye `account_id`, el binding `ASSETS` y genera `dist/.assetsignore` durante el
+   build para evitar publicar `_worker.js` como asset.
+4. Ejecuta el deploy:
+
+   ```bash
+   npx --yes wrangler@4.40.2 deploy
+   ```
+
+5. Wrangler construye el proyecto (Astro build) y sube tanto el Worker como los assets estáticos.
+6. Si necesitas asociarlo a un dominio, usa `wrangler routes` o configura Pages Domains.
 
 ## 📊 Optimizaciones Implementadas
 
