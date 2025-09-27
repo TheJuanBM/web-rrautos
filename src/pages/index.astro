@@ -4,10 +4,13 @@ import Layout from '../layouts/Layout.astro'
 
 <Layout>
   <section class="landing" aria-labelledby="landing-title">
-    <div class="landing__glow" aria-hidden="true"></div>
+    <div class="landing__glow" data-parallax data-parallax-speed="-0.08" aria-hidden="true"></div>
+    <div class="landing__layer landing__layer--orb" data-parallax data-parallax-speed="-0.18" aria-hidden="true"></div>
+    <div class="landing__layer landing__layer--flare" data-parallax data-parallax-speed="-0.28" aria-hidden="true">
+    </div>
 
     <div class="landing__content">
-      <section class="hero" aria-labelledby="landing-title">
+      <section class="hero" aria-labelledby="landing-title" data-parallax data-parallax-speed="-0.05">
         <div class="hero__copy">
           <span class="hero__eyebrow">Confianza y respaldo garantizados</span>
           <h1 id="landing-title">Tu próximo vehículo te espera en RR Autos</h1>
@@ -196,6 +199,142 @@ import Layout from '../layouts/Layout.astro'
           </a>
         </div>
       </section>
+
+      <section class="best-sellers" aria-labelledby="best-sellers-title">
+        <header class="section-header best-sellers__header">
+          <p class="section-eyebrow">Top ventas</p>
+          <h2 id="best-sellers-title">Los favoritos del momento</h2>
+          <p class="section-description">
+            Modelos que nuestros clientes eligen una y otra vez. Rendimiento probado, garantía extendida y condiciones
+            listas para entrega inmediata.
+          </p>
+        </header>
+
+        <div class="best-sellers__grid">
+          <article class="best-sellers-card best-sellers-card--feature">
+            <div class="best-sellers-card__media">
+              <img
+                src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=299,h=299,fit=crop/dWxyV6XrakH93wpo/img_6088-YKb6OB0Ez8IjZKK1.JPG"
+                alt="Auto destacado disponible en RR Autos"
+                loading="lazy"
+              />
+              <span class="best-sellers-card__badge" aria-hidden="true">#1</span>
+            </div>
+            <div class="best-sellers-card__content">
+              <header>
+                <p class="best-sellers-card__label">Entrega inmediata</p>
+                <h3>Nombre del modelo</h3>
+                <p class="best-sellers-card__meta">
+                  <strong>S/ 115,900</strong>
+                  <span>Cuota estimada: S/ 1,690/mes</span>
+                </p>
+              </header>
+              <ul class="best-sellers-card__tags">
+                <li>2023</li>
+                <li>15,000 km</li>
+                <li>Automática</li>
+              </ul>
+              <p class="best-sellers-card__description">
+                Ideal para familias exigentes: amplio interior, consumo eficiente y tecnología de asistencia completa.
+              </p>
+              <div class="best-sellers-card__actions">
+                <a class="hero__cta best-sellers-card__cta" href="/vehiculos">Ver ficha técnica</a>
+                <button class="best-sellers-card__ghost" type="button">Reservar test drive</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="best-sellers-card">
+            <div class="best-sellers-card__media">
+              <img
+                src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=299,h=299,fit=crop/dWxyV6XrakH93wpo/dsc06396-YKb6w0bDMrC9ezw4.jpg"
+                alt="Auto destacado disponible en RR Autos"
+                loading="lazy"
+              />
+              <span class="best-sellers-card__badge" aria-hidden="true">#2</span>
+            </div>
+            <div class="best-sellers-card__content">
+              <header>
+                <p class="best-sellers-card__label">Garantía extendida</p>
+                <h3>Nombre del modelo</h3>
+                <p class="best-sellers-card__meta">
+                  <strong>S/ 98,400</strong>
+                  <span>Cuota estimada: S/ 1,380/mes</span>
+                </p>
+              </header>
+              <ul class="best-sellers-card__tags">
+                <li>2022</li>
+                <li>24,000 km</li>
+                <li>Gasolina</li>
+              </ul>
+              <div class="best-sellers-card__foot">
+                <p>Incluye mantenimiento completo y polarizado premium sin costo adicional.</p>
+                <a class="best-sellers-card__link" href="/vehiculos">Ver disponibilidad</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="best-sellers-card">
+            <div class="best-sellers-card__media">
+              <img
+                src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=299,h=299,fit=crop/dWxyV6XrakH93wpo/dsc09629-enhanced-nr-mk3zpelg33iK1007.jpg"
+                alt="Auto destacado disponible en RR Autos"
+                loading="lazy"
+              />
+              <span class="best-sellers-card__badge" aria-hidden="true">#3</span>
+            </div>
+            <div class="best-sellers-card__content">
+              <header>
+                <p class="best-sellers-card__label">Full equipo</p>
+                <h3>Nombre del modelo</h3>
+                <p class="best-sellers-card__meta">
+                  <strong>S/ 89,700</strong>
+                  <span>Cuota estimada: S/ 1,260/mes</span>
+                </p>
+              </header>
+              <ul class="best-sellers-card__tags">
+                <li>2021</li>
+                <li>32,500 km</li>
+                <li>Híbrido</li>
+              </ul>
+              <div class="best-sellers-card__foot">
+                <p>Paquete de seguridad avanzado, cámara 360° y conectividad inalámbrica.</p>
+                <a class="best-sellers-card__link" href="/vehiculos">Solicitar cotización</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="best-sellers-card">
+            <div class="best-sellers-card__media">
+              <img
+                src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=299,h=299,fit=crop/dWxyV6XrakH93wpo/dsc03021-2-AzGeXBBpaai5l9Mg.jpg"
+                alt="Auto destacado disponible en RR Autos"
+                loading="lazy"
+              />
+              <span class="best-sellers-card__badge" aria-hidden="true">#4</span>
+            </div>
+            <div class="best-sellers-card__content">
+              <header>
+                <p class="best-sellers-card__label">Garantía certificada</p>
+                <h3>Nombre del modelo</h3>
+                <p class="best-sellers-card__meta">
+                  <strong>S/ 82,500</strong>
+                  <span>Cuota estimada: S/ 1,180/mes</span>
+                </p>
+              </header>
+              <ul class="best-sellers-card__tags">
+                <li>2020</li>
+                <li>41,000 km</li>
+                <li>Manual</li>
+              </ul>
+              <div class="best-sellers-card__foot">
+                <p>Incluye inspección de 150 puntos, historial documentado y asistencia en ruta por 12 meses.</p>
+                <a class="best-sellers-card__link" href="/vehiculos">Programar visita</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -219,6 +358,50 @@ import Layout from '../layouts/Layout.astro'
       filter: blur(80px);
       opacity: 0.85;
       pointer-events: none;
+    }
+
+    .landing [data-parallax] {
+      --parallax-base-x: 0;
+      --parallax-base-y: 0;
+      --parallax-shift: 0px;
+      transform: translate3d(var(--parallax-base-x), var(--parallax-base-y), 0) translate3d(0, var(--parallax-shift), 0);
+      will-change: transform;
+      transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .landing__layer {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .landing__layer--orb {
+      top: -22vh;
+      left: 68%;
+      width: clamp(28rem, 40vw, 46rem);
+      aspect-ratio: 1 / 1;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 40% 40%, rgba(var(--color-primary-soft-rgb), 0.42), transparent 70%);
+      opacity: 0.55;
+      filter: blur(12px);
+      mix-blend-mode: screen;
+      --parallax-base-x: -50%;
+      --parallax-base-y: 0;
+    }
+
+    .landing__layer--flare {
+      top: 25vh;
+      left: -10vw;
+      width: clamp(32rem, 48vw, 60rem);
+      height: clamp(20rem, 34vw, 32rem);
+      border-radius: 9999px;
+      background:
+        radial-gradient(circle at center, rgba(var(--color-primary-glow-rgb), 0.18), transparent 70%),
+        conic-gradient(from 110deg, rgba(var(--color-primary-soft-rgb), 0.18), rgba(var(--color-primary-soft-rgb), 0));
+      opacity: 0.35;
+      filter: blur(30px);
+      mix-blend-mode: screen;
+      --parallax-base-y: -40%;
     }
 
     .landing__content {
@@ -546,7 +729,6 @@ import Layout from '../layouts/Layout.astro'
     }
 
     .cta {
-      margin-top: clamp(2.5rem, 6vw, 4rem);
       padding: clamp(2rem, 4vw, 2.75rem);
       border-radius: 1.75rem;
       background: linear-gradient(
@@ -596,6 +778,260 @@ import Layout from '../layouts/Layout.astro'
       background: rgba(var(--surface-card-rgb), 0.16);
     }
 
+    .best-sellers {
+      padding: clamp(2.5rem, 6vw, 3.5rem);
+      border-radius: 2rem;
+      background:
+        linear-gradient(160deg, rgba(var(--surface-card-rgb), 0.18) 0%, rgba(var(--color-primary-soft-rgb), 0.12) 100%),
+        rgba(var(--surface-panel-rgb), 0.65);
+      box-shadow:
+        inset 0 1px 0 rgba(var(--color-white-rgb), 0.12),
+        0 28px 60px -40px rgba(var(--surface-panel-rgb), 0.7);
+      backdrop-filter: blur(18px);
+      display: grid;
+      gap: clamp(1.75rem, 4vw, 2.5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .best-sellers::after {
+      content: '';
+      position: absolute;
+      inset: -40% 20% auto -25%;
+      height: clamp(18rem, 40vw, 26rem);
+      background: radial-gradient(circle, rgba(var(--color-primary-soft-rgb), 0.25), transparent 70%);
+      filter: blur(60px);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .best-sellers__header {
+      position: relative;
+      z-index: 1;
+    }
+
+    .best-sellers__header .section-description {
+      max-width: 36rem;
+    }
+
+    .best-sellers__grid {
+      position: relative;
+      z-index: 1;
+      margin-top: clamp(1.5rem, 3vw, 2rem);
+      display: grid;
+      gap: clamp(1.5rem, 3vw, 2rem);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .best-sellers-card {
+      position: relative;
+      display: grid;
+      gap: 1.25rem;
+      background: rgba(var(--surface-card-rgb), 0.92);
+      border-radius: 1.5rem;
+      padding: clamp(1.6rem, 3vw, 2rem);
+      border: 1px solid rgba(var(--surface-border-rgb), 0.6);
+      box-shadow: 0 22px 45px -35px rgba(var(--surface-panel-rgb), 0.65);
+      transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        border-color 220ms ease;
+    }
+
+    .best-sellers-card:hover,
+    .best-sellers-card:focus-within {
+      transform: translateY(-4px);
+      box-shadow: 0 28px 58px -30px rgba(var(--surface-panel-rgb), 0.7);
+      border-color: rgba(var(--color-primary-soft-rgb), 0.35);
+    }
+
+    .best-sellers-card--feature {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: clamp(1.5rem, 4vw, 2rem);
+      grid-template-columns: minmax(240px, 0.85fr) minmax(260px, 1.15fr);
+      background: linear-gradient(
+        150deg,
+        rgba(var(--color-primary-soft-rgb), 0.26),
+        rgba(var(--surface-card-rgb), 0.95)
+      );
+      border: 1px solid rgba(var(--color-primary-hover-rgb), 0.32);
+      box-shadow: 0 30px 64px -38px rgba(var(--color-primary-hover-rgb), 0.55);
+    }
+
+    .best-sellers-card__media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.25rem;
+      aspect-ratio: 4 / 3;
+      background: rgba(var(--surface-card-alt-rgb), 0.4);
+      display: grid;
+      place-items: center;
+    }
+
+    .best-sellers-card__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.92);
+      transition: transform 320ms ease;
+    }
+
+    .best-sellers-card:hover .best-sellers-card__media img,
+    .best-sellers-card:focus-within .best-sellers-card__media img {
+      transform: scale(1.04);
+    }
+
+    .best-sellers-card__badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.55rem 1rem;
+      background: rgba(var(--surface-panel-rgb), 0.82);
+      color: rgba(var(--color-primary-soft-rgb), 0.95);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 999px;
+      box-shadow: 0 18px 32px -26px rgba(var(--surface-panel-rgb), 0.75);
+      backdrop-filter: blur(12px);
+    }
+
+    .best-sellers-card__content {
+      display: grid;
+      gap: 1.1rem;
+    }
+
+    .best-sellers-card__content header {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .best-sellers-card__label {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(var(--color-primary-soft-rgb), 0.85);
+    }
+
+    .best-sellers-card__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: baseline;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .best-sellers-card__meta strong {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: rgba(var(--color-primary-soft-rgb), 0.95);
+    }
+
+    .best-sellers-card__tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .best-sellers-card__tags li {
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--color-primary-soft-rgb), 0.24);
+      background: rgba(var(--surface-card-alt-rgb), 0.4);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .best-sellers-card__description {
+      margin: 0;
+      color: rgba(var(--text-secondary-rgb), 0.9);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .best-sellers-card__actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .best-sellers-card__cta {
+      background: linear-gradient(
+        135deg,
+        rgba(var(--color-white-rgb), 0.96),
+        rgba(var(--color-primary-soft-rgb), 0.38)
+      );
+      color: var(--surface-panel);
+      min-width: 11.5rem;
+      box-shadow: 0 15px 34px -26px rgba(var(--surface-panel-rgb), 0.55);
+    }
+
+    .best-sellers-card__ghost {
+      appearance: none;
+      border: 1px solid rgba(var(--color-primary-soft-rgb), 0.3);
+      background: rgba(var(--surface-card-alt-rgb), 0.4);
+      color: rgba(var(--color-primary-soft-rgb), 0.85);
+      border-radius: 999px;
+      padding: 0.85rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease;
+    }
+
+    .best-sellers-card__ghost:hover,
+    .best-sellers-card__ghost:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(var(--color-primary-soft-rgb), 0.45);
+      background: rgba(var(--surface-card-alt-rgb), 0.55);
+      box-shadow: 0 18px 40px -30px rgba(var(--surface-panel-rgb), 0.55);
+    }
+
+    .best-sellers-card__foot {
+      display: grid;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .best-sellers-card__link {
+      color: rgba(var(--color-primary-soft-rgb), 0.92);
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      position: relative;
+    }
+
+    .best-sellers-card__link::after {
+      content: '';
+      height: 1px;
+      width: 100%;
+      background: currentColor;
+      position: absolute;
+      bottom: -0.2rem;
+      left: 0;
+      transform-origin: left;
+      transform: scaleX(0.3);
+      transition: transform 200ms ease;
+    }
+
+    .best-sellers-card__link:hover::after,
+    .best-sellers-card__link:focus-visible::after {
+      transform: scaleX(1);
+    }
+
     @media (max-width: 768px) {
       .hero__stats {
         gap: 0.75rem;
@@ -608,14 +1044,13 @@ import Layout from '../layouts/Layout.astro'
       .panel {
         padding: 1.5rem;
       }
+
+      .best-sellers-card--feature {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 640px) {
-      .landing {
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-      }
-
       .hero__actions {
         flex-direction: column;
         align-items: stretch;
@@ -646,6 +1081,21 @@ import Layout from '../layouts/Layout.astro'
         width: 100%;
         justify-content: center;
       }
+
+      .best-sellers {
+        padding: 2rem;
+      }
+
+      .best-sellers-card__actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .best-sellers-card__cta,
+      .best-sellers-card__ghost {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -657,6 +1107,84 @@ import Layout from '../layouts/Layout.astro'
         transition: none;
         box-shadow: none;
       }
+
+      .landing [data-parallax] {
+        transition: none;
+        transform: none !important;
+      }
+
+      .best-sellers-card,
+      .best-sellers-card__ghost,
+      .best-sellers-card__link::after,
+      .best-sellers-card__media img {
+        transition: none;
+        box-shadow: none;
+      }
     }
   </style>
+
+  <script is:inline>
+    if (typeof window !== 'undefined') {
+      const parallaxElements = Array.from(document.querySelectorAll('[data-parallax][data-parallax-speed]'))
+
+      if (parallaxElements.length) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+        let ticking = false
+        let isActive = false
+
+        const updateParallax = () => {
+          const viewportCenter = window.scrollY + window.innerHeight / 2
+
+          parallaxElements.forEach(el => {
+            const speed = Number(el.dataset.parallaxSpeed || 0)
+            const rect = el.getBoundingClientRect()
+            const elementCenter = window.scrollY + rect.top + rect.height / 2
+            const shift = (elementCenter - viewportCenter) * speed
+            el.style.setProperty('--parallax-shift', `${shift}px`)
+          })
+        }
+
+        const onScrollOrResize = () => {
+          if (ticking || !isActive) return
+          ticking = true
+          window.requestAnimationFrame(() => {
+            updateParallax()
+            ticking = false
+          })
+        }
+
+        const enable = () => {
+          if (isActive) return
+          isActive = true
+          updateParallax()
+          window.addEventListener('scroll', onScrollOrResize, { passive: true })
+          window.addEventListener('resize', onScrollOrResize)
+        }
+
+        const disable = () => {
+          if (!isActive) return
+          isActive = false
+          window.removeEventListener('scroll', onScrollOrResize)
+          window.removeEventListener('resize', onScrollOrResize)
+          parallaxElements.forEach(el => {
+            el.style.removeProperty('--parallax-shift')
+          })
+        }
+
+        const handleMotionPreference = () => {
+          if (prefersReducedMotion.matches) {
+            disable()
+          } else {
+            enable()
+          }
+        }
+
+        handleMotionPreference()
+        prefersReducedMotion.addEventListener('change', handleMotionPreference)
+
+        // Provide an initial update after images/fonts settle
+        window.addEventListener('load', updateParallax, { once: true })
+      }
+    }
+  </script>
 </Layout>
