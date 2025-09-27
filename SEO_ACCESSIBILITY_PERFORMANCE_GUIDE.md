@@ -51,7 +51,7 @@ rendimiento.
 ```
 User-agent: *
 Allow: /
-Sitemap: https://rrautosweb.com/sitemap.xml
+Sitemap: https://rrautos.club/sitemap.xml
 ```
 
 **sitemap.xml**:

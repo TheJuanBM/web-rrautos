@@ -39,8 +39,18 @@ const {
   googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION,
 } = Astro.props as Props
 
+const FALLBACK_SITE = 'https://rrautos.club'
+const currentUrl = Astro.url ?? new URL(FALLBACK_SITE)
+const siteOrigin = Astro.site?.origin ?? currentUrl.origin
+const canonicalUrl = canonical.startsWith('http') ? canonical : new URL(canonical, siteOrigin).href
 const fullTitle = title.includes('RR Autos') ? title : `${title} | RR Autos`
-const imageUrl = new URL(image, Astro.site || Astro.url.origin).href
+const imageUrl = (() => {
+  try {
+    return new URL(image, siteOrigin).href
+  } catch {
+    return image
+  }
+})()
 const analyticsSnippet = analyticsId
   ? [
       'window.dataLayer = window.dataLayer || [];',
@@ -56,7 +66,7 @@ const analyticsSnippet = analyticsId
 <meta name="description" content={description} />
 <meta name="keywords" content={keywords.join(', ')} />
 <meta name="author" content={author} />
-<link rel="canonical" href={canonical} />
+<link rel="canonical" href={canonicalUrl} />
 
 <!-- Robots -->
 {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -67,7 +77,7 @@ const analyticsSnippet = analyticsId
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageUrl} />
-<meta property="og:url" content={canonical} />
+<meta property="og:url" content={canonicalUrl} />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content="es_CO" />
 {facebookAppId && <meta property="fb:app_id" content={facebookAppId} />}
@@ -86,14 +96,38 @@ const analyticsSnippet = analyticsId
     '@type': 'AutoDealer',
     name: siteName,
     description: description,
-    url: canonical,
+    url: canonicalUrl,
     logo: imageUrl,
-    sameAs: ['https://www.facebook.com/rrautos', 'https://www.instagram.com/rrautos'],
+    sameAs: [
+      'https://www.facebook.com/rrautos',
+      'https://www.instagram.com/rrautos',
+      'https://www.linkedin.com/company/rr-autos',
+    ],
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'CO',
-      addressLocality: 'Colombia',
+      addressRegion: 'Antioquia',
+      addressLocality: 'Medellín',
     },
+    areaServed: {
+      '@type': 'Country',
+      name: 'Colombia',
+    },
+    telephone: '+57 300 200 6818',
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '18:00',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Saturday'],
+        opens: '09:00',
+        closes: '13:00',
+      },
+    ],
     offers: {
       '@type': 'AggregateOffer',
       priceCurrency: 'COP',
@@ -103,7 +137,7 @@ const analyticsSnippet = analyticsId
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${canonical}?q={search_term_string}`,
+        urlTemplate: `${canonicalUrl}?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
@@ -128,7 +162,7 @@ const analyticsSnippet = analyticsId
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
 <!-- PWA Meta -->
-<meta name="theme-color" content="#2563eb" />
+<meta name="theme-color" content="#152238" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="RR Autos" />

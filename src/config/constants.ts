@@ -6,16 +6,11 @@ const BASE_HEADERS: Record<string, string> = {
 }
 
 const SSR_ONLY_HEADERS: Record<string, string> = {
-  origin: 'https://www.rrautosweb.com',
-  referer: 'https://www.rrautosweb.com/',
   priority: 'u=1, i',
-  'sec-ch-ua': '"Chromium";v="140", "Not=A?Brand";v="24", "Google Chrome";v="140"',
   'sec-ch-ua-mobile': '?0',
-  'sec-ch-ua-platform': '"macOS"',
   'sec-fetch-dest': 'empty',
   'sec-fetch-mode': 'cors',
   'sec-fetch-site': 'cross-site',
-  // 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/140.0.0.0 Safari/537.36',
 }
 
 const HEADERS = import.meta.env.SSR ? { ...BASE_HEADERS, ...SSR_ONLY_HEADERS } : BASE_HEADERS

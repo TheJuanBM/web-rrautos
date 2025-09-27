@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://rrautosweb.com/sitemap.xml
+Sitemap: https://rrautos.club/sitemap.xml
 
 # Crawl-delay for being respectful
 Crawl-delay: 1

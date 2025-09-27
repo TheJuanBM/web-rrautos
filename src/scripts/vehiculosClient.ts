@@ -31,7 +31,7 @@ interface VehiculosState {
 
 class VehiculosClient {
   private state: VehiculosState
-  private readonly defaultCtaUrl = 'https://wa.me/51987654321'
+  private readonly defaultCtaUrl = 'https://wa.me/573002006818'
   private loadingIndicatorHideTimeout: number | null = null
   private readonly loadingMessages = Object.freeze({
     loading: 'Cargando catálogo de vehículos…',

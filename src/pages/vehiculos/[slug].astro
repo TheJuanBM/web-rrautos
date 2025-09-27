@@ -45,7 +45,7 @@ const normalizedSlug = resolveVehicleSlug({
 })
 
 function getCanonical(): string {
-  const baseUrl = Astro.site || Astro.url.origin
+  const baseUrl = Astro.site?.origin || Astro.url.origin
   return new URL(`/vehiculos/${normalizedSlug}`, baseUrl).href
 }
 
@@ -95,7 +95,7 @@ const detailNotes = descriptionLines.filter(
   line => !specsMap.has(line) && line !== priceLine && !/Financiamos/i.test(line) && !/^CONTACTA/i.test(line)
 )
 
-const defaultContactUrl = 'https://wa.me/51987654321'
+const defaultContactUrl = 'https://wa.me/573002006818'
 const contactUrl = sanitizeUrl(
   extractFirstLink(description ?? '') ||
     `${defaultContactUrl}?text=${encodeURIComponent(`Hola, me interesa ${title}. ${getCanonical()}`)}`
@@ -332,7 +332,7 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
               <a class="cta-btn cta-btn--primary" href={contactUrl} target="_blank" rel="noopener">
                 {contactLabel}
               </a>
-              <a class="cta-btn cta-btn--ghost" href="mailto:contacto@rrautosweb.com">Enviar correo</a>
+              <a class="cta-btn cta-btn--ghost" href="mailto:contacto@rrautos.club">Enviar correo</a>
             </div>
           </div>
         </section>
