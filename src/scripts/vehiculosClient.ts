@@ -26,6 +26,7 @@ interface VehiculosState {
   paginacionDivs: HTMLElement[]
   marcaSelect: HTMLSelectElement | null
   errorBanner: HTMLElement | null
+  resultsSection: HTMLElement | null
   loadingIndicator: LoadingIndicatorElements
 }
 
@@ -47,8 +48,27 @@ class VehiculosClient {
       paginacionDivs: Array.from(document.querySelectorAll<HTMLElement>('[data-pagination-anchor]')),
       marcaSelect: document.getElementById('marca-select') as HTMLSelectElement,
       errorBanner: document.querySelector('[data-results-error]'),
+      resultsSection: document.getElementById('catalog_results'),
       loadingIndicator: this.selectLoadingIndicator(),
     }
+  }
+
+  private scrollToResults(): void {
+    if (typeof window === 'undefined') return
+
+    if (!this.state.resultsSection || !document.body.contains(this.state.resultsSection)) {
+      this.state.resultsSection = document.getElementById('catalog_results')
+    }
+
+    const target = this.state.resultsSection
+    if (!target) return
+
+    window.requestAnimationFrame(() => {
+      const headerOffset = 85
+      const elementTop = target.getBoundingClientRect().top + window.scrollY
+      const scrollTarget = Math.max(elementTop - headerOffset, 0)
+      window.scrollTo({ top: scrollTarget, behavior: 'smooth' })
+    })
   }
 
   private selectLoadingIndicator(): LoadingIndicatorElements {
@@ -395,6 +415,7 @@ class VehiculosClient {
             const newPage = parseInt(pageAttr)
             if (!isNaN(newPage)) {
               this.state.currentPage = newPage
+              this.scrollToResults()
               this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
             }
           })
@@ -405,6 +426,7 @@ class VehiculosClient {
       prevBtn?.addEventListener('click', () => {
         if (this.state.currentPage > 1) {
           this.state.currentPage--
+          this.scrollToResults()
           this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
         }
       })
@@ -413,6 +435,7 @@ class VehiculosClient {
       nextBtn?.addEventListener('click', () => {
         if (this.state.currentPage < totalPages) {
           this.state.currentPage++
+          this.scrollToResults()
           this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
         }
       })
@@ -467,6 +490,7 @@ class VehiculosClient {
       const target = e.target as HTMLSelectElement
       this.state.currentMarca = target.value
       this.state.currentPage = 1
+      this.scrollToResults()
       this.fetchVehiculos(this.state.currentPage, this.state.currentMarca)
 
       announceToScreenReader(`Filtro aplicado: ${target.options[target.selectedIndex].text}. Cargando vehículos...`)
