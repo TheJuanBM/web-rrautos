@@ -113,7 +113,7 @@ function resolveImageUrl(rawUrl?: string | null): string {
         return new URL(rawUrl, base).href
       }
     } catch {
-      /* ignore */
+      console.error('error resolving image url', rawUrl)
     }
 
     if (rawUrl.startsWith('//')) {
@@ -284,104 +284,130 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
 ---
 
 <Layout {...seoData}>
-  <article class="vehicle-detail" itemscope itemtype="https://schema.org/Vehicle">
-    <nav class="vehicle-detail__breadcrumbs" aria-label="Ruta de navegación">
-      <ol>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/vehiculos">Vehículos</a></li>
-        <li aria-current="page">{title}</li>
-      </ol>
-    </nav>
+  <section class="vehicle-detail-shell">
+    <article class="vehicle-detail" itemscope itemtype="https://schema.org/Vehicle">
+      <div class="vehicle-detail__surface">
+        <nav class="vehicle-detail__breadcrumbs" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/vehiculos">Vehículos</a></li>
+            <li aria-current="page" class="breadcrumb-current" title={title}>
+              <span>{title}</span>
+            </li>
+          </ol>
+        </nav>
 
-    <VehicleHero title={title} highlights={highlightSpecs} carouselImages={carouselImages} hasGallery={hasGallery}>
-      <div class="hero__actions" slot="actions">
-        <a class="hero__cta hero__cta--primary" href={contactUrl} rel="noopener" target="_blank">
-          {contactLabel}
-        </a>
-        <a class="hero__cta hero__cta--secondary" href="tel:+573002006818">Llamar al asesor</a>
-        <a class="hero__cta hero__cta--ghost" href="/vehiculos">Volver al catálogo</a>
+        <VehicleHero title={title} highlights={highlightSpecs} carouselImages={carouselImages} hasGallery={hasGallery}>
+          <div class="hero__actions" slot="actions">
+            <a class="hero__cta hero__cta--primary" href={contactUrl} rel="noopener" target="_blank">
+              {contactLabel}
+            </a>
+            <a class="hero__cta hero__cta--secondary" href="tel:+573002006818">Llamar al asesor</a>
+            <a class="hero__cta hero__cta--ghost" href="/vehiculos">Volver al catálogo</a>
+          </div>
+        </VehicleHero>
       </div>
-    </VehicleHero>
 
-    <VehicleSummary title={title} priceText={priceValue} benefits={benefits} notes={extraNotes} extraInfo={extraInfo} />
+      <div class="vehicle-detail__content-grid">
+        <VehicleSummary
+          title={title}
+          priceText={priceValue}
+          benefits={benefits}
+          notes={extraNotes}
+          extraInfo={extraInfo}
+        />
 
-    <section class="vehicle-detail__cta" aria-labelledby="cta-detail-title">
-      <div class="cta-card">
-        <div class="cta-card__content">
-          <p class="section-eyebrow">Agenda tu cita</p>
-          <h2 id="cta-detail-title">Confirma disponibilidad y recibe una atención 100% personalizada</h2>
-          <p>
-            Habla con un asesor para revisar historial, validar precio, simular financiamiento y coordinar una visita o
-            inspección virtual.
-          </p>
+        <section class="vehicle-detail__cta" aria-labelledby="cta-detail-title">
+          <div class="cta-card">
+            <div class="cta-card__content">
+              <p class="section-eyebrow advisors-card__eyebrow">Agenda tu cita</p>
+              <div class="hero__divider"></div>
+              <h2 id="cta-detail-title">Confirma disponibilidad y recibe una atención 100% personalizada.</h2>
+              <br />
+              <p>
+                Habla con un asesor para revisar historial, validar precio, simular financiamiento y coordinar una
+                visita o inspección virtual.
+              </p>
+            </div>
+            <div class="cta-card__actions">
+              <a class="cta-btn cta-btn--primary" href={contactUrl} target="_blank" rel="noopener">
+                {contactLabel}
+              </a>
+              <a class="cta-btn cta-btn--ghost" href="mailto:contacto@rrautosweb.com">Enviar correo</a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <AsesoresList asesores={ASESORES} />
+
+      <section class="vehicle-detail__faq" aria-labelledby="faq-title">
+        <div class="faq-card">
+          <h2 id="faq-title">Preguntas frecuentes</h2>
+          <dl>
+            <div>
+              <dt>¿Puedo reservar este vehículo?</dt>
+              <dd>
+                Sí, podemos apartarlo mientras completamos la inspección y documentación. Contáctanos para más detalles.
+              </dd>
+            </div>
+            <div>
+              <dt>¿Cómo funciona el financiamiento?</dt>
+              <dd>
+                Trabajamos con entidades aliadas para ofrecer planes con o sin cuota inicial. Te ayudamos a simular
+                cuotas y requisitos.
+              </dd>
+            </div>
+            <div>
+              <dt>¿Realizan envíos a otras ciudades?</dt>
+              <dd>
+                Coordinamos transporte a nivel nacional con empresas aseguradas. Validamos costos y tiempos antes de
+                confirmar.
+              </dd>
+            </div>
+          </dl>
         </div>
-        <div class="cta-card__actions">
-          <a class="cta-btn cta-btn--primary" href={contactUrl} target="_blank" rel="noopener">
-            {contactLabel}
-          </a>
-          <a class="cta-btn cta-btn--ghost" href="mailto:contacto@rrautosweb.com">Enviar correo</a>
-        </div>
-      </div>
-    </section>
-
-    <AsesoresList asesores={ASESORES} />
-
-    <section class="vehicle-detail__faq" aria-labelledby="faq-title">
-      <div class="faq-card">
-        <h2 id="faq-title">Preguntas frecuentes</h2>
-        <dl>
-          <div>
-            <dt>¿Puedo reservar este vehículo?</dt>
-            <dd>
-              Sí, podemos apartarlo mientras completamos la inspección y documentación. Contáctanos para más detalles.
-            </dd>
-          </div>
-          <div>
-            <dt>¿Cómo funciona el financiamiento?</dt>
-            <dd>
-              Trabajamos con entidades aliadas para ofrecer planes con o sin cuota inicial. Te ayudamos a simular cuotas
-              y requisitos.
-            </dd>
-          </div>
-          <div>
-            <dt>¿Realizan envíos a otras ciudades?</dt>
-            <dd>
-              Coordinamos transporte a nivel nacional con empresas aseguradas. Validamos costos y tiempos antes de
-              confirmar.
-            </dd>
-          </div>
-        </dl>
-      </div>
-    </section>
-  </article>
+      </section>
+    </article>
+  </section>
 
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <style>
-    :global(body) {
-      background: var(--color-gray-80);
+    .vehicle-detail-shell {
+      background:
+        radial-gradient(120% 120% at 15% 0%, rgba(var(--color-primary-soft-rgb), 0.28), transparent 62%),
+        linear-gradient(180deg, rgba(var(--surface-panel-rgb), 0.92), rgba(var(--surface-body-rgb), 0.98));
+      padding: clamp(2.5rem, 7vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
     }
 
     .vehicle-detail {
-      width: min(1180px, calc(100% - 2.5rem));
-      margin: clamp(1.5rem, 7vw, 1.5rem) auto;
+      width: min(1160px, calc(100% - 2.5rem));
+      margin: 0 auto;
       display: grid;
-      gap: clamp(2rem, 4.5vw, 1.5rem);
-      color: var(--color-gray-800);
-      padding-bottom: clamp(3rem, 7vw, 4.5rem);
+      gap: clamp(2.5rem, 6vw, 3.5rem);
+      color: var(--color-gray-900);
+    }
+
+    .vehicle-detail__surface {
+      display: grid;
+      gap: clamp(1.8rem, 4.5vw, 2.6rem);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
     }
 
     .vehicle-detail__breadcrumbs {
       font-size: 0.88rem;
-      color: var(--color-gray-600);
+      color: rgba(var(--color-gray-600-rgb), 0.95);
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.85rem 1.35rem;
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      box-shadow: 0 18px 42px -32px rgba(15, 23, 42, 0.6);
-      border-radius: 20px;
+      padding: 0.5rem;
+      background: rgba(var(--color-white-rgb), 0.6);
+      border: 1px solid rgba(var(--color-gray-300-rgb), 0.28);
+      box-shadow: 0 16px 38px -28px rgba(var(--color-gray-900-rgb), 0.4);
+      border-radius: 10px;
       backdrop-filter: blur(6px);
       width: fit-content;
     }
@@ -389,7 +415,7 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
     .vehicle-detail__breadcrumbs ol {
       list-style: none;
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 0.45rem;
       padding: 0;
       margin: 0;
@@ -401,13 +427,14 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
       align-items: center;
       gap: 0.45rem;
       font-weight: 500;
-      color: rgba(71, 85, 105, 0.9);
+      color: rgba(var(--color-gray-600-rgb), 0.95);
+      min-width: 0;
     }
 
     .vehicle-detail__breadcrumbs li::after {
       content: '›';
       font-size: 1rem;
-      color: rgba(148, 163, 184, 0.9);
+      color: var(--color-black);
     }
 
     .vehicle-detail__breadcrumbs li:last-child::after {
@@ -419,8 +446,21 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
       font-weight: 600;
     }
 
+    .vehicle-detail__breadcrumbs .breadcrumb-current {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .vehicle-detail__breadcrumbs .breadcrumb-current span {
+      display: block;
+      max-width: clamp(8rem, 24vw, 14rem);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .vehicle-detail__breadcrumbs a {
-      color: var(--color-primary);
+      color: #4f46e5;
       text-decoration: none;
       padding: 0.25rem 0.6rem;
       border-radius: 999px;
@@ -431,7 +471,7 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
 
     .vehicle-detail__breadcrumbs a:hover,
     .vehicle-detail__breadcrumbs a:focus-visible {
-      background: rgba(37, 99, 235, 0.08);
+      background: rgba(var(--color-primary-rgb), 0.12);
       color: var(--color-indigo);
     }
 
@@ -442,34 +482,56 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
       margin-top: 0.25rem;
     }
 
+    .vehicle-detail__content-grid {
+      display: grid;
+      gap: clamp(1.8rem, 4vw, 2.4rem);
+    }
+
     .vehicle-detail__cta .cta-card {
-      background: linear-gradient(135deg, var(--color-primary-hover), var(--color-indigo));
+      background:
+        radial-gradient(circle at 12% 18%, rgba(var(--color-primary-soft-rgb), 0.35), transparent 58%),
+        linear-gradient(145deg, rgba(var(--color-primary-rgb), 0.94), rgba(var(--color-indigo-rgb), 0.82));
       border-radius: 1.75rem;
-      color: var(--color-white);
+      color: var(--color-black);
       padding: clamp(2rem, 4vw, 2.8rem);
       display: flex;
-      flex-wrap: wrap;
       gap: 1.5rem;
       justify-content: space-between;
-      box-shadow: 0 38px 65px -44px rgba(var(--color-primary-shadow-rgb), 0.85);
+      box-shadow: 0 35px 70px -42px rgba(var(--color-primary-shadow-rgb), 0.85);
+      border: 1px solid rgba(var(--color-primary-contrast-rgb), 0.22);
+      position: relative;
+      overflow: hidden;
     }
 
     .cta-card__content {
-      display: grid;
       gap: 0.75rem;
-      max-width: 34rem;
+      max-width: 60%;
+      position: relative;
+      z-index: 1;
+      color: rgba(71, 85, 105, 0.92);
     }
 
     .cta-card__content p {
       margin: 0;
-      color: rgba(var(--color-gray-200-rgb), 0.9);
+      color: var(--color-black);
+    }
+
+    .cta-card__content p:last-child {
+      color: rgba(71, 85, 105, 0.92);
     }
 
     .cta-card__actions {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: center;
       gap: 0.75rem;
       align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-card__actions > a {
+      width: 100%;
     }
 
     .cta-btn {
@@ -487,14 +549,17 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
     }
 
     .cta-btn--primary {
-      background: var(--color-white);
-      color: var(--color-primary-hover);
+      text-align: center;
+      background: #2563eb;
+      color: var(--color-white);
       box-shadow: 0 18px 48px -22px rgba(var(--color-white-rgb), 0.9);
     }
 
     .cta-btn--ghost {
-      border: 1px solid rgba(var(--color-gray-200-rgb), 0.5);
+      text-align: center;
+      border: 1px solid rgba(var(--color-gray-200-rgb), 0.6);
       color: var(--color-white);
+      background: transparent;
     }
 
     .cta-btn:hover,
@@ -504,11 +569,11 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
     }
 
     .vehicle-detail__faq .faq-card {
-      background: rgba(var(--color-white-rgb), 0.95);
+      background: linear-gradient(140deg, rgba(var(--color-white-rgb), 0.95), rgba(var(--color-primary-soft-rgb), 0.4));
       border-radius: 1.75rem;
-      padding: clamp(1.8rem, 4vw, 2.4rem);
-      border: 1px solid rgba(var(--color-gray-300-rgb), 0.25);
-      box-shadow: 0 24px 55px -42px rgba(var(--color-gray-900-rgb), 0.55);
+      padding: clamp(1.9rem, 4vw, 2.5rem);
+      border: 1px solid rgba(var(--color-gray-300-rgb), 0.28);
+      box-shadow: 0 28px 65px -46px rgba(var(--color-gray-900-rgb), 0.55);
       display: grid;
       gap: 1.25rem;
     }
@@ -526,34 +591,64 @@ const contactLabel = priceValue ? `Solicitar cotización de ${priceValue}` : 'Ha
 
     .vehicle-detail__faq dd {
       margin: 0;
-      color: var(--color-gray-600);
+      color: rgba(var(--color-gray-600-rgb), 0.95);
+    }
+
+    .vehicle-detail :global(.advisors-card) {
+      border-radius: 1.6rem;
+      border: 1px solid var(--surface-border);
+      box-shadow: 0 24px 52px -32px rgba(var(--surface-panel-rgb), 0.55);
+      background:
+        radial-gradient(circle at top right, rgba(var(--color-primary-soft-rgb), 0.12), transparent 65%),
+        linear-gradient(165deg, rgba(var(--surface-card-rgb), 0.9), rgba(var(--surface-card-alt-rgb), 0.88));
+    }
+
+    @media (min-width: 1024px) {
+      .vehicle-detail__content-grid {
+        align-items: stretch;
+      }
+
+      .vehicle-detail__cta {
+        align-self: stretch;
+      }
     }
 
     @media (max-width: 1000px) {
+      .cta-card {
+        flex-direction: column;
+      }
+
       .vehicle-detail {
         width: min(100%, calc(100% - 1.5rem));
-        margin: clamp(2.5rem, 6vw, 3.5rem) auto;
         gap: clamp(2rem, 5vw, 3rem);
       }
     }
 
     @media (max-width: 768px) {
+      .vehicle-detail-shell {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+      }
+
       .vehicle-detail {
-        width: min(100%, calc(100% - 1.5rem));
+        width: min(100%, calc(100% - 0.5rem));
       }
 
       .cta-card__actions {
         width: 100%;
+        flex-direction: column;
       }
 
       .cta-btn {
         width: 100%;
+        text-align: center;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .cta-btn,
-      .vehicle-detail__cta .cta-card {
+      .vehicle-detail__cta .cta-card,
+      .vehicle-detail__surface {
         transition: none;
         box-shadow: none;
       }

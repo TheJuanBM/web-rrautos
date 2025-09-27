@@ -16,7 +16,8 @@ const { title, priceText = null, benefits = [], notes = [], extraInfo = [] } = A
 ---
 
 <section class="vehicle-summary">
-  <h2>Resumen del vehículo</h2>
+  <h2 class="advisors-card__eyebrow">Resumen del vehículo</h2>
+  <div class="hero__divider"></div>
   <p>
     Este {title} forma parte de nuestro inventario verificado. Confirmamos historial, kilometraje real y estado mecánico
     antes de publicar cada unidad.
@@ -63,13 +64,12 @@ const { title, priceText = null, benefits = [], notes = [], extraInfo = [] } = A
 <style>
   .vehicle-summary {
     position: relative;
-    background:
-      linear-gradient(140deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 255, 0.92)),
-      radial-gradient(130% 120% at 90% -10%, rgba(191, 219, 254, 0.3), transparent 60%);
+    background: linear-gradient(140deg, rgba(var(--surface-card-rgb), 0.95), rgba(var(--surface-card-alt-rgb), 0.85));
     border-radius: 1.9rem;
     padding: clamp(2rem, 4vw, 2.6rem);
     border: 1px solid rgba(148, 163, 184, 0.2);
     box-shadow: 0 24px 60px -45px rgba(30, 64, 175, 0.4);
+    overflow: hidden;
     display: grid;
     gap: 1.3rem;
   }
@@ -83,15 +83,9 @@ const { title, priceText = null, benefits = [], notes = [], extraInfo = [] } = A
     pointer-events: none;
   }
 
-  .vehicle-summary h2 {
-    margin: 0;
-    color: var(--color-gray-900);
-    letter-spacing: -0.012em;
-  }
-
   .vehicle-summary p {
     margin: 0;
-    color: rgba(71, 85, 105, 0.92);
+    color: var(--color-white);
   }
 
   .vehicle-summary__extra {
@@ -135,7 +129,7 @@ const { title, priceText = null, benefits = [], notes = [], extraInfo = [] } = A
 
   .vehicle-detail__price-label {
     font-weight: 600;
-    color: var(--color-gray-800);
+    color: var(--color-white);
   }
 
   .vehicle-detail__benefits {
@@ -143,7 +137,7 @@ const { title, priceText = null, benefits = [], notes = [], extraInfo = [] } = A
     padding-left: 1.25rem;
     display: grid;
     gap: 0.6rem;
-    color: rgba(71, 85, 105, 0.88);
+    color: var(--color-white);
     list-style: disc;
   }
 </style>

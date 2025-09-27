@@ -44,11 +44,11 @@ const { title, highlights = [], carouselImages = [], hasGallery } = Astro.props 
     padding: clamp(1.8rem, 4vw, 2.4rem);
     gap: clamp(1.6rem, 4vw, 2.4rem);
     border-radius: 2rem;
-    background: #fff;
     border: 1px solid rgba(148, 163, 184, 0.18);
     box-shadow: 0 28px 80px -60px rgba(15, 23, 42, 0.42);
     position: relative;
     align-items: start;
+    background: rgba(var(--surface-card-rgb), 0.88);
   }
 
   .hero__info {
@@ -63,7 +63,7 @@ const { title, highlights = [], carouselImages = [], hasGallery } = Astro.props 
     margin: 0;
     font-weight: 600;
     font-size: clamp(2.3rem, 5.5vw, 3.1rem);
-    color: var(--color-gray-900);
+    color: var(--color-white);
     letter-spacing: -0.02em;
     line-height: 1.05;
     text-shadow: 0 10px 35px rgba(15, 23, 42, 0.15);
@@ -71,15 +71,9 @@ const { title, highlights = [], carouselImages = [], hasGallery } = Astro.props 
 
   .hero__subtitle {
     margin: 0;
-    color: rgba(71, 85, 105, 0.85);
+    color: rgba(225, 225, 225, 0.85);
     font-size: 1.05rem;
     max-width: 38ch;
-  }
-
-  .hero__divider {
-    height: 1px;
-    background: linear-gradient(90deg, rgba(148, 163, 184, 0), rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0));
-    margin: clamp(0.8rem, 2vw, 1.2rem) 0;
   }
 
   .hero__media {
@@ -126,7 +120,6 @@ const { title, highlights = [], carouselImages = [], hasGallery } = Astro.props 
 
   .hero__actions :global(.hero__cta--secondary) {
     border: 1px solid rgba(59, 130, 246, 0.28);
-    color: var(--color-primary-contrast);
     background: rgba(255, 255, 255, 0.95);
   }
 

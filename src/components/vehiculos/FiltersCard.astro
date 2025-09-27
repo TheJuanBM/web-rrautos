@@ -33,13 +33,13 @@ const { marcas } = Astro.props
 
 <style>
   .catalog__filters .filters-card {
-    background: rgba(var(--color-white-rgb), 0.95);
+    background: rgba(var(--surface-card-rgb), 0.92);
     border-radius: 1.5rem;
-    border: 1px solid rgba(var(--color-gray-400-rgb), 0.25);
+    border: 1px solid var(--surface-border);
     padding: clamp(1.25rem, 3.5vw, 2rem);
     display: grid;
     gap: 1.25rem;
-    box-shadow: 0 24px 48px -32px rgba(var(--color-primary-rgb), 0.4);
+    box-shadow: 0 24px 48px -32px rgba(var(--surface-panel-rgb), 0.55);
   }
 
   .filters-card header {
@@ -58,7 +58,7 @@ const { marcas } = Astro.props
 
   .filters-card p {
     margin: 0;
-    color: var(--color-gray-600);
+    color: var(--text-secondary);
     line-height: 1.7;
   }
 
@@ -72,21 +72,27 @@ const { marcas } = Astro.props
     flex-wrap: wrap;
     gap: 0.5rem;
     font-size: 0.92rem;
-    color: var(--color-gray-600);
+    color: var(--text-muted);
   }
 
   .filters-link {
-    color: var(--color-primary-hover);
     font-weight: 600;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+    color: rgba(var(--color-primary-soft-rgb), 0.92);
+  }
+
+  .filters-link:hover,
+  .filters-link:focus-visible {
+    color: rgba(var(--color-primary-soft-rgb), 1);
   }
 
   .filters-link::after {
     content: '↗';
     font-size: 0.85rem;
+    color: rgba(var(--color-primary-soft-rgb), 0.9);
   }
 
   @media (max-width: 900px) {

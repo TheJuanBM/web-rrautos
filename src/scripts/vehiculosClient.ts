@@ -263,15 +263,6 @@ class VehiculosClient {
                     <path fill="currentColor" d="M13.172 12L8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"></path>
                   </svg>
                 </a>
-                <a
-                  href="${contactLink}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="vehicle-card__cta vehicle-card__cta--secondary"
-                  aria-label="Contactar asesor de ${safeTitle} (se abre en nueva ventana)"
-                >
-                  <span>Contactar asesor</span>
-                </a>
               </div>
             </div>
           </article>

@@ -52,8 +52,11 @@ function normalizeTitle(rawTitle: string): string {
           -apple-system,
           sans-serif;
         line-height: 1.6;
-        color: var(--color-gray-800);
-        background-color: var(--color-white);
+        color: var(--text-primary);
+        background-color: var(--surface-body);
+        background-image:
+          radial-gradient(circle at top, rgba(var(--color-primary-glow-rgb), 0.06), transparent 55%),
+          linear-gradient(180deg, rgba(var(--surface-panel-rgb), 0.84) 0%, rgba(var(--surface-body-rgb), 0.96) 65%);
       }
 
       .sr-only {
@@ -86,7 +89,7 @@ function normalizeTitle(rawTitle: string): string {
     <!-- Skip to main content para accesibilidad -->
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 px-4 py-2 rounded-md z-50"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white text-slate-900 px-4 py-2 rounded-md z-50 shadow-lg"
     >
       Saltar al contenido principal
     </a>

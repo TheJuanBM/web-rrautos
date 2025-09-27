@@ -121,7 +121,7 @@ const currentPath = Astro.url.pathname
     display: flex;
     justify-content: center;
     height: 85px;
-    background-color: rgba(var(--color-gray-900-rgb), 0.88);
+    background-color: rgba(var(--surface-panel-rgb), 0.92);
     backdrop-filter: blur(28px) saturate(140%);
     -webkit-backdrop-filter: blur(28px) saturate(140%);
   }
@@ -134,11 +134,11 @@ const currentPath = Astro.url.pathname
     background:
       linear-gradient(
         125deg,
-        rgba(var(--color-gray-900-rgb), 0.95),
-        rgba(var(--color-primary-contrast-rgb), 0.6) 34%,
-        rgba(var(--color-sky-rgb), 0.42) 68%
+        rgba(var(--surface-panel-rgb), 0.96),
+        rgba(var(--color-primary-hover-rgb), 0.24) 45%,
+        rgba(var(--color-primary-glow-rgb), 0.16) 90%
       ),
-      rgba(var(--color-gray-900-rgb), 0.92);
+      rgba(var(--surface-panel-rgb), 0.95);
     opacity: 1;
     pointer-events: none;
   }
@@ -147,8 +147,8 @@ const currentPath = Astro.url.pathname
     position: absolute;
     inset: auto 0 -35% 0;
     background:
-      radial-gradient(circle at top left, rgba(var(--color-primary-rgb), 0.32), transparent 60%),
-      radial-gradient(circle at top right, rgba(var(--color-sky-rgb), 0.28), transparent 60%);
+      radial-gradient(circle at top left, rgba(var(--color-primary-glow-rgb), 0.16), transparent 60%),
+      radial-gradient(circle at top right, rgba(var(--color-secondary-glow-rgb), 0.14), transparent 60%);
     pointer-events: none;
     opacity: 0.6;
     filter: blur(24px);
@@ -157,7 +157,7 @@ const currentPath = Astro.url.pathname
   .site-header__inner {
     position: relative;
     z-index: 1;
-    width: min(1160px, calc(100% - 2.5rem));
+    width: min(1140px, calc(100% - 2.5rem));
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -169,7 +169,7 @@ const currentPath = Astro.url.pathname
     align-items: center;
     gap: 0.6rem;
     text-decoration: none;
-    color: rgba(var(--color-white-rgb), 0.95);
+    color: rgba(var(--color-white-rgb), 0.92);
     font-weight: 700;
     letter-spacing: 0.015em;
     font-size: 1rem;
@@ -199,7 +199,7 @@ const currentPath = Astro.url.pathname
     font-size: 1.05rem;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: rgba(var(--color-white-rgb), 0.82);
+    color: rgba(var(--color-white-rgb), 0.78);
   }
 
   .site-header__nav ul {
@@ -214,7 +214,7 @@ const currentPath = Astro.url.pathname
   .site-header__nav a {
     font-size: 0.95rem;
     font-weight: 500;
-    color: rgba(var(--color-white-rgb), 0.78);
+    color: rgba(var(--color-white-rgb), 0.75);
     text-decoration: none;
     position: relative;
     padding-bottom: 0.2rem;
@@ -232,7 +232,7 @@ const currentPath = Astro.url.pathname
     width: 100%;
     height: 2px;
     background:
-      linear-gradient(90deg, rgba(var(--color-primary-glow-rgb), 0.75), rgba(var(--color-sky-bright-rgb), 0.85)),
+      linear-gradient(90deg, rgba(var(--color-primary-glow-rgb), 0.65), rgba(var(--color-secondary-glow-rgb), 0.72)),
       linear-gradient(90deg, rgba(var(--color-white-rgb), 0.2), transparent);
     border-radius: 999px;
     transform: scaleX(0);
@@ -284,15 +284,12 @@ const currentPath = Astro.url.pathname
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
-    color: var(--color-gray-900);
-    background: linear-gradient(
-      135deg,
-      rgba(var(--color-gray-80-rgb), 0.95),
-      rgba(var(--color-primary-tint-rgb), 0.95)
-    );
+    color: var(--surface-panel);
+    background: linear-gradient(135deg, rgba(var(--color-white-rgb), 0.92), rgba(var(--color-primary-soft-rgb), 0.35));
+    border: 1px solid rgba(var(--color-primary-soft-rgb), 0.25);
     box-shadow:
-      0 18px 40px -22px rgba(var(--color-gray-900-rgb), 0.65),
-      inset 0 0 0 1px rgba(var(--color-white-rgb), 0.4);
+      0 18px 34px -20px rgba(var(--surface-panel-rgb), 0.5),
+      inset 0 0 0 1px rgba(var(--color-white-rgb), 0.1);
     transition:
       transform 150ms ease,
       box-shadow 150ms ease;
@@ -306,7 +303,7 @@ const currentPath = Astro.url.pathname
   .site-header__cta:hover,
   .site-header__cta:focus-visible {
     transform: translateY(-1px);
-    box-shadow: 0 18px 45px -18px rgba(var(--color-primary-rgb), 0.7);
+    box-shadow: 0 18px 40px -18px rgba(var(--surface-panel-rgb), 0.55);
   }
 
   @media (max-width: 900px) {
